@@ -1,0 +1,39 @@
+{
+  "id": "love_beyond_prototype_001",
+  "series": "Love Beyond Heaven or Hell",
+  "title": "The First Encounter",
+  "subtitle": "High above the world",
+  "note": "Temporary prototype dialogue; replace with the author's canonical scene before release.",
+  "backgrounds": {
+    "dialogue": "storm_duel.jpg",
+    "battle": "storm_duel.jpg",
+    "result": "storm_clash.jpg"
+  },
+  "fighters": [
+    "haniel",
+    "asmodeus"
+  ],
+  "battle_intro": "Lightning flashes around the two airborne fighters. The duel begins!",
+  "dialogue": [
+    {
+      "speaker": "NARRATOR",
+      "text": "High above the world, an angel and a demon confront each other within a thundercloud."
+    },
+    {
+      "speaker": "ASMODEUS",
+      "text": "You are awfully persistent for someone who doesn't speak."
+    },
+    {
+      "speaker": "HANIEL",
+      "text": "..."
+    },
+    {
+      "speaker": "NARRATOR",
+      "text": "Blue lightning rips through the clouds. Haniel raises her invisible bow as black ice forms around Asmodeus."
+    },
+    {
+      "speaker": "ASMODEUS",
+      "text": "Fine. Let's settle this."
+    }
+  ]
+}
