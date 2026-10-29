@@ -29,3 +29,13 @@ These are lightweight, cropped/resized copies of existing Love Beyond audiobook 
 - Script: `scripts/prototype_illustrated.gd`
 - Original text-only test: `scenes/prototype.tscn`
 - This is a reusable first visual pass, *not* the final script or final transparent character sprites.
+
+## Development experiment: Modular content pipeline
+
+The original illustrated game remains the default **F5** scene. An **optional** new scene,
+`scenes/prototype_modular.tscn`, tests loading the same encounter from JSON character and
+chapter data. Open that scene in Godot and press **F6** to try it.
+
+See [the content pipeline guide](docs/content_pipeline.md) for architecture, test commands,
+and editing instructions. The modular scene has not yet been verified in the Godot editor,
+so keep using the original F5 scene if it reports errors.
