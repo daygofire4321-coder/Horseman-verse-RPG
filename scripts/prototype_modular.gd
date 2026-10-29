@@ -4,15 +4,61 @@ extends "res://scripts/prototype_illustrated.gd"
 
 const ContentStore = preload("res://scripts/core/content_store.gd")
 const DuelEngine = preload("res://scripts/core/duel_engine.gd")
+const SaveStore = preload("res://scripts/core/save_store.gd")
 const CHAPTER_ID = "love_beyond_prototype_001"
 
 var chapter_data: Dictionary = {}
+var difficulty_data: Dictionary = {}
+var selected_profile: Dictionary = {}
+var save_data: Dictionary = {}
 var duel = null
 
 
 func _ready() -> void:
 	chapter_data = ContentStore.load_chapter(CHAPTER_ID)
+	difficulty_data = ContentStore.read_dictionary("res://data/difficulties.json")
+	save_data = SaveStore.load_save()
+	var settings: Dictionary = save_data.get("settings", {})
+	selected_profile = _find_profile(str(settings.get("difficulty", difficulty_data.get("default", "normal"))))
 	super._ready()
+
+
+func _find_profile(difficulty_id: String) -> Dictionary:
+	for profile in difficulty_data.get("profiles", []):
+		if str(profile.get("id", "")) == difficulty_id:
+			return profile
+	return {"id": "normal", "name": "Normal", "enemy_hp_multiplier": 1.0, "enemy_damage_multiplier": 1.0}
+
+
+func _choose_fighter() -> void:
+	_clear_buttons()
+	_set_hp_visible(false)
+	heading.text = "CHOOSE YOUR FIGHTER"
+	subheading.text = "THE FIRST DUEL"
+	speaker.text = "YOUR PERSPECTIVE"
+	message.text = "Haniel: divine arrows and healing.\nAsmodeus: black ice and defensive magic."
+	_button("Play as Haniel", Callable(self, "_show_difficulty_picker").bind("Haniel", "Asmodeus"))
+	_button("Play as Asmodeus", Callable(self, "_show_difficulty_picker").bind("Asmodeus", "Haniel"))
+
+
+func _show_difficulty_picker(chosen: String, enemy_name: String) -> void:
+	_clear_buttons()
+	heading.text = "SELECT DIFFICULTY"
+	subheading.text = "FIGHT AS " + chosen.to_upper()
+	speaker.text = "DIFFICULTY"
+	message.text = "Choose the challenge for this duel. Your choice will be remembered."
+	for profile in difficulty_data.get("profiles", []):
+		var difficulty_id := str(profile.get("id", "normal"))
+		var difficulty_label := str(profile.get("name", difficulty_id))
+		_button(difficulty_label, Callable(self, "_begin_with_difficulty").bind(chosen, enemy_name, difficulty_id))
+	_button("Back", _choose_fighter)
+
+
+func _begin_with_difficulty(chosen: String, enemy_name: String, difficulty_id: String) -> void:
+	selected_profile = _find_profile(difficulty_id)
+	SaveStore.set_difficulty(save_data, str(selected_profile.get("id", "normal")))
+	SaveStore.write_save(save_data)
+	_start_battle(chosen, enemy_name)
 
 
 func _chapter_background(key: String, fallback: String) -> void:
@@ -59,7 +105,7 @@ func _start_battle(chosen: String, enemy_name: String) -> void:
 	fighter = chosen
 	opponent = enemy_name
 	duel = DuelEngine.new()
-	duel.setup(player_data, enemy_data)
+	duel.setup(player_data, enemy_data, selected_profile)
 	player_hp = duel.player_hp
 	enemy_hp = duel.enemy_hp
 	last_message = str(chapter_data.get("battle_intro", "The battle begins!"))
@@ -74,7 +120,7 @@ func _draw_battle() -> void:
 	_set_hp_visible(true)
 	_update_hp()
 	heading.text = "THE FIRST DUEL"
-	subheading.text = "YOU CONTROL: %s    |    OPPONENT: %s" % [fighter.to_upper(), opponent.to_upper()]
+	subheading.text = "YOU CONTROL: %s    |    OPPONENT: %s    |    %s" % [fighter.to_upper(), opponent.to_upper(), str(selected_profile.get("name", "Normal")).to_upper()]
 	speaker.text = "BATTLE"
 	message.text = last_message
 	for move in duel.player_moves():
@@ -98,3 +144,28 @@ func _turn(move_id: String) -> void:
 		_result(bool(outcome.get("victory", false)))
 	else:
 		_draw_battle()
+
+
+
+func _update_hp() -> void:
+	if duel == null:
+		return
+	var haniel_value: int = player_hp if fighter == "Haniel" else enemy_hp
+	var haniel_max: int = duel.player_max_hp if fighter == "Haniel" else duel.enemy_max_hp
+	var asmo_value: int = player_hp if fighter == "Asmodeus" else enemy_hp
+	var asmo_max: int = duel.player_max_hp if fighter == "Asmodeus" else duel.enemy_max_hp
+	haniel_hp.max_value = haniel_max
+	asmodeus_hp.max_value = asmo_max
+	haniel_hp.value = haniel_value
+	asmodeus_hp.value = asmo_value
+	haniel_hp.get_parent().get_node("HPText").text = "%d / %d HP" % [haniel_value, haniel_max]
+	asmodeus_hp.get_parent().get_node("HPText").text = "%d / %d HP" % [asmo_value, asmo_max]
+
+
+func _result(won: bool) -> void:
+	if won:
+		SaveStore.record_test_victory(save_data, CHAPTER_ID, fighter.to_lower(), str(selected_profile.get("id", "normal")))
+		SaveStore.write_save(save_data)
+	super._result(won)
+	if won:
+		message.text += "\nPrototype victory recorded in your local save."
