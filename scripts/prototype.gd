@@ -2,10 +2,10 @@ extends Control
 
 # Prototype 001: placeholder dialogue -> fighter selection -> duel -> ending.
 var lines := [
-	["NARRATOR", "Within a quiet cave, an archangel and a demon face each other."],
+	["NARRATOR", "High above the world, Haniel and Asmodeus face one another inside a thundercloud."],
 	["ASMODEUS", "You are awfully persistent for someone who doesn't speak."],
 	["HANIEL", "..."],
-	["NARRATOR", "Haniel lifts her invisible bow. Black ice gathers at Asmodeus's feet."],
+	["NARRATOR", "Lightning splits the clouds as Haniel raises her invisible bow. Black ice forms around Asmodeus in midair."],
 	["ASMODEUS", "Fine. Let's settle this."]
 ]
 var current_line := 0
@@ -111,7 +111,7 @@ func _start_battle(chosen: String, foe: String) -> void:
 	player_hp = 100
 	enemy_hp = 100
 	defending = false
-	status = "The duel begins!"
+	status = "Lightning flashes around the two airborne fighters. The duel begins!"
 	_show_battle()
 
 func _show_battle() -> void:
