@@ -1,8 +1,11 @@
 extends SceneTree
-## Manual headless smoke test: godot --headless --path . --script res://tests/smoke_test.gd
+## Run locally:
+## godot --headless --path . --script res://tests/smoke_test.gd
+## WARNING: This uses in-memory save data; it never overwrites the player's save.
 
 const ContentStore = preload("res://scripts/core/content_store.gd")
 const DuelEngine = preload("res://scripts/core/duel_engine.gd")
+const SaveStore = preload("res://scripts/core/save_store.gd")
 
 
 func _initialize() -> void:
@@ -13,20 +16,38 @@ func _run_tests() -> void:
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
-	assert(chapter.get("dialogue", []).size() >= 2, "Chapter dialogue must load")
+	var difficulties: Dictionary = ContentStore.read_dictionary("res://data/difficulties.json")
+
+	assert(chapter.get("dialogue", []).size() >= 2, "Missing chapter dialogue")
+	assert(chapter.get("fighters", []).has("haniel"), "Haniel missing from chapter")
+	assert(chapter.get("fighters", []).has("asmodeus"), "Asmodeus missing from chapter")
 	assert(haniel.get("id", "") == "haniel")
 	assert(asmodeus.get("id", "") == "asmodeus")
+	assert(difficulties.get("profiles", []).size() == 4, "Expected four difficulties")
 
 	var duel = DuelEngine.new()
 	duel.setup(haniel, asmodeus)
 	assert(duel.player_moves().size() == 3)
 	var outcome: Dictionary = duel.take_turn("divine_arrow")
-	assert(outcome["enemy_hp"] == 77)
-	assert(outcome["player_hp"] == 83)
+	assert(outcome["enemy_hp"] == 77, "Arrow should deal 23")
+	assert(outcome["player_hp"] == 83, "Normal enemy attack should deal 17")
 
 	duel.setup(asmodeus, haniel)
 	outcome = duel.take_turn("ice_guard")
-	assert(outcome["player_hp"] == 94, "Guard should reduce the next hit")
+	assert(outcome["player_hp"] == 94, "Guard should reduce damage to 6")
+
+	var hard: Dictionary = {"enemy_hp_multiplier": 1.3, "enemy_damage_multiplier": 1.25}
+	duel.setup(haniel, asmodeus, hard)
+	assert(duel.enemy_max_hp == 130, "Hard HP scaling")
+	outcome = duel.take_turn("attack")
+	assert(outcome["enemy_hp"] == 115)
+	assert(outcome["player_hp"] == 79, "Hard enemy attack scaling")
+
+	var story: Dictionary = {"enemy_hp_multiplier": 0.8, "enemy_damage_multiplier": 0.7}
+	duel.setup(haniel, asmodeus, story)
+	assert(duel.enemy_max_hp == 80, "Story HP scaling")
+	outcome = duel.take_turn("attack")
+	assert(outcome["player_hp"] == 88, "Story enemy damage scaling")
 
 	duel.setup(haniel, asmodeus)
 	var victory := false
@@ -46,5 +67,15 @@ func _run_tests() -> void:
 			break
 	assert(victory, "Asmodeus should be able to win")
 
-	print("Paleverse smoke tests passed: content, abilities, AI, and both playable sides.")
+	var save_data: Dictionary = SaveStore.new_save()
+	SaveStore.set_difficulty(save_data, "hard")
+	assert(save_data["settings"]["difficulty"] == "hard")
+	SaveStore.record_test_victory(save_data, "love_beyond_prototype_001", "haniel", "hard")
+	SaveStore.record_test_victory(save_data, "love_beyond_prototype_001", "haniel", "hard")
+	assert(save_data["battle_records"]["love_beyond_prototype_001|haniel|hard"] == 2)
+	SaveStore.unlock_character(save_data, "haniel")
+	SaveStore.unlock_character(save_data, "haniel")
+	assert(save_data["roster"]["unlocked"].size() == 1)
+
+	print("Paleverse smoke tests passed: content, duel, difficulty scaling, save model, both fighters.")
 	quit(0)
