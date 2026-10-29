@@ -22,6 +22,15 @@ func _expect(condition: bool, message: String = "Smoke test expectation failed")
 
 
 func _run_tests() -> void:
+	# Loading the PackedScene forces Godot to parse the experimental UI script.
+	var modular_scene: Resource = load("res://scenes/prototype_modular.tscn")
+	_expect(modular_scene is PackedScene, "Modular scene must load successfully")
+	if modular_scene is PackedScene:
+		var view: Node = (modular_scene as PackedScene).instantiate()
+		root.add_child(view)
+		_expect(view.is_inside_tree(), "Modular prototype should instantiate")
+		view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
