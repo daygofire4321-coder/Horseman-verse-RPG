@@ -59,7 +59,7 @@ func take_turn(move_id: String) -> Dictionary:
 	if move.is_empty():
 		return _outcome("Unknown move: " + move_id)
 
-	var power := max(0, int(move.get("power", 0)))
+	var power: int = maxi(0, int(move.get("power", 0)))
 	var kind := str(move.get("kind", "damage"))
 	var guard_active := false
 	var log_text := ""
@@ -94,7 +94,7 @@ func take_turn(move_id: String) -> Dictionary:
 		var base_damage := int(enemy_ai.get("damage", 17))
 		if guard_active:
 			base_damage = int(enemy_ai.get("damage_vs_guard", 6))
-		var damage := max(0, int(round(float(base_damage) * enemy_damage_multiplier)))
+		var damage: int = maxi(0, int(round(float(base_damage) * enemy_damage_multiplier)))
 		player_hp = max(0, player_hp - damage)
 		log_text += "\n%s deals %d damage." % [str(enemy.get("name", "Opponent")), damage]
 
