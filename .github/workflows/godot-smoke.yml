@@ -24,4 +24,4 @@ jobs:
         run: /tmp/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --editor --import
 
       - name: Run content and combat smoke tests
-        run: /tmp/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --script res://tests/smoke_test.gd
+        run: timeout 90s /tmp/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --script res://tests/smoke_test.gd
