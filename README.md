@@ -39,3 +39,12 @@ chapter data. Open that scene in Godot and press **F6** to try it.
 See [the content pipeline guide](docs/content_pipeline.md) for architecture, test commands,
 and editing instructions. The modular scene has not yet been verified in the Godot editor,
 so keep using the original F5 scene if it reports errors.
+
+### Optional test features
+
+The modular scene now offers **Story / Normal / Hard / Nightmare** difficulties,
+loads scaled battle values from `data/difficulties.json`, and remembers your
+selected difficulty and test wins in Godot's local `user://` save folder.
+
+The working F5 scene is unchanged. See the [content pipeline guide](docs/content_pipeline.md)
+for details and the GitHub Actions import/smoke-test workflow.
