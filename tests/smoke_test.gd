@@ -12,7 +12,8 @@ var failures: Array[String] = []
 
 
 func _initialize() -> void:
-	_run_tests()
+	# Defer until SceneTree.root has entered the tree before instantiating UI.
+	call_deferred("_run_tests")
 
 
 func _expect(condition: bool, message: String = "Smoke test expectation failed") -> void:
