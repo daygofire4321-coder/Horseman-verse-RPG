@@ -45,3 +45,37 @@ The main F5 scene remains the working visual prototype. The existing artwork is 
 - Campaign unlocks/custom parties using stable character IDs.
 - Experience, difficulty, items, and save files linked to stable IDs.
 - Branching dialogue, chapter events, and multi-character battles.
+
+## Prototype difficulty and saves (2026-10-29)
+
+The optional `scenes/prototype_modular.tscn` now adds a difficulty picker after
+choosing a fighter. Profiles in `data/difficulties.json` currently modify
+**enemy HP** and **enemy damage** only. They do not alter player HP, experience,
+or characters' canonical strength. Values are provisional.
+
+| Difficulty | Enemy HP | Enemy damage |
+| --- | --- | --- |
+| Story | 80% | 70% |
+| Normal | 100% | 100% |
+| Hard | 130% | 125% |
+| Nightmare | 160% | 150% |
+
+`scripts/core/save_store.gd` contains a versioned, local save model. Godot
+stores this in `user://paleverse_save_v1.json`, NOT the repository. It
+remembers difficulty and prototype victory counts by chapter/character/
+difficulty. A helper for future character unlocks exists but is not yet used
+by this tutorial scene; canon unlock rules still need designing.
+
+**No grinding, real leveling, or campaign progression yet.** This adds a
+foundation for those features rather than pretending they are complete.
+
+## Automatic checks
+
+`.github/workflows/godot-smoke.yml` tries to import the project and run
+`tests/smoke_test.gd` on pushes/PRs. It uses Godot 4.7.2, matching our local
+project version. Smoke tests exercise story data, both sides of the duel,
+damage scaling, and in-memory save manipulation (without writing a player's
+real save).
+
+Run the optional scene with **F6** and the familiar working illustrated demo
+with **F5**. If anything appears broken, the working F5 version is still there.
