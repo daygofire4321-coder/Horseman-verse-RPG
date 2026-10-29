@@ -1,0 +1,33 @@
+{
+  "id": "haniel",
+  "name": "Haniel",
+  "series": "love_beyond",
+  "variant": "archangel",
+  "portrait": "haniel_portrait.jpg",
+  "max_hp": 100,
+  "moves": [
+    {
+      "id": "attack",
+      "name": "Attack",
+      "kind": "damage",
+      "power": 15
+    },
+    {
+      "id": "divine_arrow",
+      "name": "Divine Arrow",
+      "kind": "damage",
+      "power": 23
+    },
+    {
+      "id": "heal",
+      "name": "Heal",
+      "kind": "heal",
+      "power": 20
+    }
+  ],
+  "ai": {
+    "damage": 17,
+    "heal_threshold": 35,
+    "heal_amount": 14
+  }
+}
