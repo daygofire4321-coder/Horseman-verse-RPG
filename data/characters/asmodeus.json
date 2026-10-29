@@ -1,0 +1,32 @@
+{
+  "id": "asmodeus",
+  "name": "Asmodeus",
+  "series": "love_beyond",
+  "variant": "demon_lord",
+  "portrait": "asmodeus_portrait.jpg",
+  "max_hp": 100,
+  "moves": [
+    {
+      "id": "attack",
+      "name": "Attack",
+      "kind": "damage",
+      "power": 15
+    },
+    {
+      "id": "black_ice",
+      "name": "Black Ice",
+      "kind": "damage",
+      "power": 23
+    },
+    {
+      "id": "ice_guard",
+      "name": "Ice Guard",
+      "kind": "guard",
+      "power": 0
+    }
+  ],
+  "ai": {
+    "damage": 17,
+    "damage_vs_guard": 6
+  }
+}
