@@ -1,0 +1,18 @@
+{
+  "id": "bandit_thug",
+  "name": "Cliffside Thug",
+  "series": "love_beyond",
+  "max_hp": 34,
+  "ai": {
+    "damage": 9,
+    "damage_vs_guard": 4
+  },
+  "moves": [
+    {
+      "id": "knife",
+      "name": "Knife",
+      "kind": "damage",
+      "power": 9
+    }
+  ]
+}
