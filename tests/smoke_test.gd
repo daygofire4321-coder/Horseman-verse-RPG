@@ -183,7 +183,7 @@ func _run_tests() -> void:
 							hunt.enemy_hp = 1
 							arc.call("_hunt_turn", "attack")
 						_expect(not bool(arc.get("hunt_mode")), "Completed hunt returns to camp")
-						_expect(int(daily.state["level"]) > 1 or int(daily.state["xp"]) > 0, "Successful hunt grants experience")
+						_expect(int(arc.get("interlude_engine").state["level"]) > 1 or int(arc.get("interlude_engine").state["xp"]) > 0, "Successful hunt grants experience")
 						arc.call("_exciting_tomorrow")
 						_expect(int(arc.get("event_index")) > index, "Exciting day advances to next chapter")
 				"alley_wave":
