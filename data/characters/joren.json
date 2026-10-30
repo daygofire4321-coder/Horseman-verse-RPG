@@ -1,0 +1,23 @@
+{
+  "id": "joren",
+  "name": "Joren",
+  "series": "love_beyond",
+  "variant": "early_cliffside_youth",
+  "max_hp": 65,
+  "ai": {
+    "damage": 12,
+    "damage_vs_guard": 5
+  },
+  "story_rules": {
+    "nonlethal": true,
+    "scripted_defeat": "Asmodeus injures Joren's wrist; Haniel wants to heal him; Alric stops her."
+  },
+  "moves": [
+    {
+      "id": "knife",
+      "name": "Knife",
+      "kind": "damage",
+      "power": 12
+    }
+  ]
+}
