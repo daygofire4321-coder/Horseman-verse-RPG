@@ -284,7 +284,7 @@ func _hit_and_clear(destination: String, beam: ColorRect, halo: ColorRect, tint:
 	if is_instance_valid(halo):
 		halo.queue_free()
 	_flash(destination, Color(tint.r, tint.g, tint.b, 0.56))
-	_floating_number(destination, "-%d" % max(0, int(duel.enemy_max_hp)), tint) if false else _damage_number(destination)
+	_damage_number(destination)
 	_schedule_effect_completion(outcome, 0.25)
 
 
@@ -409,8 +409,15 @@ func _finish_animated_turn(outcome: Dictionary) -> void:
 		ending.tween_interval(0.43)
 		ending.tween_callback(Callable(self, "_finish_battle").bind(bool(outcome.get("victory", false))))
 	else:
-		busy_animating = false
-		_draw_battle()
+		# Let the HP animation finish before the next redraw resets its value.
+		var resume := create_tween()
+		resume.tween_interval(0.36)
+		resume.tween_callback(_resume_battle)
+
+
+func _resume_battle() -> void:
+	busy_animating = false
+	_draw_battle()
 
 
 func _finish_battle(won: bool) -> void:
