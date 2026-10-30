@@ -1,0 +1,26 @@
+{
+  "id": "grizzly_bear",
+  "name": "Grizzly Bear",
+  "type": "wildlife",
+  "series": "love_beyond",
+  "variant": "story_boss",
+  "max_hp": 100,
+  "moves": [
+    {
+      "id": "maul",
+      "name": "Maul",
+      "kind": "damage",
+      "power": 22
+    }
+  ],
+  "ai": {
+    "damage": 17,
+    "damage_vs_guard": 6
+  },
+  "story_rules": {
+    "trigger": "bear_hp_at_or_below_half_or_player_falls",
+    "threshold_ratio": 0.5,
+    "scripted_final_blow": "Haniel Divine Arrow",
+    "note": "Asmodeus does not kill the bear in canon."
+  }
+}
