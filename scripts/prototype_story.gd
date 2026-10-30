@@ -121,7 +121,7 @@ func _show_event() -> void:
 			subheading.text = "A LOVE STRONGER THAN HEAVEN OR HELL"
 			speaker.text = current_part
 			message.text = "Continue to begin."
-			_button("Enter " + current_part.title(), _advance_event)
+			_button("Enter " + current_part, _advance_event)
 		"line":
 			speaker.text = str(event.get("speaker", "NARRATOR"))
 			message.text = str(event.get("text", ""))
