@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "stages": [
+    {
+      "id": "after_part_four",
+      "name": "Forest Recovery",
+      "pov": "asmodeus",
+      "location": "Forest Camp",
+      "day_actions": 3,
+      "scene": "haniel_collapse.jpg",
+      "next_story": "part_five",
+      "hunting_pool": [
+        "wild_boar",
+        "gray_wolf"
+      ],
+      "actions": [
+        {
+          "id": "rest",
+          "label": "Rest",
+          "description": "Regain 35 HP",
+          "limited": true
+        },
+        {
+          "id": "care",
+          "label": "Care for Haniel",
+          "description": "An optional quiet scene with Haniel",
+          "limited": true
+        },
+        {
+          "id": "explore",
+          "label": "Explore",
+          "description": "Explore the wilderness and gather supplies",
+          "limited": true
+        }
+      ]
+    },
+    {
+      "id": "after_part_five",
+      "name": "Playing House",
+      "pov": "asmodeus",
+      "location": "Forest Camp",
+      "day_actions": 3,
+      "scene": "campfire.jpg",
+      "next_story": "part_six",
+      "hunting_pool": [
+        "wild_boar",
+        "gray_wolf"
+      ],
+      "actions": [
+        {
+          "id": "rest",
+          "label": "Rest",
+          "description": "Recover 35 HP",
+          "limited": true
+        },
+        {
+          "id": "camp",
+          "label": "Work on Camp",
+          "description": "Repair the hide rack and improve supplies",
+          "limited": true
+        },
+        {
+          "id": "explore",
+          "label": "Explore",
+          "description": "Look around the forests near Cliffside",
+          "limited": true
+        }
+      ]
+    }
+  ],
+  "future_pool_hooks": {
+    "after_arc_one": [
+      "wild_boar",
+      "gray_wolf",
+      "grizzly_bear"
+    ],
+    "later_zones": [
+      "bandit_thug"
+    ],
+    "note": "Future zones are not active yet and weaker foes never scale automatically to player level."
+  }
+}
