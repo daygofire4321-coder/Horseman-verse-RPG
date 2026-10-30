@@ -96,6 +96,35 @@ func _run_tests() -> void:
 		_expect(int(story.get("event_index")) >= events.size(), "Story should reach the end")
 		story.queue_free()
 
+	# The alternate rescue branch must also work: Asmodeus collapses first.
+	var loss_resource: Resource = load("res://scenes/prototype_story.tscn")
+	if loss_resource is PackedScene:
+		var losing_story: Node = (loss_resource as PackedScene).instantiate()
+		root.add_child(losing_story)
+		losing_story.call("_begin_story_events")
+		var sequence: Array = losing_story.get("story_events")
+		for step in range(100):
+			var at: int = int(losing_story.get("event_index"))
+			if at >= sequence.size():
+				break
+			var event: Dictionary = sequence[at]
+			var kind := str(event.get("kind", "line"))
+			if kind == "battle":
+				var bear_duel: RefCounted = losing_story.get("duel")
+				bear_duel.set("player_hp", 1)
+				losing_story.call("_bear_turn", "attack")
+				await create_timer(0.82).timeout
+				_expect(not bool(losing_story.get("bear_mode")), "Asmodeus loss should also trigger rescue")
+				_expect(int(losing_story.get("event_index")) == at + 1, "Loss should enter the immediate rescue event")
+				break
+			elif kind == "gather":
+				for branch in range(3):
+					losing_story.call("_collect_branch")
+				losing_story.call("_advance_event")
+			else:
+				losing_story.call("_advance_event")
+		losing_story.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
