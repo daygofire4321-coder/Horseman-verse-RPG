@@ -169,10 +169,16 @@ func _run_tests() -> void:
 						_expect(int(arc.get("event_index")) == index, "Ordinary days never advance authored scenes")
 						arc.call("_take_interlude_action", "rest")
 						arc.call("_take_interlude_action", "explore")
-						_expect(int(daily.state["actions_left"]) == 1, "Activities spend daily action slots")
+						arc.call("_take_interlude_action", "care" if interludes_seen == 1 else "camp")
+						_expect(int(daily.state["actions_left"]) == 0, "All three daily actions can be spent")
+						arc.call("_show_menu")
+						arc.call("_resume_adventure")
+						_expect(int(arc.get("event_index")) == index, "Saved adventure resumes the same interlude")
+						var resumed = arc.get("interlude_engine")
+						_expect(int(resumed.state["actions_left"]) == 0, "Daily actions survive saving and resuming")
 						arc.call("_start_hunt")
 						var hunt = arc.get("duel")
-						_expect(int(daily.state["actions_left"]) == 1, "Hunting uses no daily action")
+						_expect(int(arc.get("interlude_engine").state["actions_left"]) == 0, "Hunting works after all daily actions are spent")
 						if bool(arc.get("hunt_mode")):
 							hunt.enemy_hp = 1
 							arc.call("_hunt_turn", "attack")
@@ -196,6 +202,17 @@ func _run_tests() -> void:
 		_expect(alley_waves_seen == 2, "Two Cliffside combat waves should occur")
 		_expect(int(arc.get("event_index")) >= chain.size(), "Story should finish Part Six")
 		arc.queue_free()
+
+
+	# Losing the alley fight should still enter the authored cutscene.
+	const AllyWaves = preload("res://scripts/core/alley_wave_engine.gd")
+	var scripted_loss = AllyWaves.new()
+	scripted_loss.setup(2, {"enemy_hp_multiplier":1.0,"enemy_damage_multiplier":1.0})
+	scripted_loss.player_hp = 1
+	scripted_loss.alric_hp = 0
+	var loss_result: Dictionary = scripted_loss.take_turn("attack")
+	_expect(bool(loss_result.get("finished", false)), "Alley loss should finish rather than soft-lock")
+	_expect(not bool(loss_result.get("won", true)), "Alley loss should report its outcome")
 
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
