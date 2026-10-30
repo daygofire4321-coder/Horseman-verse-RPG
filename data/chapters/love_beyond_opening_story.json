@@ -1,0 +1,393 @@
+{
+  "id": "love_beyond_opening_story",
+  "title": "A Love Stronger Than Heaven or Hell",
+  "note": "Adapted directly from author-supplied Parts 1–3; narration lightly condensed for VN pacing. Prologue dialogue is kept in love_beyond_prototype_001.json.",
+  "archive_asset_root": "res://assets/love_beyond/story_001/",
+  "events": [
+    {
+      "kind": "title",
+      "part": "PART ONE",
+      "title": "AFTERMATH",
+      "image": "cave_after.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus sat in the damp cave, his body still weak from his life-or-death battle with the angel before him. They had fought so evenly that he now felt no stronger than a mortal man."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "You aren't too bad, angel."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "A cough brought up fresh flecks of blood, a reminder of the angel's might."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The angel regarded him with azure eyes and white pupils that seemed to mimic the endless sky."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She weakly raised a hand, thumb and pinky extended. Asmodeus watched the familiar gesture for several moments before recognizing it: sign language. The little angel was mute."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I'm glad you feel the same. We have kinship in that, at least."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel gave him an inquisitive look."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I'm the demon of lust. I've had perverse encounters with hundreds, perhaps thousands... maybe more people. A few mutes have come my way."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The angel crinkled her nose and waved a hand. He didn't recognize the sign, but its meaning was clear."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Well, regardless, guess we have two options."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "We can work on surviving together until we can get back home, or we can try to kill each other again."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He would kill her if he had to, but he'd much rather return to his manor. Outings like this weren't his forte."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I'm Asmodeus, by the way."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The angel considered this for several moments, then traced letters in the air in Enochian.",
+      "image": "cave_names.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Now he understood. She wasn't merely an angel, but an archangel—God's grace herself."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Bet the Heaven Father told you to kill some lowly demon."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She nodded."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I was told the same. I was told to take out some weak little angel, so I guess we were both punked by our old men."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus sighed and leaned back against the rocky wall. He heard Haniel do the same."
+    },
+    {
+      "kind": "title",
+      "part": "PART TWO",
+      "title": "THE NATURAL ORDER",
+      "image": "forest_gather.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Beneath an old oak, Haniel gathered fallen branches. She lacked her older brother's affinity for flames, and making fire by human means was proving difficult."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The tree was magnificent. Chopping it down would be efficient—but destroying such a life for firewood was unthinkable."
+    },
+    {
+      "kind": "gather",
+      "count": 3,
+      "image": "forest_gather.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel placed her collection on a patch of bare dirt, where it would damage the forest as little as possible."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus had wandered off early without a word. She couldn't blame him if he'd left; they were natural enemies."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [THOUGHT]",
+      "text": "I hope he finds happiness."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Her mission had failed. She doubted Heaven would welcome her back without question."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Yet Asmodeus hadn't killed her in her sleep—or even tried to seduce her. For a demon, his choices were unusual."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She knelt and rubbed two sticks together. The only thing growing warm was her wrists.",
+      "image": "forest_fire.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She sighed. If she had to spend eternity somewhere, at least Earth had grass, birds, and trees unlike her own home."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "A presence approached. Asmodeus emerged, dragging a boar—the fear it had felt before dying still seemed to cling to it.",
+      "image": "campfire.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Why would you harm it?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus paused to interpret her hands."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "For us to eat. So we can survive. So we can get stronger."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He dropped the boar beside the woodpile."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "It also needed to live. To feel the sun, to eat, to breed."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "But why should we be bound to something so much our lesser? I didn't erase the entire species, just one of many so we can survive as well."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Who is to say we are above them?"
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "We are stronger. It's the natural order that the strong devour the weak. It happens all the time down here."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "A small flame hovered above Asmodeus's index finger."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Then we should know better. Know better and be responsible for ourselves."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He used the flame to light the pile of wood."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "We should know better?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She nodded, wondering if she'd gotten through to him."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "To know better than the natural order is a lofty claim, angel. Is that empathy or arrogance?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel couldn't believe his audacity. His knowing crimson eyes stayed fixed on her."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus butchered the boar with unsettling accuracy and set the meat over the fire. The thought sickened Haniel—but the smell wasn't unappetizing."
+    },
+    {
+      "kind": "title",
+      "part": "PART THREE",
+      "title": "TO BE PREYED UPON",
+      "image": "forest_hunt.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus crouched behind a bush, watching a nearby boar. An autumn breeze rustled the leaves and tousled his hair."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Despite Haniel's protests, she had eaten yesterday's meal. Perhaps even angels put survival ahead of principle when they must."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The boar startled and fled, even though Asmodeus had barely moved."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Something heavy and furred slammed into him, hurling him into a tree.",
+      "image": "bear_ambush.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Wind knocked from his lungs, Asmodeus spat flecks of blood and stared at a grizzly bear. In his weakened state, the animal was far stronger."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Shit."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He stood his ground. Normally his gaze alone would terrify an animal, but the bear showed no fear."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Okay, ugly, let's dance. I would prefer someone cute, but when times are rough you gotta do what you gotta do."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The bear charged. Asmodeus barely dodged its bulk, but a massive paw still struck him and sent him rolling."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Pain racked his body. This time, he couldn't rely on the power of a demon lord."
+    },
+    {
+      "kind": "battle",
+      "enemy": "grizzly_bear",
+      "threshold": 0.5,
+      "image": "bear_boss.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The bear's overwhelming strength brought Asmodeus down. Every part of him ached, and his body refused to answer."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Alright, ugly, ya got me."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He had preached survival of the fittest to Haniel only yesterday. Now he seemed destined to learn what that meant from the other side."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The bear loomed above him, one massive paw raised. Asmodeus closed his eyes—not out of fear, but in acceptance."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Wind brushed his face. The bear howled in pain as a brilliant blue arrow struck it.",
+      "image": "haniel_rescue.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus opened his eyes. The little angel stood before him, drawing back the string of her invisible bow. Her aim was steady, though she was sweating and weak."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Haniel..."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She glanced back at him."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "You're shorter than I originally thought."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel rolled her eyes."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The bear charged again. Haniel released her invisible bowstring, and a blue arrow of angelic power struck the beast's head.",
+      "image": "bear_aftermath.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The bear and Haniel hit the ground at the same time."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus rushed to her and knelt by her side. The angel who had argued for the life of a boar yesterday had killed a creature today—for him. A demon.",
+      "image": "haniel_collapse.jpg"
+    }
+  ],
+  "ending": {
+    "next_chapter": "pending_part_four",
+    "note": "No Part Four script has been supplied yet."
+  }
+}
