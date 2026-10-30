@@ -11,7 +11,7 @@
       "kind": "title",
       "part": "PART FOUR",
       "title": "TO GIVE THANKS",
-      "image": "haniel_collapse.jpg"
+      "image": "haniel_water.jpg"
     },
     {
       "kind": "line",
@@ -121,7 +121,7 @@
       "kind": "title",
       "part": "PART FIVE",
       "title": "PLAYING HOUSE",
-      "image": "campfire.jpg"
+      "image": "camp_hiderack.jpg"
     },
     {
       "kind": "line",
@@ -161,7 +161,8 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "Haniel climbed down from the ledge. She mulled his question over like a puzzle."
+      "text": "Haniel climbed down from the ledge. She mulled his question over like a puzzle.",
+      "image": "camp_conversation.jpg"
     },
     {
       "kind": "line",
@@ -196,7 +197,8 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "He turned to their charcoal-filled firepit. If he had to play house with an angel, he was glad it was this one."
+      "text": "He turned to their charcoal-filled firepit. If he had to play house with an angel, he was glad it was this one.",
+      "image": "camp_hiderack.jpg"
     },
     {
       "kind": "interlude",
