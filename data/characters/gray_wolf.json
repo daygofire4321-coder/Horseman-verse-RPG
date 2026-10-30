@@ -1,0 +1,19 @@
+{
+  "id": "gray_wolf",
+  "name": "Gray Wolf",
+  "series": "love_beyond",
+  "max_hp": 65,
+  "exp_reward": 18,
+  "ai": {
+    "damage": 13,
+    "damage_vs_guard": 5
+  },
+  "moves": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "damage",
+      "power": 13
+    }
+  ]
+}
