@@ -125,6 +125,78 @@ func _run_tests() -> void:
 				losing_story.call("_advance_event")
 		losing_story.queue_free()
 
+
+	# Prototype 004: player must be able to spend unlimited ordinary days
+	# between script beats, and choose exactly when the next part starts.
+	var v4_resource: Resource = load("res://scenes/prototype_story_v4.tscn")
+	_expect(v4_resource is PackedScene, "Six-part scene must import")
+	if v4_resource is PackedScene:
+		var arc: Node = (v4_resource as PackedScene).instantiate()
+		root.add_child(arc)
+		arc.call("_load_story_if_needed")
+		var chain: Array = arc.get("story_events")
+		_expect(chain.size() > 145, "Six-part story should include all authored scenes")
+		arc.call("_begin_story_events")
+		var interludes_seen := 0
+		var alley_waves_seen := 0
+		for step in range(260):
+			var index: int = int(arc.get("event_index"))
+			if index >= chain.size():
+				break
+			var beat: Dictionary = chain[index]
+			match str(beat.get("kind", "line")):
+				"gather":
+					for branch in range(3):
+						arc.call("_collect_branch")
+					arc.call("_advance_event")
+				"battle":
+					for turn in range(5):
+						if not bool(arc.get("bear_mode")):
+							break
+						arc.call("_bear_turn", "black_ice")
+						await create_timer(0.82).timeout
+					_expect(not bool(arc.get("bear_mode")), "Bear rescue still works in six-part mode")
+				"interlude":
+					interludes_seen += 1
+					var daily = arc.get("interlude_engine")
+					_expect(daily != null, "Interlude engine created")
+					if daily != null:
+						var day_before: int = int(daily.state.get("day", 1))
+						arc.call("_ordinary_tomorrow")
+						arc.call("_ordinary_tomorrow")
+						arc.call("_ordinary_tomorrow")
+						_expect(int(daily.state["day"]) == day_before + 3, "Three ordinary days advance time")
+						_expect(int(arc.get("event_index")) == index, "Ordinary days never advance authored scenes")
+						arc.call("_take_interlude_action", "rest")
+						arc.call("_take_interlude_action", "explore")
+						_expect(int(daily.state["actions_left"]) == 1, "Activities spend daily action slots")
+						arc.call("_start_hunt")
+						var hunt = arc.get("duel")
+						_expect(int(daily.state["actions_left"]) == 1, "Hunting uses no daily action")
+						if bool(arc.get("hunt_mode")):
+							hunt.enemy_hp = 1
+							arc.call("_hunt_turn", "attack")
+						_expect(not bool(arc.get("hunt_mode")), "Completed hunt returns to camp")
+						_expect(int(daily.state["level"]) > 1 or int(daily.state["xp"]) > 0, "Successful hunt grants experience")
+						arc.call("_exciting_tomorrow")
+						_expect(int(arc.get("event_index")) > index, "Exciting day advances to next chapter")
+				"alley_wave":
+					alley_waves_seen += 1
+					var wave = arc.get("wave_engine")
+					_expect(int(wave.wave) == alley_waves_seen, "Alley waves appear in order")
+					for strike in range(16):
+						if bool(arc.get("alley_ready")):
+							break
+						arc.call("_alley_turn", "divine_arrow" if alley_waves_seen == 1 else "black_ice")
+					_expect(bool(arc.get("alley_ready")), "Alley wave resolves into canonical outcome")
+					arc.call("_finish_alley_wave")
+				_:
+					arc.call("_advance_event")
+		_expect(interludes_seen == 2, "Two optional daily interludes should occur")
+		_expect(alley_waves_seen == 2, "Two Cliffside combat waves should occur")
+		_expect(int(arc.get("event_index")) >= chain.size(), "Story should finish Part Six")
+		arc.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
