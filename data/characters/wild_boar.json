@@ -1,0 +1,19 @@
+{
+  "id": "wild_boar",
+  "name": "Wild Boar",
+  "series": "love_beyond",
+  "max_hp": 50,
+  "exp_reward": 12,
+  "ai": {
+    "damage": 10,
+    "damage_vs_guard": 3
+  },
+  "moves": [
+    {
+      "id": "charge",
+      "name": "Charge",
+      "kind": "damage",
+      "power": 10
+    }
+  ]
+}
