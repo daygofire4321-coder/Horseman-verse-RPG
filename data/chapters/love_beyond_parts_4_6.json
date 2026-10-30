@@ -1,0 +1,447 @@
+{
+  "id": "love_beyond_parts_4_6",
+  "title": "A Love Stronger Than Heaven or Hell",
+  "note": "Adapted from author's Parts Four–Six; dialogue lightly copyedited; narration condensed. Joren is identified by author as gang boss even though story manuscript calls him 'youth' or 'gang leader'.",
+  "events": [
+    {
+      "kind": "checkpoint",
+      "part": 3
+    },
+    {
+      "kind": "title",
+      "part": "PART FOUR",
+      "title": "TO GIVE THANKS",
+      "image": "haniel_collapse.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Cool water touched Haniel's lips and coaxed her awake. Asmodeus knelt beside her, holding a particularly large seashell to her mouth."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "His eyes widened when he realized she was awake. Her body still ached from the fight with the bear."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Hey."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Why?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She tilted her head, drinking from the seashell."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I told you the strong's duty is to do as they please with the weak. That bear had me at its mercy. Yet despite disagreeing with my worldview, you still saved my ass yesterday... why?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He sounded soft and genuinely confused. Haniel began to wonder whether this demon was different from the others she'd known."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Then, as the one who defeated it, it was my right to save you and to take its life, given your own philosophy."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She signed slowly with heavy, clumsy hands. She remembered the fear the bear had felt when she killed it."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Just don't let its body be wasted. All the beasts of the land deserve that respect, at least."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus smiled, showing his sharp teeth."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I figured you'd say something cliche like that."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She felt both indignant and strangely warm at his chuckle."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Don't look at me with that expression. I turned its fur into a blanket, the very one you are laying on."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel finally noticed the bear-fur blanket. Had he done it for her, or did he appreciate life in his own way?"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Thank you."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Nah, I should be the one kissing your ass. You saved my life, not even a week after we tried killing each other, and I'm sure your bosses wouldn't be thrilled knowing you saved the prince of lust."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "His grin faded as he looked away."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Then we both owe thanks, so none needs to be given."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel smiled. Asmodeus smiled back."
+    },
+    {
+      "kind": "interlude",
+      "id": "after_part_four"
+    },
+    {
+      "kind": "title",
+      "part": "PART FIVE",
+      "title": "PLAYING HOUSE",
+      "image": "campfire.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus surveyed the grassy clearing he'd made outside the cave. Haniel sat on the ledge behind him, still recovering."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Damnit."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The crude rack he'd built for drying hides collapsed again. He was accustomed to servants who handled all the mundane work."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "But servants were boring. Haniel wasn't. She challenged him—and that made him feel alive in a way he hadn't since the rings were conquered."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Luci can wait a few more days, or weeks, or whatever."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel tilted her head. Asmodeus knew this comfortable life would eventually end, and that they'd return to their respective peoples as enemies."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Do you miss it?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel climbed down from the ledge. She mulled his question over like a puzzle."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Yes."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Yet her eyes didn't sparkle as they did when rabbits grazed nearby or when the sunrise touched the forest."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "What about that place is so great?"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "It's home."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus didn't believe she would ever fall. He'd met fallen angels before, and none was anything like her."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Whatever, let's just eat or whatever."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He turned to their charcoal-filled firepit. If he had to play house with an angel, he was glad it was this one."
+    },
+    {
+      "kind": "interlude",
+      "id": "after_part_five"
+    },
+    {
+      "kind": "title",
+      "part": "PART SIX",
+      "title": "THE NATURE OF MAN AND DEMONS",
+      "image": "cliffside_street.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel felt heavy and tired as they entered the human town nearest their camp. Its dirt roads were busier than anything she'd imagined."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Cliffside. What weird namers humans are."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "If I was in charge of naming towns they would be named something scarier to frighten off the possibility of attacks. Something like Bloodfell, or Life's Bane, not named because of its placement upon the earth."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "His complaints sounded annoyed, but Haniel could feel that he enjoyed them."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "They approached a shop with baskets of merchandise near the front door."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Stay here."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He pointed to a crate. Haniel sat, rolling her eyes as he went inside. Her halo was warm within her bag; without it she felt vulnerable."
+    },
+    {
+      "kind": "line",
+      "speaker": "BLOND YOUTH",
+      "text": "Hey, miss, could ya come and give my friend some help? He's hurt pretty bad."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "A skinny blond man with shoulder-length hair and an unconvincing mustache gestured toward an alley."
+    },
+    {
+      "kind": "line",
+      "speaker": "BLOND YOUTH",
+      "text": "He's right down there."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel followed. She was weak, but surely she could heal one person."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Several people surrounded her in the alley, some carrying crude blades.",
+      "image": "cliffside_alley.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "Bet you have money, so cough it up."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel didn't know what money was. Their emotions—fear, worry, anger and envy—blurred together."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Why don't we talk?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Her gestures only confused them. One youth waved a knife so wildly that he nearly cut his friend's ear."
+    },
+    {
+      "kind": "line",
+      "speaker": "THUG",
+      "text": "Money. Now."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel could neither outrun nor overpower them in her weakened condition."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Oi, you lil' rats causing trouble again?"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "A broad man approached with a hammer, his leather apron damp with sweat."
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "Buzz off, pops. We don't need a geezer interfering with our business."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "It's my business when you're doing it in the town my children were raised in."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The youth mouthed something that angered Alric. He punched the boy, who landed flat on his rear."
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "You did it now, Alric."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Two thugs stood watch over Haniel as the others surrounded Alric."
+    },
+    {
+      "kind": "alley_wave",
+      "wave": 1,
+      "image": "cliffside_alley.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric knocked several attackers down, but one drove a knife into his shoulder. The smith roared and fell to one knee."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Little bastards..."
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "Just shut up and die already."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The youth tossed his knife and caught it, his nose still bloody. Then a shadow appeared behind him."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus lifted the leader by the back of his head. Haniel sensed malice and bloodlust—but beneath it, something protective."
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "What the hell?"
+    },
+    {
+      "kind": "alley_wave",
+      "wave": 2,
+      "image": "cliffside_alley_2.jpg"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus pulled the leader into a knife's path as a shield, then kicked him into the attacker. The remaining thugs fled."
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "Who even are you? Are you her husband or something?!"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Asmodeus."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He didn't look her way. The boy tried to flee, but Asmodeus knocked him down and planted a foot on his back."
+    },
+    {
+      "kind": "line",
+      "speaker": "GANG LEADER",
+      "text": "Get off me, psycho!"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Asmodeus."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel hurried forward, but Asmodeus grasped the boy's wrist. A sickening crunch followed."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel reached to heal the sobbing youth. Alric placed a strong hand on her shoulder."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I understand you want to aid him, but you should let him learn his lesson."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She felt no hatred from Alric, only cool calmness. Tears ran down her face, but she listened."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I'll call his folks. They were too soft on him when he was a boy, so I'm sure they will mend him."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric sat the youth against the alley wall, and Asmodeus returned to Haniel."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She wondered whether what she had witnessed was the dual nature of humankind—and, looking at Asmodeus, the nature of a demon."
+    },
+    {
+      "kind": "checkpoint",
+      "part": 6
+    }
+  ]
+}
