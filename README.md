@@ -1,6 +1,58 @@
 # Horseman-verse-RPG
 
-An expandable, story-driven Pale Horseman-verse visual novel / turn-based RPG, built in **Godot 4.7.2**. Mobile landscape is the eventual target.
+## F5: Prototype 004 — The first six Love Beyond parts and free-time days
+
+The new default scene is `scenes/prototype_story_v4.tscn`. Earlier versions are preserved.
+
+**Story route:** Thundercloud duel → Parts 1–3 → Part Four (*To Give Thanks*) → **Interlude A** → Part Five (*Playing House*) → **Interlude B** → Part Six (*The Nature of Man and Demons*) → two-wave Cliffside alley encounter → end-of-slice.
+
+### Sleep is NOT a forced story trigger
+
+After the first bear recovery scene, Asmodeus gets optional daily activities. At bedtime the game asks:
+
+> **Will tomorrow be an ordinary day, or an exciting one?**
+
+- **An ordinary day:** advance the day counter, refresh three limited activities, restore a little HP and remain at the same point in the story. Do this as often as you want.
+- **An exciting day:** advance to the *next* authored chapter. Never happens unless the player deliberately chooses it.
+- **Not yet:** return to the activities for the current day, including repeatable hunting.
+
+Daily choices are tied to the POV and chapter; the first two camps use Asmodeus. Hunt is repeatable without costing a daily action, with persistent HP, simple EXP/level gains, and encounter pools that expand from boars/wolves to lynx. Rest, Care for Haniel, Explore, and Work on Camp use limited daily actions. Future arcs can replace these choices with Farm, Speak with Townsfolk, and other chapter-specific choices.
+
+Progress is saved at the interlude. **CONTINUE SAVED ADVENTURE** on the title screen resumes from the active interlude. The main **BEGIN THE CHAPTER** option still starts from the beginning.
+
+### Cliffside battle
+
+Part Six introduces Alric and Joren. **Wave 1:** Haniel and Alric versus two thugs, with Alric providing automatic ally attacks. **Wave 2:** Asmodeus and an injured Alric versus two thugs and Joren as the gang boss. Any win/loss eventually continues into the author's canonical alley resolution—no story character dies due to combat HP.
+
+### Install the author-provided artwork
+
+For Parts 1–6, download **`Paleverse_Love_Beyond_Parts_1_to_6_Art_Pack.zip`** from the related ChatGPT conversation. It includes **19 optimized illustrations** from the user's audiobook archive, including the 11 opening images plus eight recovery, camp, and Cliffside images.
+
+Extract the archive's `assets/` folder into this project beside `project.godot` (preserving `assets/love_beyond/story_001/` and `story_002/`). It replaces the need to install the earlier art pack separately. The UI still runs without the added CGs, but temporary backgrounds are shown.
+
+### Code and content
+
+- `scripts/prototype_story_v4.gd` — new story+interlude UI and event routing
+- `scripts/core/interlude_engine.gd` — day progression, activities and simple EXP levels
+- `scripts/core/alley_wave_engine.gd` — ally-assisted, multi-enemy fight
+- `data/chapters/love_beyond_parts_4_6.json` — the author's next three parts
+- `data/interludes/love_beyond.json` — POV options, chapter gates and hunting pools
+- `data/characters/` — Alric, Joren, bandits, wild creatures
+- `tests/smoke_test.gd` — automated story traversal, daily loops, hunts and battle waves
+
+See [the new design notes](docs/love_beyond_interludes_parts_4_6.md) for canon and system rules.
+
+### Known next milestones
+
+- Manual visual playtesting in landscape and balancing (especially higher difficulties).
+- Replace temporary stat and color-flash combat effects with sprites/animation.
+- Make character expression variants for Haniel, Asmodeus, Alric and Joren.
+- Build later POV profiles such as Haniel, and story-unlocked farm/townsfolk choices.
+- Refine XP, inventory and growth once additional chapters establish progression pacing.
+
+---
+
+## Earlier Prototype 003 reference
 
 ## F5: Prototype 003 — Love Beyond (Parts 1–3)
 
