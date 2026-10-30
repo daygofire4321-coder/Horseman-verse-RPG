@@ -1,0 +1,19 @@
+{
+  "id": "forest_lynx",
+  "name": "Forest Lynx",
+  "series": "love_beyond",
+  "max_hp": 72,
+  "exp_reward": 22,
+  "ai": {
+    "damage": 14,
+    "damage_vs_guard": 5
+  },
+  "moves": [
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "damage",
+      "power": 14
+    }
+  ]
+}
