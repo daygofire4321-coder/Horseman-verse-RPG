@@ -3,7 +3,7 @@
   "series": "Love Beyond Heaven or Hell",
   "title": "The First Encounter",
   "subtitle": "High above the world",
-  "note": "Temporary prototype dialogue; replace with the author's canonical scene before release.",
+  "note": "Author-supplied thundercloud prologue dialogue, lightly copyedited. The fight and subsequent cave scene are still being connected.",
   "backgrounds": {
     "dialogue": "storm_duel.jpg",
     "battle": "storm_duel.jpg",
@@ -16,12 +16,8 @@
   "battle_intro": "Lightning flashes around the two airborne fighters. The duel begins!",
   "dialogue": [
     {
-      "speaker": "NARRATOR",
-      "text": "High above the world, an angel and a demon confront each other within a thundercloud."
-    },
-    {
       "speaker": "ASMODEUS",
-      "text": "You are awfully persistent for someone who doesn't speak."
+      "text": "Persistent angel bitch."
     },
     {
       "speaker": "HANIEL",
@@ -29,11 +25,23 @@
     },
     {
       "speaker": "NARRATOR",
-      "text": "Blue lightning rips through the clouds. Haniel raises her invisible bow as black ice forms around Asmodeus."
+      "text": "Lightning crackles and the earth shakes as the two otherworldly beings face each other."
     },
     {
       "speaker": "ASMODEUS",
-      "text": "Fine. Let's settle this."
+      "text": "Too bad I have to kill ya. You're kinda cute, but the big guys have spoken, ya know."
+    },
+    {
+      "speaker": "HANIEL",
+      "text": "*Glares.*"
+    },
+    {
+      "speaker": "NARRATOR",
+      "text": "The mute angel raises her bow, signaling her response."
+    },
+    {
+      "speaker": "ASMODEUS",
+      "text": "Well, orders are orders."
     }
   ]
 }
