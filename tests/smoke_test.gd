@@ -54,6 +54,48 @@ func _run_tests() -> void:
 		_expect(not bool(v2.get("busy_animating")), "Black Ice VFX should release input")
 		v2.queue_free()
 
+	# Story arc: prologue -> cave -> gathering -> bear -> authored rescue.
+	var story_resource: Resource = load("res://scenes/prototype_story.tscn")
+	_expect(story_resource is PackedScene, "Story opening scene should load")
+	if story_resource is PackedScene:
+		var story: Node = (story_resource as PackedScene).instantiate()
+		root.add_child(story)
+		_expect(story.is_inside_tree(), "Story scene must instantiate")
+		story.call("_start_dialogue")
+		story.call("_result", false)
+		story.call("_begin_story_events")
+		var events: Array = story.get("story_events")
+		_expect(events.size() >= 65, "Story arc should contain all three parts")
+		var found_gather := false
+		var found_bear := false
+		for step in range(120):
+			var at: int = int(story.get("event_index"))
+			if at >= events.size():
+				break
+			var event: Dictionary = events[at]
+			var kind := str(event.get("kind", "line"))
+			if kind == "gather":
+				found_gather = true
+				story.call("_collect_branch")
+				story.call("_collect_branch")
+				story.call("_collect_branch")
+				_expect(int(story.get("gathering_count")) == 3, "Branch collection should finish")
+				story.call("_advance_event")
+			elif kind == "battle":
+				found_bear = true
+				for hit in range(5):
+					if not bool(story.get("bear_mode")):
+						break
+					story.call("_bear_turn", "black_ice")
+					await create_timer(0.82).timeout
+				_expect(not bool(story.get("bear_mode")), "Bear battle should trigger rescue at 50% HP")
+			else:
+				story.call("_advance_event")
+		_expect(found_gather, "Story should include the branch gathering interaction")
+		_expect(found_bear, "Story should include the bear battle")
+		_expect(int(story.get("event_index")) >= events.size(), "Story should reach the end")
+		story.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
