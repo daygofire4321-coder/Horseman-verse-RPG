@@ -7,7 +7,7 @@
       "pov": "asmodeus",
       "location": "Forest Camp",
       "day_actions": 3,
-      "scene": "haniel_collapse.jpg",
+      "scene": "haniel_water.jpg",
       "next_story": "part_five",
       "hunting_pool": [
         "wild_boar",
@@ -40,7 +40,7 @@
       "pov": "asmodeus",
       "location": "Forest Camp",
       "day_actions": 3,
-      "scene": "campfire.jpg",
+      "scene": "camp_hiderack.jpg",
       "next_story": "part_six",
       "hunting_pool": [
         "wild_boar",
