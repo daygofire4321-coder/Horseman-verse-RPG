@@ -32,6 +32,28 @@ func _run_tests() -> void:
 		_expect(view.is_inside_tree(), "Modular prototype should instantiate")
 		view.queue_free()
 
+	# Prototype 002 is an independent scene. Verify its menu, navigation,
+	# both skill VFX paths and turn unlock after the animations finish.
+	var v2_resource: Resource = load("res://scenes/prototype_v2.tscn")
+	_expect(v2_resource is PackedScene, "Prototype 002 scene must load")
+	if v2_resource is PackedScene:
+		var v2: Node = (v2_resource as PackedScene).instantiate()
+		root.add_child(v2)
+		_expect(v2.is_inside_tree(), "Prototype 002 must instantiate")
+		_expect(v2.get("frontend") != null, "Main menu must be created")
+		v2.call("_start_dialogue")
+		v2.call("_choose_fighter")
+		v2.call("_show_difficulty_picker", "Haniel", "Asmodeus")
+		v2.call("_start_battle", "Haniel", "Asmodeus")
+		v2.call("_turn", "divine_arrow")
+		await create_timer(1.15).timeout
+		_expect(not bool(v2.get("busy_animating")), "Divine Arrow VFX should release input")
+		v2.call("_start_battle", "Asmodeus", "Haniel")
+		v2.call("_turn", "black_ice")
+		await create_timer(1.15).timeout
+		_expect(not bool(v2.get("busy_animating")), "Black Ice VFX should release input")
+		v2.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
