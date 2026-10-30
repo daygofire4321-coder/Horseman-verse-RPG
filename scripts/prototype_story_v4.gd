@@ -188,7 +188,8 @@ func _draw_interlude() -> void:
 	_ensure_layers()
 	_clear_frontend()
 	frontend.show()
-	boss_hud.hide() if is_instance_valid(boss_hud) else null
+	if is_instance_valid(boss_hud):
+		boss_hud.hide()
 	portraits.hide()
 	_set_story_background(str(current_profile.get("scene", "campfire.jpg")))
 	var content: VBoxContainer = _front_panel()
