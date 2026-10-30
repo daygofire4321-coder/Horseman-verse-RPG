@@ -116,6 +116,6 @@ func take_turn(move_id: String) -> Dictionary:
 			player_hp = maxi(0, player_hp - dmg)
 			logs.append("%s strikes %s (%d damage)." % [str(foe["name"]), str(player.get("name", "hero")), dmg])
 
-	var lost: bool = player_hp <= 0 and alric_hp <= 0
-	# A story loss does not block the next scripted scene.
+	var lost: bool = player_hp <= 0 or alric_hp <= 0
+	# If either active fighter falls, yield to the scripted scene instead of allowing a fallen character to act.
 	return {"finished":lost, "won":not lost, "message":"\n".join(logs)}
