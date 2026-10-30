@@ -1,0 +1,19 @@
+{
+  "id": "alric",
+  "name": "Alric",
+  "series": "love_beyond",
+  "variant": "town_smith",
+  "max_hp": 110,
+  "moves": [
+    {
+      "id": "hammer",
+      "name": "Hammer",
+      "kind": "damage",
+      "power": 16
+    }
+  ],
+  "ai": {
+    "damage": 12,
+    "damage_vs_guard": 4
+  }
+}
