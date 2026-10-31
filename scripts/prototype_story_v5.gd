@@ -25,7 +25,7 @@ func _hide_pixel_stage() -> void:
 	if is_instance_valid(pixel_layer):
 		pixel_layer.hide()
 	stage_area = ""
-	scene_image.texture_filter = Control.TEXTURE_FILTER_INHERIT
+	scene_image.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
 
 
 func _show_menu() -> void:
@@ -142,7 +142,7 @@ func _set_area_background(area_id: String) -> void:
 			scene_image.texture = load(AREA_ART_ROOT + file_name)
 			scene_image.texture_filter = Control.TEXTURE_FILTER_NEAREST
 		else:
-			scene_image.texture_filter = Control.TEXTURE_FILTER_INHERIT
+			scene_image.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
 			var fallback: String = str(area.get("fallback", "forest_hunt.jpg"))
 			if area_id == "thundercloud":
 				_background(fallback)
