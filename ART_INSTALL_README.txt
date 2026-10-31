@@ -1,0 +1,1 @@
+Love Beyond Parts 1-6 artwork. Extract the assets/ directory into your GitHub Desktop clone of Horseman-verse-RPG, alongside project.godot. This archive includes the original 11 story_001 JPEGs and 8 new story_002 JPEGs. No need to extract the older pack separately.
