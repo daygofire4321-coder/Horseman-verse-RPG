@@ -42,6 +42,17 @@ Extract the archive's `assets/` folder into this project beside `project.godot` 
 
 See [the new design notes](docs/love_beyond_interludes_parts_4_6.md) for canon and system rules.
 
+### Development roadmap (planned, not yet implemented)
+
+1. **Battle Visual Pass 1 — next:** consistent pixel-art battlers for Haniel, Asmodeus, Alric, Joren and wildlife; battlefield backgrounds based on the actual encounter area (thunderclouds, forest, bear encounter, Cliffside alley). Keep the illustrated visual-novel cutscenes.
+2. **Story presentation pass:** correct any illustration ordering, add character expressions, refine dialogue layout, and improve battle animation.
+3. **Hunger and food survival — later:** both Haniel and Asmodeus have a food/hunger need tied to ordinary days. Hunts provide food as well as EXP; eventually farming, buying, preparing or sharing meals can also contribute. Balance so choosing extra ordinary days is meaningful without forcing the next story beat or creating an unwinnable starvation loop. Determine thresholds and rest/HP effects only when implementing.
+4. **Expanded exploration event pool — later:** replace today's deterministic +1 supplies with a wide variety of region-, character-, and story-stage-specific optional encounters: discoveries, resource finds, wildlife, bandits, travelers, and relationship scenes. Mix peaceful and combat events, and allow authored rare events. Do not change canon plot events or auto-advance the story without the player's choice.
+5. **Broader chapter / POV content:** Haniel-specific interludes; later Asmodeus activities such as Farm and Speak with Townsfolk; new hunt pools unlocked through recovery and geography. Avoid automatic scaling that removes the feeling of character progression.
+6. **Deeper progression and balancing:** inventory, food economy, EXP curves, traits, skills, equipment, and eventually landscape/mobile playtesting.
+
+**Story pacing rule remains permanent:** Sleeping and selecting **An ordinary day** must never advance the authored chapter. Only **An exciting day** advances. Daily needs and random exploration events must not override that decision.
+
 ### Known next milestones
 
 - Manual visual playtesting in landscape and balancing (especially higher difficulties).
