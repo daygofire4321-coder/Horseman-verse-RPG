@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "asset_root": "res://assets/love_beyond/pixel_battles/",
+  "areas": [
+    {
+      "id": "thundercloud",
+      "label": "Thundercloud Sky",
+      "background": "thundercloud.png",
+      "fallback": "storm_duel.jpg",
+      "mood": "The First Encounter"
+    },
+    {
+      "id": "forest_clearing",
+      "label": "Forest Clearing",
+      "background": "forest_clearing.png",
+      "fallback": "forest_hunt.jpg",
+      "mood": "Hunting Grounds"
+    },
+    {
+      "id": "forest_camp",
+      "label": "Forest Camp",
+      "background": "forest_camp.png",
+      "fallback": "campfire.jpg",
+      "mood": "Forest Edge"
+    },
+    {
+      "id": "cliffside_alley",
+      "label": "Cliffside Alley",
+      "background": "cliffside_alley.png",
+      "fallback": "cliffside_alley.jpg",
+      "mood": "The Nature of Man and Demons"
+    }
+  ],
+  "sprites": {
+    "asmodeus": "asmodeus.png",
+    "wild_boar": "wild_boar.png"
+  },
+  "routes": {
+    "prologue": "thundercloud",
+    "hunt": "forest_clearing",
+    "bear": "forest_clearing",
+    "alley": "cliffside_alley"
+  },
+  "notes": "Battle visuals are independent of illustrated story CGs. Add sprite images to this map as they are created. All battle art assets are optional and have a fallback."
+}
