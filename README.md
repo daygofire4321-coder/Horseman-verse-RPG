@@ -1,5 +1,29 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 005 — Battle Visual Pass 1
+
+The default Godot scene is now `scenes/prototype_story_v5.tscn`. **All six Love Beyond story parts, both interludes, EXP and save data remain intact.** Prototype 004 is preserved in `scenes/prototype_story_v4.tscn`.
+
+**New:** A pixel-art combat stage with backgrounds that automatically change by encounter (thundercloud duel, forest hunts, story bear, Cliffside alley). An original, weapon-free Asmodeus sprite and Wild Boar enemy sprite are provided in a separate art pack. The non-pixel visual novel scenes keep the existing anime illustrations.
+
+To test instantly without replaying the story, choose **PIXEL BATTLE PREVIEW — ASMODEUS VS BOAR** on the title screen. The preview does not affect campaign saves or EXP.
+
+### Required for the new pixel graphics
+
+Download **`Paleverse_Pixel_Battle_Pass_01.zip`** from our ChatGPT conversation. Extract the ZIP **into the project root beside `project.godot`**, not into `assets/`, which would create an extra folder.
+
+The resulting files will live under:
+
+`assets/love_beyond/pixel_battles/`
+
+The ZIP includes four illustrated pixel-art combat environments and two transparent character sprites. Without the ZIP, the new scene still works but shows the prior illustrations and labeled sprite placeholders. The previous Parts 1–6 art pack still supplies the VN backgrounds.
+
+Read [the visual pass guide](docs/battle_visual_pass_01.md) and [the area/sprite map](data/battle_areas.json).
+
+**Scope note:** Only Asmodeus and Wild Boar have finished first-pass sprite graphics; the other characters are placeholders. This version adds lightweight damage feedback but not full sprite-sheet animation.
+
+---
+
 ## F5: Prototype 004 — The first six Love Beyond parts and free-time days
 
 The new default scene is `scenes/prototype_story_v4.tscn`. Earlier versions are preserved.
