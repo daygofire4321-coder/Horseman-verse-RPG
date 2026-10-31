@@ -142,6 +142,7 @@ func _set_area_background(area_id: String) -> void:
 			scene_image.texture = load(AREA_ART_ROOT + file_name)
 			scene_image.texture_filter = Control.TEXTURE_FILTER_NEAREST
 		else:
+			scene_image.texture_filter = Control.TEXTURE_FILTER_INHERIT
 			var fallback: String = str(area.get("fallback", "forest_hunt.jpg"))
 			if area_id == "thundercloud":
 				_background(fallback)
@@ -191,7 +192,6 @@ func _draw_battle() -> void:
 func _hit_feedback(target: TextureRect) -> void:
 	if not is_instance_valid(target) or not target.visible:
 		return
-	var original_pos := target.position
 	var tween := create_tween()
 	tween.tween_property(target, "modulate", Color(1.0, 0.38, 0.48, 1.0), 0.09)
 	tween.tween_property(target, "modulate", Color.WHITE, 0.24)
