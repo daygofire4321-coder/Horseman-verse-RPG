@@ -235,6 +235,7 @@ func _run_tests() -> void:
 		_expect(not bool(pixel_view.get("battle_demo")), "Pixel preview should cleanly exit")
 		pixel_view.call("_start_battle", "Haniel", "Asmodeus")
 		_expect(str(pixel_view.get("stage_area")) == "thundercloud", "Opening duel uses storm sky")
+		pixel_view.call("_load_story_if_needed")
 		pixel_view.call("_enter_interlude", "after_part_four")
 		pixel_view.call("_start_hunt")
 		_expect(str(pixel_view.get("stage_area")) == "forest_clearing", "Repeatable hunts use forest")
