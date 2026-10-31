@@ -214,6 +214,36 @@ func _run_tests() -> void:
 	_expect(bool(loss_result.get("finished", false)), "Alley loss should finish rather than soft-lock")
 	_expect(not bool(loss_result.get("won", true)), "Alley loss should report its outcome")
 
+
+	# Prototype 005: optional pixel art, instant boar preview and area routing.
+	# The CI runner does not install the downloadable binary image pack: fallbacks
+	# must still instantiate, play and navigate without crashing.
+	var v5_resource: Resource = load("res://scenes/prototype_story_v5.tscn")
+	_expect(v5_resource is PackedScene, "Pixel battle scene must import")
+	if v5_resource is PackedScene:
+		var pixel_view: Node = (v5_resource as PackedScene).instantiate()
+		root.add_child(pixel_view)
+		_expect(pixel_view.is_inside_tree(), "Pixel battle scene should instantiate")
+		pixel_view.call("_start_battle_preview")
+		_expect(bool(pixel_view.get("battle_demo")), "Pixel preview should start")
+		_expect(str(pixel_view.get("stage_area")) == "forest_clearing", "Boar preview uses forest clearing")
+		var demo_duel: RefCounted = pixel_view.get("duel")
+		var original_enemy_hp: int = int(demo_duel.get("enemy_hp"))
+		pixel_view.call("_preview_turn", "black_ice")
+		_expect(int(demo_duel.get("enemy_hp")) < original_enemy_hp, "Pixel preview turn should damage wild boar")
+		pixel_view.call("_exit_preview")
+		_expect(not bool(pixel_view.get("battle_demo")), "Pixel preview should cleanly exit")
+		pixel_view.call("_start_battle", "Haniel", "Asmodeus")
+		_expect(str(pixel_view.get("stage_area")) == "thundercloud", "Opening duel uses storm sky")
+		pixel_view.call("_enter_interlude", "after_part_four")
+		pixel_view.call("_start_hunt")
+		_expect(str(pixel_view.get("stage_area")) == "forest_clearing", "Repeatable hunts use forest")
+		pixel_view.call("_start_alley_wave", 1, "cliffside_alley.jpg")
+		_expect(str(pixel_view.get("stage_area")) == "cliffside_alley", "Alley waves use Cliffside")
+		pixel_view.call("_start_bear_battle", {"image":"bear_boss.jpg"})
+		_expect(str(pixel_view.get("stage_area")) == "forest_clearing", "Bear encounter uses forest")
+		pixel_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
