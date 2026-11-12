@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 018 — Speaking Portraits & Facing Battle Sprites
+
+**NEW:** Four user-supplied expressions each for **Asmodeus, Haniel, Joren and Alric** appear during dialogue, dimming whoever isn't speaking. Story scenes use a two-sided portrait layer behind the readable text box. Signed/thought Haniel lines and Joren's initial "BLOND YOUTH" alias are recognized. Expressions persist through scenes and are reconstructed when skipping/resuming dialogue; missing art never breaks the story.
+
+**Battle update:** Normal encounters now have visible pixel battlers facing one another—**enemies left, allies right**—with small HP cards on their respective edges, a highlighted acting ally, and diamond markers over valid field targets. The JRPG command dock, party status strip and all existing battle mechanics remain. Authored boss/story fights are unchanged.
+
+**Update instructions:** GitHub Desktop → **Fetch origin → Pull origin** → extract the separate **Paleverse_Dialogue_Portraits_018.zip** from this conversation directly into your project folder (beside `project.godot`) → Godot **F5**. The scene is `scenes/prototype_story_v18.tscn`. The optimized pack has 16 transparent WebP files (~1.5 MB); the original user PNG names and emotions are respected. **No existing chapter illustrations or Part Six backgrounds were replaced.**
+
+[Read the detailed Prototype 018 guide](docs/dialogue_portraits_and_battle_018.md).
+
+---
+
+
 ## F5: Prototype 017 — Curated Story Art (Parts 1–5)
 
 The new default scene is `scenes/prototype_story_v17.tscn`. The author supplied **22 illustrations** in `1-6.zip` for Parts One through Five, plus a note specifying the order of the Part Three bear images. The story events now select the matching pictures during the cave truce, collecting firewood, bear confrontation/rescue, recovery, and camp-building scenes.
