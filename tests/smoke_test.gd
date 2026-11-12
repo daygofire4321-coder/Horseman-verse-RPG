@@ -1305,11 +1305,13 @@ func _run_tests() -> void:
 		portrait_view.call("_start_dialogue")
 		_expect(old_face_row != null and not old_face_row.visible,
 			"Old face boxes are hidden when the opening dialogue starts")
+		_expect(str(portrait_view.get("last_portrait_speaker")) == "asmodeus",
+			"The opening Asmodeus line still selects his new transparent portrait")
 		portrait_view.call("_advance_dialogue")
 		_expect(old_face_row != null and not old_face_row.visible,
 			"Legacy portrait boxes remain hidden when the speaker changes")
-		_expect(str(portrait_view.get("last_portrait_speaker")) == "asmodeus",
-			"The new transparent portrait layer still tracks Asmodeus speaking")
+		_expect(str(portrait_view.get("last_portrait_speaker")) == "haniel",
+			"Haniel's next line still selects her new transparent portrait")
 		portrait_view.call("_choose_fighter")
 		_expect(old_face_row != null and not old_face_row.visible,
 			"Fighter selection does not expose the duplicate legacy face row")
