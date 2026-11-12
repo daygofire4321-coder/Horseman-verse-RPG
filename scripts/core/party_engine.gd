@@ -35,7 +35,7 @@ func begin(save_data: Dictionary, config: Dictionary) -> void:
 			active.append(id)
 		else:
 			active.append("")
-	if active.count("asmodeus") == 0 and active.count("haniel") == 0 and not unlocked.is_empty():
+	if member_count() == 0 and not unlocked.is_empty():
 		active[0] = unlocked[0]
 	error_text = ""
 
@@ -76,7 +76,7 @@ func write_to(save_data: Dictionary) -> void:
 	var campaigns: Dictionary = save_data.get("campaigns", {})
 	var lb: Dictionary = campaigns.get("love_beyond", {})
 	# Preserve chapter checkpoints, EXP, free-time state and every unrelated key.
-	lb["party"] = {"active": active.duplicate(), "unlocked": Array(unlocked)}
+	lb["party"] = {"active": active.duplicate(), "unlocked": unlocked.duplicate()}
 	campaigns["love_beyond"] = lb
 	save_data["campaigns"] = campaigns
 
