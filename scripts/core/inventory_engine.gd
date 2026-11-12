@@ -8,6 +8,7 @@ const SLOTS_PER_CHARACTER := 3
 var catalog: Dictionary = {}
 var state: Dictionary = {}
 var error_text := ""
+var just_granted := false
 
 
 func begin(save_data: Dictionary, item_config: Dictionary) -> void:
@@ -16,9 +17,11 @@ func begin(save_data: Dictionary, item_config: Dictionary) -> void:
 	var lb: Dictionary = campaigns.get("love_beyond", {})
 	var existing: Dictionary = lb.get("inventory", {})
 	state = existing.duplicate(true)
+	just_granted = false
 	if not state.has("starter_granted"):
 		# First-use kit, never re-awarded after saving or reopening.
 		if existing.is_empty():
+			just_granted = true
 			state["backpack"] = catalog.get("starter_pack", {}).duplicate(true)
 			state["slots"] = {}
 		else:
