@@ -154,12 +154,25 @@ func _hide_speaking_portraits() -> void:
 
 func _show_dialogue() -> void:
 	super._show_dialogue()
+	# The old 235x220 face cards were built for Prototype 001. The new
+	# transparent speaker portraits replace them during opening dialogue.
+	# Keep those cards available for the interactive duel's HP display.
+	if is_instance_valid(portraits):
+		portraits.hide()
 	# The opening tutorial exists outside the six-part story-event stream.
 	var actor := _portrait_speaker_id(str(speaker.text))
 	var expressions := {"asmodeus":"neutral", "haniel":"neutral"}
 	if actor == "asmodeus" and line_index > 0:
 		expressions["asmodeus"] = "smile"
 	_present_speakers("asmodeus", "haniel", expressions, actor)
+
+
+func _choose_fighter() -> void:
+	# The fighter-selection UI already has its own intentional character
+	# choices, so don't also display the old oversized portrait row behind it.
+	super._choose_fighter()
+	if is_instance_valid(portraits):
+		portraits.hide()
 
 
 func _show_event() -> void:
@@ -202,6 +215,10 @@ func _party_panel(title_text: String, subtitle: String) -> VBoxContainer:
 
 func _draw_battle() -> void:
 	_hide_speaking_portraits()
+	# Prologue/quick-duel still uses the original HP bars and hit-effect
+	# anchors. Restore those only for that actual duel (not dialogue).
+	if is_instance_valid(portraits) and not bear_mode and not hunt_mode and not alley_mode and not battle_demo:
+		portraits.show()
 	super._draw_battle()
 
 
