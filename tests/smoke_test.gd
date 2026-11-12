@@ -453,6 +453,83 @@ func _run_tests() -> void:
 		_expect(int(environments.get("interlude_engine").state.get("actions_left", 0)) == 3, "Camp background does not consume daily actions")
 		environments.queue_free()
 
+
+	# Prototype 010: story-locked 3-slot party, original moves and save safety.
+	const PartySystem = preload("res://scripts/core/party_engine.gd")
+	var party_config: Dictionary = ContentStore.read_dictionary("res://data/party/love_beyond.json")
+	var sample_save: Dictionary = SaveStore.new_save()
+	sample_save["campaigns"] = {"love_beyond": {
+		"opening_parts_completed": 4,
+		"interludes": {"after_part_four": {"day": 7, "actions_left": 2}},
+		"progression": {"asmodeus": {"level": 3, "xp": 11, "hp": 77, "max_hp": 116, "supplies": 4}}
+	}}
+	var party = PartySystem.new()
+	party.begin(sample_save, party_config)
+	_expect(party.active.size() == 3, "Party has exactly three active slots")
+	_expect(party.active[0] == "asmodeus" and party.active[1] == "haniel" and party.active[2] == "", "Initial party has two protagonists and an empty slot")
+	_expect(not party.is_unlocked("alric"), "Alric cannot join before Part Six")
+	_expect(not party.assign(2, "alric"), "Locked characters cannot enter a party")
+	_expect(party.assign(0, "haniel"), "Moving an active member into another slot succeeds")
+	_expect(party.active[0] == "haniel" and party.active[1] == "asmodeus", "An existing ally is swapped, never duplicated")
+	_expect(party.assign(1, ""), "An active character can move into reserves")
+	_expect(not party.assign(0, ""), "Party management cannot remove the last remaining ally")
+	var asmo_sheet: Dictionary = party.sheet("asmodeus", sample_save)
+	_expect(int(asmo_sheet.get("level", 0)) == 3 and int(asmo_sheet.get("hp", 0)) == 77, "Character sheet uses persisted level and HP")
+	_expect(int(asmo_sheet.get("max_hp", 0)) == 116 and int(asmo_sheet.get("xp", 0)) == 11, "Character sheet retains HP and EXP progression")
+	_expect(asmo_sheet.get("moves", []).size() == 4, "Every member has four displayed move slots")
+	_expect(str(asmo_sheet.get("moves", [])[1].get("id", "")) == "black_ice", "Character moves come from the original battle data")
+	_expect(asmo_sheet.get("moves", [])[3].is_empty(), "Unlearned move slot stays empty rather than inventing skills")
+	_expect(int(asmo_sheet.get("item_slots", 0)) == 3, "Every sheet reserves three item slots")
+
+	party.write_to(sample_save)
+	var saved_lb: Dictionary = sample_save.get("campaigns", {}).get("love_beyond", {})
+	_expect(int(saved_lb.get("interludes", {}).get("after_part_four", {}).get("day", 0)) == 7, "Party changes preserve free-time checkpoints")
+	_expect(int(saved_lb.get("progression", {}).get("asmodeus", {}).get("xp", 0)) == 11, "Party changes preserve gained EXP")
+	var reopened_party = PartySystem.new()
+	reopened_party.begin(sample_save, party_config)
+	_expect(reopened_party.active == party.active, "Party slots survive save and reload")
+
+	saved_lb["opening_parts_completed"] = 6
+	sample_save["campaigns"]["love_beyond"] = saved_lb
+	reopened_party.begin(sample_save, party_config)
+	_expect(reopened_party.is_unlocked("alric"), "Part Six completion unlocks Alric for optional party use")
+	_expect(reopened_party.assign(2, "alric"), "Three-character party can include unlocked Alric")
+	_expect(reopened_party.member_count() <= 3 and reopened_party.active.count("alric") == 1, "Party may not exceed three members or duplicate allies")
+	var alric_sheet: Dictionary = reopened_party.sheet("alric", sample_save)
+	_expect(str(alric_sheet.get("ability", {}).get("name", "")) == "Friends and Family", "Alric has reserved Smithy discount passive")
+	_expect(not bool(alric_sheet.get("ability", {}).get("implemented", true)), "Planned shop discount is not falsely active")
+
+	var v10_resource: Resource = load("res://scenes/prototype_story_v10.tscn")
+	_expect(v10_resource is PackedScene, "Party management scene must load")
+	if v10_resource is PackedScene:
+		var party_view: Node = (v10_resource as PackedScene).instantiate()
+		root.add_child(party_view)
+		party_view.set("party_disable_disk_writes", true)
+		party_view.set("save_data", SaveStore.new_save())
+		party_view.call("_show_party_menu", false)
+		_expect(party_view.find_child("PartySlot_2", true, false) != null, "Empty third slot is visible in party menu")
+		var locked_button: Button = party_view.find_child("PartyMember_alric", true, false) as Button
+		_expect(locked_button != null and locked_button.disabled, "Locked Alric appears but is not selectable")
+		party_view.call("_edit_party_slot", 2)
+		var locked_choice: Button = party_view.find_child("PartyPick_alric", true, false) as Button
+		_expect(locked_choice != null and locked_choice.disabled, "Story gate applies to party selection UI")
+		party_view.call("_show_character_sheet", "asmodeus")
+		_expect(party_view.find_child("PartyCharacterSprite", true, false) != null, "Character sheet has sprite display")
+		party_view.set("save_data", sample_save)
+		party_view.call("_show_party_menu", false)
+		var available_alric: Button = party_view.find_child("PartyMember_alric", true, false) as Button
+		_expect(available_alric != null and not available_alric.disabled, "Old completed save unlocks Alric in menu")
+		party_view.call("_assign_party_member", 2, "alric")
+		var updated_party = party_view.get("party_engine")
+		_expect(updated_party.active[2] == "alric", "UI assignment changes active third slot")
+		_expect(party_view.get("save_data").get("campaigns", {}).get("love_beyond", {}).get("party", {}).get("active", [])[2] == "alric", "UI change is saved in campaign data")
+		party_view.call("_enter_interlude", "after_part_four")
+		party_view.call("_show_party_menu", true)
+		party_view.call("_close_party_menu")
+		_expect(bool(party_view.get("interlude_mode")), "Returning from party management preserves ordinary-day mode")
+		_expect(party_view.find_child("DailyActivitiesScroll", true, false) != null, "Party screen returns to functional daily routines")
+		party_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
