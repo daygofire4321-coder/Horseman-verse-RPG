@@ -1252,6 +1252,93 @@ func _run_tests() -> void:
 		_expect(str(curated_view.call("_curated_image_for", first_events.size() + 61)) == "", "Part Six never accidentally inherits an image from Part Five")
 		curated_view.queue_free()
 
+
+	# Prototype 018: named user portraits, scene-accurate speaker aliases,
+	# resumable expression state and on-field opposing battlers.
+	var portrait_catalog: Dictionary = ContentStore.read_dictionary("res://data/portraits/love_beyond.json")
+	var portrait_characters: Dictionary = portrait_catalog.get("characters", {})
+	_expect(portrait_characters.size() == 4, "Portrait registry contains the four provided characters")
+	for portrait_id in ["asmodeus", "haniel", "alric", "joren"]:
+		var definition: Dictionary = portrait_characters.get(portrait_id, {})
+		_expect(definition.get("expressions", {}).size() == 4, "Exactly four user-named expressions available for " + portrait_id)
+	_expect(portrait_characters.get("joren", {}).get("expressions", {}).has("villainsmirk"), "Joren's distinctive expression name remains untouched")
+	_expect(portrait_characters.get("joren", {}).get("default", "") == "sheepish", "Joren uses his supplied sheepish image when a neutral portrait isn't present")
+	_expect(portrait_characters.get("haniel", {}).get("aliases", []).has("HANIEL [SIGNING]"), "Signing is recognized as Haniel")
+	var story_with_portraits: Dictionary = ContentStore.read_dictionary("res://data/chapters/love_beyond_opening_story.json")
+	var story_with_portraits_later: Dictionary = ContentStore.read_dictionary("res://data/chapters/love_beyond_parts_4_6.json")
+	_expect(str(story_with_portraits.get("events", [])[2].get("portrait_expression", "")) == "smile", "Cave dialogue selects Asmodeus's smile")
+	_expect(str(story_with_portraits_later.get("events", [])[48].get("portrait_expression", "")) == "villainsmirk", "Joren starts with his assigned sly portrait")
+	_expect(str(story_with_portraits_later.get("events", [])[59].get("portrait_expression", "")) == "angry", "Alric's alley dialogue selects his angry portrait")
+
+	var portrait_scene: Resource = load("res://scenes/prototype_story_v18.tscn")
+	_expect(portrait_scene is PackedScene, "Prototype 018 portrait/facing combat scene imports")
+	if portrait_scene is PackedScene:
+		var portrait_view: Node = (portrait_scene as PackedScene).instantiate()
+		root.add_child(portrait_view)
+		portrait_view.set("party_disable_disk_writes", true)
+		_expect(portrait_view.find_child("DialoguePortraitLayer", true, false) != null, "Portraits have a separate dialogue overlay")
+		_expect(portrait_view.find_child("LeftSpeakingPortrait", true, false) != null, "Left speaker has an independent transparent picture")
+		_expect(portrait_view.find_child("RightSpeakingPortrait", true, false) != null, "Right speaker has an independent transparent picture")
+		_expect(portrait_view.call("_portrait_speaker_id", "HANIEL [SIGNING]") == "haniel", "Signing lines brighten Haniel, not narrator")
+		_expect(portrait_view.call("_portrait_speaker_id", "BLOND YOUTH") == "joren", "Youth alias displays Joren without changing authored name")
+		_expect(portrait_view.call("_portrait_speaker_id", "GANG LEADER") == "", "Unprovided thug portrait is not invented")
+		_expect(str(portrait_view.call("_portrait_resource", "joren", "villainsmirk")).ends_with("joren/villainsmirk.webp"), "Portrait lookup references optimized pack by expression")
+		_expect(str(portrait_view.call("_portrait_resource", "haniel", "unknown")).ends_with("haniel/neutral.webp"), "Missing expression gracefully uses supplied default")
+		portrait_view.call("_load_story_if_needed")
+		var first_count: int = story_with_portraits.get("events", []).size()
+		var smile_state: Dictionary = portrait_view.call("_portrait_state_at", 2)
+		_expect(smile_state.get("active") == "asmodeus" and smile_state.get("expressions", {}).get("asmodeus") == "smile", "Resumable Part One cave scene highlights the right speaker and expression")
+		var signed_state: Dictionary = portrait_view.call("_portrait_state_at", first_count + 4)
+		_expect(signed_state.get("active") == "haniel", "A signed Part Four line activates Haniel's portrait")
+		var youth_state: Dictionary = portrait_view.call("_portrait_state_at", first_count + 48)
+		_expect(youth_state.get("right") == "joren" and youth_state.get("expressions", {}).get("joren") == "villainsmirk", "Part Six shows Joren only after his introduction")
+		var alric_state: Dictionary = portrait_view.call("_portrait_state_at", first_count + 59)
+		_expect(alric_state.get("left") == "alric" and alric_state.get("right") == "joren", "Alric appears next to Joren when he enters the scene")
+		var early_six: Dictionary = portrait_view.call("_portrait_state_at", first_count + 40)
+		_expect(early_six.get("left") == "asmodeus" and early_six.get("right") == "haniel", "Part Six resets the on-screen cast without changing chapter art")
+		portrait_view.call("_show_menu")
+		var overlay: Control = portrait_view.find_child("DialoguePortraitLayer", true, false) as Control
+		_expect(overlay != null and not overlay.visible, "Portraits don't cover the title/campaign selector")
+		portrait_view.set("story_mode", true)
+		portrait_view.set("event_index", 2)
+		portrait_view.call("_show_event")
+		_expect(str(portrait_view.get("last_portrait_speaker")) == "asmodeus", "Dialogue renderer identifies active Asmodeus on line 2")
+		portrait_view.call("_show_menu")
+		_expect(not overlay.visible, "Returning to menu hides speaking characters safely")
+
+		var portrait_test_save: Dictionary = SaveStore.new_save()
+		portrait_test_save["campaigns"] = {"love_beyond": {
+			"opening_parts_completed":6,
+			"party":{"active":["asmodeus","haniel","alric"]},
+			"training":{"asmodeus":{"learned":["black_ice_lance"],"points":0}}
+		}}
+		portrait_view.set("save_data", portrait_test_save)
+		var before_practice: Dictionary = portrait_test_save.duplicate(true)
+		portrait_view.call("_party_battle_start", "forest_clearing")
+		_expect(portrait_view.find_child("BattlefieldStage", true, false) != null, "Battle scene now has a dedicated opposing-sprites stage")
+		_expect(portrait_view.find_child("FacingBattlers", true, false) != null, "Battler sprite layer exists above environment")
+		var enemy_battler: PanelContainer = portrait_view.find_child("EnemyBattler_0", true, false) as PanelContainer
+		var ally_battler: PanelContainer = portrait_view.find_child("AllyBattler_0", true, false) as PanelContainer
+		_expect(enemy_battler != null and ally_battler != null, "Enemy and ally have distinct on-field sprite frames")
+		if enemy_battler != null and ally_battler != null:
+			_expect(enemy_battler.position.x < ally_battler.position.x, "Enemies are on the left and allies face them from the right")
+			_expect(enemy_battler.find_child("BattlerSprite_", true, false) == null, "Battler identities use named actual sprite IDs")
+			var enemy_image: TextureRect = enemy_battler.find_child("BattlerSprite_wild_boar", true, false) as TextureRect
+			var ally_image: TextureRect = ally_battler.find_child("BattlerSprite_haniel", true, false) as TextureRect
+			_expect(enemy_image != null and not enemy_image.flip_h, "Enemies face the party")
+			_expect(ally_image != null and ally_image.flip_h, "Allied sprites face toward opponents")
+		_expect(portrait_view.find_child("EnemyWing", true, false) != null, "Enemy HP information stays on enemy's side")
+		_expect(portrait_view.find_child("AllyWing", true, false) != null, "Ally HP information stays on party's side")
+		_expect(portrait_view.find_child("EnemyHpMini", true, false) != null, "Nonboss enemy bars remain small")
+		_expect(portrait_view.find_child("BattlePartyStatus", true, false) != null, "Three-party bottom HP strip remains")
+		_expect(portrait_view.find_child("CombatCommandDock", true, false) != null, "Attack/skill/item JRPG commands remain functional")
+		portrait_view.call("_party_battle_pick_target", "divine_arrow")
+		_expect(portrait_view.find_child("FieldTarget_0", true, false) != null, "Enemy sprites are marked with a visual target diamond")
+		_expect(portrait_view.find_child("PartyTarget_Enemy_1", true, false) != null, "Player still has two legal enemy target buttons")
+		portrait_view.call("_party_battle_use", "divine_arrow", 1)
+		_expect(portrait_view.get("save_data") == before_practice, "New sprite arrangement doesn't change combat saves")
+		portrait_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
