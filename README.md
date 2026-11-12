@@ -1,5 +1,20 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 014 — Cliffside Gold, Market and Outlaw Encounters
+
+**The default Godot scene is `scenes/prototype_story_v14.tscn`.** Update with GitHub Desktop → **Fetch origin → Pull origin**, then open Godot 4.7.2 and press **F5**. No extra PNG/ZIP packs needed.
+
+**After completing Part Six**, the scrollable title screen offers **CLIFFSIDE FREE TIME** and **CLIFFSIDE MARKET**. From Cliffside Free Time, choose either **Asmodeus — Explore** or **Haniel — Patrol**. Each has **four distinct repeatable thug/bandit scenarios**, real three-character battles, and **gold and EXP rewards on victory**, with one daily action spent at encounter start. Gold stays in a persistent wallet and wounded party HP carries over. Retreat/defeat pays nothing; a victory cannot pay twice. Real battle food is permanently consumed (unlike practice battles).
+
+**Cliffside Market:** Visit the Provisioner for Travel Rations/Herbal Bread or the Outfitter for Bracers, Iron Charm, Bowstring Wrap and Black Ice Focus. Purchase using earned gold; sell unequipped backpack items for half their value. There is no market access before Part Six, and **Alric's Smithy + his 20% Friends and Family discount are still planned for Prototype 015**.
+
+**Story and saves:** Unlimited ordinary days never advance the story; the old forest recovery routines remain unchanged. The authored Joren/Cliffside fights, character unlocks, training and older saves still work. New Cliffside days do **not** create story-cursor checkpoints.
+
+See [full Prototype 014 playtest instructions, eight encounters and prices](docs/cliffside_economy_014.md).
+
+---
+
+
 ## F5: Prototype 013 — Inventory and Equipment
 
 The default scene is `scenes/prototype_story_v13.tscn`. **No new art pack is required.** GitHub Desktop → **Fetch origin → Pull origin**, then Godot → **F5**.
