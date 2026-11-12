@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 009 — Seven author-made environment backgrounds
+
+The default scene is now `scenes/prototype_story_v9.tscn`. Download **Paleverse_Love_Beyond_Backgrounds_Pack_03.zip** from the conversation and extract directly into the repository root beside `project.godot`. Then **Fetch origin → Pull origin** and press **F5** in Godot.
+
+**New environments:** Thundercloud duel, bright forest for wildlife, deep forest for the bear, Cliffside alley, camp cave for daily routines, market street (preview), and Alric's smithy (preview). The optimized background files are WebP, 1280×720, around 2.6 MB total; the original PNGs are unchanged. Older battle PNGs continue working as fallback. Story dialogue, EXP, saves, sprites, and the **Skip Dialogue** feature are unchanged.
+
+**New title-menu option:** **VIEW SEVEN NEW LOCATIONS** lets you examine each environment without replaying chapters. The game loads each background from `data/battle_areas.json`; if the art ZIP isn't installed, you get a safe fallback instead of a crash.
+
+**Note:** Marketplace inventory, Alric's shop, the party discount, team management, training points and item slots are planned systems, not implemented by the environment pack. See [background integration and install steps](docs/background_pack_03.md).
+
+---
+
+
 ## F5: Prototype 008 — Skip dialogue safely
 
 The default scene is now `scenes/prototype_story_v8.tscn` (earlier prototypes remain for rollback).
