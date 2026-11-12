@@ -1,5 +1,24 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 019 — Love Beyond Parts Seven, Eight & Nine
+
+**NEW STORY:** The playable adaptation now continues beyond Part Six through **Part Seven: Michael**, **Part Eight: Explanation**, and **Part Nine: Understanding**, using the author-supplied manuscript and the 26-image **care package**. Dialogue includes Michael and Uriel's conversation in Heaven, the visit to Alric's home, Joren's apology, Toren's introduction, and Haniel's reflections about her brothers.
+
+**New portrait art:** Michael (4 expressions), Uriel (4), Toren (2), plus Toren's and wounded Joren's noncombat sprites. **14 new illustrations/backgrounds** cover the three story parts. These are supplied as a separate **Paleverse_Parts_7_to_9_Asset_Pack.zip** from this conversation, to merge into the Godot project's `assets` folder. The existing image loader supports Windows nested ZIP extraction and safely falls back when assets are missing.
+
+**Continue from old saves:** Complete Part Six, then use **Love Beyond → Continue Story: Part Seven**. Completing Seven or Eight unlocks the corresponding next story part without replaying the earlier chapters. The original Chapters 1–6, inventory, training, Cliffside market, gold, and combat remain intact.
+
+**New daily life after Part Nine:** Asmodeus can practice **gardening** with Joren and Toren, while Haniel can practice **woodworking**. Their two homestead routines track separate progress and allow unlimited ordinary days without advancing the written story. This establishes the foundation for future crop and crafting systems rather than introducing imaginary recipes.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin**, copy the ZIP's **assets** folder into the directory containing `project.godot`, then press **F5**. The default scene is `scenes/prototype_story_v19.tscn`.
+
+**Art check:** Love Beyond → Practice & Extras → CHECK INSTALLED STORY & PORTRAIT ART should show **36/36 curated backgrounds** and **26/26 portraits** once every previous and new art pack is installed.
+
+[Full Part 7–9 story, asset and playtest guide](docs/parts_7_9_and_assets_019.md).
+
+---
+
+
 ## Art fix — Portraits or Chapter Backgrounds Not Showing
 
 **Pulling code does not install the separate image ZIPs.** Download **Paleverse_Story_Art_and_Portraits_Fix.zip** from this ChatGPT conversation. It combines all **22 curated story backgrounds** and **16 dialogue expression portraits** into one small asset pack.
