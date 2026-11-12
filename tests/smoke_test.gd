@@ -274,11 +274,28 @@ func _run_tests() -> void:
 	if v7_resource is PackedScene:
 		var fixed_view: Node = (v7_resource as PackedScene).instantiate()
 		root.add_child(fixed_view)
-		fixed_view.set("save_data", SaveStore.new_save())
+		# Regression from the player's Day 7 screenshot: saved interlude had
+		# 3/3 actions yet the previous "complete" flag disabled ALL buttons.
+		# Reentering that interlude must unlock actions without losing progress.
+		var completed_save: Dictionary = SaveStore.new_save()
+		completed_save["campaigns"] = {"love_beyond": {
+			"interludes": {"after_part_four": {
+				"day": 7, "actions_left": 3, "complete": true,
+				"hp": 100, "max_hp": 100, "xp": 12, "level": 1, "supplies": 1
+			}},
+			"progression": {"asmodeus": {
+				"hp": 100, "max_hp": 100, "xp": 12, "level": 1, "supplies": 1
+			}}
+		}}
+		fixed_view.set("save_data", completed_save)
 		fixed_view.call("_load_story_if_needed")
 		fixed_view.call("_enter_interlude", "after_part_four")
 		var free_time = fixed_view.get("interlude_engine")
-		_expect(int(free_time.state["actions_left"]) == 3, "Fresh day offers 3 activities")
+		_expect(int(free_time.state["actions_left"]) == 3, "Restored Day 7 offers 3 activities")
+		_expect(int(free_time.state["day"]) == 7, "Fix must preserve the player's day")
+		_expect(int(free_time.state["xp"]) == 12 and int(free_time.state["supplies"]) == 1, "Fix keeps earned EXP and supplies")
+		_expect(not bool(free_time.state["complete"]), "Entering a saved completed interlude clears old lockout")
+		_expect(free_time.can_spend_action() and free_time.may_hunt(), "Saved completed interlude re-enables daily actions and hunting")
 		var daily_scroll: ScrollContainer = fixed_view.find_child("DailyActivitiesScroll", true, false) as ScrollContainer
 		_expect(daily_scroll != null, "Daily activity panel scrolls on small displays")
 		for item in ["rest", "care", "explore"]:
@@ -297,6 +314,13 @@ func _run_tests() -> void:
 			refresh.pressed.emit()
 		_expect(int(free_time.state["actions_left"]) == 3, "Ordinary day refreshes all three actions")
 		_expect(int(fixed_view.get("event_index")) == index_before, "Ordinary day never advances story")
+		# A formerly completed interlude must also recover by sleeping normally.
+		free_time.state["complete"] = true
+		free_time.ordinary_day()
+		_expect(not bool(free_time.state["complete"]), "Ordinary day clears a stale completed flag")
+		_expect(free_time.can_spend_action() and free_time.may_hunt(), "Ordinary morning restores Hunt, Rest, Care and Explore")
+		fixed_view.call("_save_interlude")
+		fixed_view.call("_draw_interlude")
 		fixed_view.call("_show_menu")
 		fixed_view.call("_resume_adventure")
 		var resumed_time = fixed_view.get("interlude_engine")
