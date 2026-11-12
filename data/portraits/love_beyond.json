@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "asset_root": "res://assets/love_beyond/dialogue_portraits/",
+  "characters": {
+    "asmodeus": {
+      "default": "neutral",
+      "default_side": "left",
+      "aliases": [
+        "ASMODEUS"
+      ],
+      "expressions": {
+        "mad": "asmodeus/mad.webp",
+        "neutral": "asmodeus/neutral.webp",
+        "sad": "asmodeus/sad.webp",
+        "smile": "asmodeus/smile.webp"
+      }
+    },
+    "haniel": {
+      "default": "neutral",
+      "default_side": "right",
+      "aliases": [
+        "HANIEL",
+        "HANIEL [SIGNING]",
+        "HANIEL [THOUGHT]"
+      ],
+      "expressions": {
+        "mad": "haniel/mad.webp",
+        "neutral": "haniel/neutral.webp",
+        "sad": "haniel/sad.webp",
+        "smile": "haniel/smile.webp"
+      }
+    },
+    "joren": {
+      "default": "sheepish",
+      "default_side": "right",
+      "aliases": [
+        "BLOND YOUTH",
+        "JOREN"
+      ],
+      "expressions": {
+        "mad": "joren/mad.webp",
+        "sheepish": "joren/sheepish.webp",
+        "smile": "joren/smile.webp",
+        "villainsmirk": "joren/villainsmirk.webp"
+      }
+    },
+    "alric": {
+      "default": "neutral",
+      "default_side": "left",
+      "aliases": [
+        "ALRIC"
+      ],
+      "expressions": {
+        "angry": "alric/angry.webp",
+        "neutral": "alric/neutral.webp",
+        "sad": "alric/sad.webp",
+        "smile": "alric/smile.webp"
+      }
+    }
+  },
+  "notes": "All names retained exactly as supplied in the 16-PNG zip; Asmo folder standardized to 'asmodeus'. Speaker aliases support signed/thought dialogue and the initially unnamed Blond Youth. Missing sprites fall back to no portrait without blocking text. Chapter illustration placements and Part Six artwork are untouched."
+}
