@@ -20,8 +20,8 @@
       },
       "ability": {
         "name": "Black Ice Affinity",
-        "description": "Unique passive under design. No combat bonus yet.",
-        "implemented": false
+        "description": "In the optional party-battle test, Asmodeus deals +2 damage with black ice moves.",
+        "implemented": true
       }
     },
     "haniel": {
@@ -34,8 +34,8 @@
       },
       "ability": {
         "name": "Angelic Grace",
-        "description": "Unique passive under design. No combat bonus yet.",
-        "implemented": false
+        "description": "In the optional party-battle test, Haniel restores +3 HP with healing moves.",
+        "implemented": true
       }
     },
     "alric": {
@@ -48,10 +48,10 @@
       },
       "ability": {
         "name": "Friends and Family",
-        "description": "Planned: 20% off at Alric's smithy while he is in your active party. Shop system is not live yet.",
+        "description": "Planned: 20% off at Alric's smithy when he is in the active party. No combat bonus in the current test.",
         "implemented": false
       }
     }
   },
-  "notes": "Prototype numeric ATK/DEF/SPD are for character-sheet layout and balance testing only; current scripted combat still uses its existing move/HP logic. No story-dependent character is recruited before their unlock milestone. Training points and 3 item slots will become interactive in later versions."
+  "notes": "Party preview stats now affect the optional party-battle test (ATK damage, DEF damage reduction, SPD turn order), not the canonical story fights. Asmodeus/Haniel practice passives are provisional; Alric discount awaits shops. Party and training saves remain compatible."
 }
