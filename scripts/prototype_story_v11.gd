@@ -110,7 +110,7 @@ func _show_character_sheet(id: String) -> void:
 	for child in content.get_children():
 		if child is Label and child.text.begins_with("TRAINING / ITEMS COMING NEXT"):
 			child.text = "Three item slots are reserved for the coming inventory and shop systems."
-	var target := training_engine.next_move(id, _completed_story_part())
+	var target: Dictionary = training_engine.next_move(id, _completed_story_part())
 	var known: Array = training_engine.learned(id)
 	var train_title := _front_label(content, "MOVE TRAINING", 19)
 	train_title.name = "CharacterTrainingHeader"
