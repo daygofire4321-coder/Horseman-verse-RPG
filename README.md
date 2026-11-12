@@ -1,5 +1,20 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 010 — Three-person party and character sheets
+
+**New playable menu:** **PARTY & CHARACTER SHEETS** on the title screen (now scrollable), and also inside the ordinary-day menu. Inspect a Pokemon/Digimon-inspired sheet for each unlocked character, and fill, swap or clear any of three active slots. The party is saved to the existing Love Beyond campaign save without changing story checkpoints, EXP, ordinary days or prior settings. Existing save files remain compatible.
+
+**Roster unlocks:** Asmodeus and Haniel start available. Alric can join an optional active party once **Part Six** is completed. Existing saves already past that encounter unlock him automatically when the Party menu is opened.
+
+**What works now:** 3-slot party editor, saved party selection, character stats/level/HP/EXP sheet, actual current move list shown in 4 move slots, unique-ability display, and three future item-slot placeholders. Artwork uses the already installed character sprite pack.
+
+**What is not yet implemented:** Party changes **do not alter the scripted story battles**; ATK/DEF/SPD are preliminary sheet stats; new training, move unlocks, equipment, food, actual shops and Alric's discount still need their systems. The 20% `Friends and Family` smithy discount is noted as a future passive, not falsely applied.
+
+**To play:** GitHub Desktop → **Fetch origin → Pull origin**, then Godot → **F5**. No new ZIPs or images are required for this code update. See [full party-system guide](docs/party_system_010.md).
+
+---
+
+
 ## F5: Prototype 009 — Seven author-made environment backgrounds
 
 The default scene is now `scenes/prototype_story_v9.tscn`. Download **Paleverse_Love_Beyond_Backgrounds_Pack_03.zip** from the conversation and extract directly into the repository root beside `project.godot`. Then **Fetch origin → Pull origin** and press **F5** in Godot.
