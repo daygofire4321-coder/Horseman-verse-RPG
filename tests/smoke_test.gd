@@ -411,6 +411,48 @@ func _run_tests() -> void:
 			_expect(int(chapter_skip.get("wave_engine").wave) == 1, "Skipping dialogue does not skip combat waves")
 		chapter_skip.queue_free()
 
+
+	# Prototype 009: the new environment pack is optional on CI. When a
+	# background is absent, story/battle logic must still run normally.
+	var v9_resource: Resource = load("res://scenes/prototype_story_v9.tscn")
+	_expect(v9_resource is PackedScene, "Environment scene must load")
+	if v9_resource is PackedScene:
+		var environments: Node = (v9_resource as PackedScene).instantiate()
+		root.add_child(environments)
+		environments.set("save_data", SaveStore.new_save())
+		environments.call("_read_pixel_data")
+		var background_config: Dictionary = environments.get("pixel_data")
+		var area_ids: Array = []
+		for definition in background_config.get("areas", []):
+			area_ids.append(str(definition.get("id", "")))
+			_expect(str(definition.get("background", "")).ends_with(".webp"), "Location maps to optimized WebP")
+		for mandatory in ["thundercloud", "forest_clearing", "bear_forest", "cliffside_alley", "forest_camp", "market_street", "alric_smithy"]:
+			_expect(area_ids.has(mandatory), "Background ID is mapped: " + mandatory)
+		var routes: Dictionary = background_config.get("routes", {})
+		_expect(str(routes.get("bear", "")) == "bear_forest", "The bear has its own forest")
+		_expect(str(routes.get("market", "")) == "market_street", "Market background reserved for future shop")
+		_expect(str(routes.get("smithy", "")) == "alric_smithy", "Alric's workshop background reserved")
+
+		environments.call("_show_location_gallery", 0)
+		_expect(environments.find_child("LocationNext", true, false) != null, "Location gallery has next button")
+		environments.call("_show_location_gallery", 6)
+		_expect(environments.find_child("LocationPrevious", true, false) != null, "Location gallery has previous button")
+		_expect(environments.find_child("LocationBack", true, false) != null, "Location gallery can return to title")
+		environments.call("_show_menu")
+		environments.call("_start_battle", "Asmodeus", "Haniel")
+		_expect(str(environments.get("stage_area")) == "thundercloud", "Opening duel uses supplied storm background route")
+		environments.call("_start_battle_preview")
+		_expect(str(environments.get("stage_area")) == "forest_clearing", "Boar uses daylight forest")
+		environments.call("_exit_preview")
+		environments.call("_start_bear_battle", {"image":"bear_boss.jpg"})
+		_expect(str(environments.get("stage_area")) == "bear_forest", "Bear boss uses dark forest, not hunting clearing")
+		environments.call("_show_menu")
+		environments.call("_load_story_if_needed")
+		environments.call("_enter_interlude", "after_part_four")
+		_expect(bool(environments.get("interlude_mode")), "Camp routines remain available with environment art")
+		_expect(int(environments.get("interlude_engine").state.get("actions_left", 0)) == 3, "Camp background does not consume daily actions")
+		environments.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
