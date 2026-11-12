@@ -629,6 +629,112 @@ func _run_tests() -> void:
 		_expect(training_view.get("save_data").get("campaigns", {}).get("love_beyond", {}).get("training", {}).get("asmodeus", {}).get("learned", []).has("black_ice_lance"), "Move unlock is global across separate interludes")
 		training_view.queue_free()
 
+
+	# Prototype 012: independent 3-person combat, target selection, trained
+	# techniques, passives, speed turns and turn-cost bench substitution.
+	const TeamCombat = preload("res://scripts/core/party_battle_engine.gd")
+	var battle_save: Dictionary = SaveStore.new_save()
+	battle_save["campaigns"] = {"love_beyond": {
+		"opening_parts_completed": 6,
+		"party": {"active":["asmodeus", "haniel", "alric"]},
+		"training": {"asmodeus": {"learned":["black_ice_lance"], "points":0}},
+		"progression": {"asmodeus": {"level": 3, "xp": 14, "hp": 112, "max_hp": 116}}
+	}}
+	var combat_party = PartySystem.new()
+	combat_party.begin(battle_save, party_config)
+	var battle_sheets: Dictionary = {}
+	for id in combat_party.unlocked:
+		battle_sheets[id] = combat_party.sheet(id, battle_save)
+	var team = TeamCombat.new()
+	team.setup(["asmodeus", "haniel", "alric"], [], battle_sheets, ["wild_boar", "gray_wolf"])
+	_expect(team.allies.size() == 3 and team.enemies.size() == 2, "Optional battle allows three party members versus two opponents")
+	_expect(str(team.current_actor().get("id", "")) == "haniel", "Speed determines starting ally turn")
+	_expect(team.targets("heal").size() == 3, "Healing targets a living team member")
+	_expect(team.targets("divine_arrow").size() == 2, "Damage moves target enemies, not allies")
+	var untouched_enemy: int = int(team.enemies[0].get("hp", 0))
+	var failed_target: Dictionary = team.use_move("divine_arrow", 7)
+	_expect(not bool(failed_target.get("ok", true)), "Invalid target cannot resolve a move")
+	_expect(int(team.enemies[0].get("hp", 0)) == untouched_enemy and str(team.current_actor().get("id", "")) == "haniel", "Bad targets do not cost turns or damage enemies")
+	team.allies[0]["hp"] = 45
+	var healer: Dictionary = team.use_move("heal", 0)
+	_expect(bool(healer.get("ok", false)) and int(team.allies[0]["hp"]) == 68, "Haniel can choose Asmodeus to heal; Angelic Grace adds 3 HP")
+	_expect(str(team.current_actor().get("id", "")) == "asmodeus", "Next fastest party member receives a turn")
+	_expect(team.current_moves().any(func(m): return str(m.get("id", "")) == "black_ice_lance"), "Learned Black Ice Lance appears as a real attack")
+	var ice: Dictionary = team.use_move("black_ice_lance", 1)
+	_expect(bool(ice.get("ok", false)) and int(team.enemies[1]["hp"]) == 36, "Black Ice Lance deals prototype 27 power +2 ice affinity to chosen wolf")
+	_expect(str(team.current_actor().get("id", "")) == "alric", "Third teammate acts before enemy phase")
+	var hammer: Dictionary = team.use_move("hammer", 0)
+	_expect(bool(hammer.get("ok", false)), "Alric can use his original Hammer move")
+	_expect(int(team.round_number) == 2, "Enemies act only after living party members finish their turns")
+	_expect(int(team.allies[0]["hp"]) < 68, "Enemies retaliate and damage the party")
+	_expect(int(battle_save["campaigns"]["love_beyond"]["progression"]["asmodeus"]["xp"]) == 14, "Practice combat never modifies persistent EXP")
+
+	var solo = TeamCombat.new()
+	solo.setup(["asmodeus"], [], battle_sheets, ["wild_boar"])
+	var solo_before: int = int(solo.allies[0]["hp"])
+	_expect(solo.use_move("ice_guard").get("ok", false), "Guard action succeeds without target selection")
+	_expect(int(solo.allies[0]["hp"]) == solo_before - 4, "Guard halves incoming boar damage after Defense reduction")
+	_expect(not bool(solo.allies[0].get("guard", true)), "Guard ends at the enemy phase")
+	var replay = TeamCombat.new()
+	replay.setup(["asmodeus"], [], battle_sheets, ["wild_boar"])
+	var attack_ok: Dictionary = replay.use_move("black_ice_lance", 0)
+	_expect(bool(attack_ok.get("ok", false)) and int(replay.enemies[0]["hp"]) == 21, "Training move is usable independently of leveling")
+
+	var bench = TeamCombat.new()
+	bench.setup(["asmodeus", "haniel"], ["alric"], battle_sheets, ["wild_boar"])
+	_expect(str(bench.current_actor().get("id", "")) == "haniel", "Haniel starts faster than Asmodeus")
+	var switch_res: Dictionary = bench.switch_with_reserve("alric")
+	_expect(bool(switch_res.get("ok", false)), "Unselected Alric can switch in as a reserve after Part Six")
+	_expect(bench.allies.size() == 2 and bench.reserves.size() == 1, "Switch preserves the three-character party limit")
+	_expect(bench.allies[1]["id"] == "alric" and bench.reserves[0]["id"] == "haniel", "Switch exchanges the current fighter and reserve")
+	_expect(bench.round_number == 1 and str(bench.current_actor().get("id", "")) == "asmodeus", "Switch uses Haniel's turn rather than granting a free action")
+	var rejected_switch: Dictionary = bench.switch_with_reserve("unknown")
+	_expect(not bool(rejected_switch.get("ok", true)) and str(bench.current_actor().get("id", "")) == "asmodeus", "Invalid switch does not consume another turn")
+
+	var v12_scene: Resource = load("res://scenes/prototype_story_v12.tscn")
+	_expect(v12_scene is PackedScene, "Three-member battle scene imports")
+	if v12_scene is PackedScene:
+		var combat_view: Node = (v12_scene as PackedScene).instantiate()
+		root.add_child(combat_view)
+		combat_view.set("save_data", battle_save.duplicate(true))
+		combat_view.call("_party_battle_start", "forest_clearing")
+		_expect(bool(combat_view.get("party_battle_active")), "Party battle UI starts without story progression")
+		var shown_team = combat_view.get("party_battle")
+		_expect(shown_team.allies.size() == 3, "UI uses saved active three-member lineup")
+		var move_button: Button = combat_view.find_child("PartyMove_heal", true, false) as Button
+		_expect(move_button != null, "Haniel's heal is selectable in practice")
+		if move_button != null:
+			move_button.pressed.emit()
+		_expect(combat_view.find_child("PartyTarget_Ally_0", true, false) != null, "Heal opens target selection for another ally")
+		combat_view.call("_party_battle_use", "heal", 0)
+		_expect(str(shown_team.current_actor().get("id", "")) == "asmodeus", "UI advances after valid heal")
+		var ice_button: Button = combat_view.find_child("PartyMove_black_ice_lance", true, false) as Button
+		_expect(ice_button != null, "Unlocked trained move appears on real battle button")
+		if ice_button != null:
+			ice_button.pressed.emit()
+		_expect(combat_view.find_child("PartyTarget_Enemy_1", true, false) != null, "Player can target second enemy")
+		var original_wolf: int = int(shown_team.enemies[1]["hp"])
+		combat_view.call("_party_battle_use", "black_ice_lance", 1)
+		_expect(int(shown_team.enemies[1]["hp"]) < original_wolf, "UI Black Ice Lance hits chosen target")
+		combat_view.call("_show_menu")
+		_expect(not bool(combat_view.get("party_battle_active")), "Leaving practice cleanly restores the title")
+		_expect(combat_view.get("save_data") == battle_save, "Non-canon battle leaves saved EXP, training and HP untouched")
+		combat_view.set("save_data", battle_save.duplicate(true))
+		var mutable_campaign: Dictionary = combat_view.get("save_data").get("campaigns", {}).get("love_beyond", {})
+		mutable_campaign["party"] = {"active":["asmodeus", "haniel", ""]}
+		combat_view.get("save_data")["campaigns"]["love_beyond"] = mutable_campaign
+		combat_view.call("_party_battle_start", "cliffside_alley")
+		_expect(str(combat_view.get("party_battle_area")) == "cliffside_alley", "Cliffside practice uses the correct background")
+		var swap_available = combat_view.get("party_battle")
+		_expect(swap_available.reserves.size() == 1, "Alric is a reserve if left out of active lineup")
+		combat_view.call("_party_battle_switch_menu")
+		var swap_button: Button = combat_view.find_child("PartySwitch_alric", true, false) as Button
+		_expect(swap_button != null, "Party switch menu exposes unlocked reserve member")
+		if swap_button != null:
+			swap_button.pressed.emit()
+		_expect(swap_available.allies[1]["id"] == "alric", "UI switch consumes current actor's turn and substitutes Alric")
+		combat_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
