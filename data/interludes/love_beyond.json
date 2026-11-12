@@ -31,6 +31,12 @@
           "label": "Explore",
           "description": "Explore the wilderness and gather supplies",
           "limited": true
+        },
+        {
+          "id": "train",
+          "label": "Train",
+          "description": "Practice black ice to earn +10 move-training points (1 daily action)",
+          "limited": true
         }
       ]
     },
@@ -65,6 +71,12 @@
           "label": "Explore",
           "description": "Look around the forests near Cliffside",
           "limited": true
+        },
+        {
+          "id": "train",
+          "label": "Train",
+          "description": "Practice black ice to earn +10 move-training points (1 daily action)",
+          "limited": true
         }
       ]
     }
@@ -79,5 +91,6 @@
       "bandit_thug"
     ],
     "note": "Future zones are not active yet and weaker foes never scale automatically to player level."
-  }
+  },
+  "notes": "Train uses one daily action and adds move-training points independently of hunt EXP. The first forest-camp routines train their POV character Asmodeus while Haniel recovers. Advanced routines and character-specific sessions come later."
 }
