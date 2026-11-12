@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 011 — Train to unlock moves
+
+The default scene is now `scenes/prototype_story_v11.tscn`. On ordinary days after Parts Four and Five, Asmodeus now has a **Train** activity: spend **one of three daily actions** to earn **10 move-training points** on a technique's bar. At **30 points**, the first prototype move **Black Ice Lance** is learned and appears in the fourth slot on his character sheet. A later technique remains gated until Part Six. Existing choices (Rest, Care, Explore, Work on Camp, Hunt, Sleep) still function normally. Ordinary days never force story progress.
+
+**No new art needed:** GitHub Desktop → **Fetch origin → Pull origin**, then Godot → **F5**. Try Train, inspect your character sheet, and repeat on ordinary days. Training points and learned moves survive saving and reopening; EXP/leveling is unchanged.
+
+**Scope:** Trained moves are recorded and visible in the sheet, but aren't selectable in the legacy battle engine yet. Future combat work will connect them to turn menus and loadouts. Haniel and Alric have provisional data-driven future paths; they are not offered training in Haniel's recovery arc. Move names/powers are subject to author review.
+
+See [Train implementation and step-by-step testing](docs/training_system_011.md).
+
+---
+
+
 ## F5: Prototype 010 — Three-person party and character sheets
 
 **New playable menu:** **PARTY & CHARACTER SHEETS** on the title screen (now scrollable), and also inside the ordinary-day menu. Inspect a Pokemon/Digimon-inspired sheet for each unlocked character, and fill, swap or clear any of three active slots. The party is saved to the existing Love Beyond campaign save without changing story checkpoints, EXP, ordinary days or prior settings. Existing save files remain compatible.
