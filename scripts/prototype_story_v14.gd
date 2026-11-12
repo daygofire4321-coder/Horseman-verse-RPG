@@ -294,7 +294,7 @@ func _finish_outlaw_encounter(retreated: bool) -> void:
 		economy_engine.award_outlaw_gold(gold)
 		economy_engine.write_to(save_data)
 		var xp_amount := maxi(0, int(live_outlaw_scenario.get("exp", 15)))
-		var xp_message := interlude_engine.earn_hunt_exp(xp_amount)
+		var xp_message: String = interlude_engine.earn_hunt_exp(xp_amount)
 		line = "%s — The outlaws flee. You earned %d gold and %s." % [
 			str(live_outlaw_scenario.get("title", "Cliffside Encounter")), gold, xp_message]
 	elif retreated:
@@ -388,7 +388,7 @@ func _market_buy_menu(merchant_id: String) -> void:
 		var data: Dictionary = offered
 		var id := str(data.get("item_id", ""))
 		var item: Dictionary = inventory_engine.definition(id)
-		var price := economy_engine.offer_price(merchant_id, id)
+		var price: int = economy_engine.offer_price(merchant_id, id)
 		var button := _front_button(content, "%s  •  %d GOLD" % [str(item.get("name", id)), price],
 			Callable(self, "_market_buy").bind(merchant_id, id), 46.0)
 		button.name = "MarketBuy_" + id
@@ -405,7 +405,7 @@ func _market_sell_menu() -> void:
 	if inventory_engine.all_backpack_items().is_empty():
 		_front_label(content, "The backpack is empty.", 16)
 	for id in inventory_engine.all_backpack_items():
-		var unit_price := economy_engine.resale_value(id)
+		var unit_price: int = economy_engine.resale_value(id)
 		var button := _front_button(content, "%s ×%d  •  SELL ONE FOR %d GOLD" % [
 			inventory_engine.name_of(id), inventory_engine.backpack_count(id), unit_price],
 			Callable(self, "_market_sell").bind(id), 46.0)
