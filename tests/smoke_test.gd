@@ -267,6 +267,55 @@ func _run_tests() -> void:
 		_expect(cast_view.get("joren_boss_sprite") != null, "Joren has a boss slot in wave 2")
 		cast_view.queue_free()
 
+
+	# Prototype 007: accessible daily actions and battle sprite presentation.
+	var v7_resource: Resource = load("res://scenes/prototype_story_v7.tscn")
+	_expect(v7_resource is PackedScene, "Prototype 007 scene must load")
+	if v7_resource is PackedScene:
+		var fixed_view: Node = (v7_resource as PackedScene).instantiate()
+		root.add_child(fixed_view)
+		fixed_view.set("save_data", SaveStore.new_save())
+		fixed_view.call("_load_story_if_needed")
+		fixed_view.call("_enter_interlude", "after_part_four")
+		var free_time = fixed_view.get("interlude_engine")
+		_expect(int(free_time.state["actions_left"]) == 3, "Fresh day offers 3 activities")
+		var daily_scroll: ScrollContainer = fixed_view.find_child("DailyActivitiesScroll", true, false) as ScrollContainer
+		_expect(daily_scroll != null, "Daily activity panel scrolls on small displays")
+		for item in ["rest", "care", "explore"]:
+			var daily_button: Button = fixed_view.find_child("Daily_action_" + item, true, false) as Button
+			_expect(daily_button != null, "Daily option is visible: " + item)
+			if daily_button != null:
+				_expect(not daily_button.disabled, "Daily option must be clickable: " + item)
+				daily_button.pressed.emit()
+		_expect(int(free_time.state["actions_left"]) == 0, "Three actions work through UI signals")
+		var exhausted: Button = fixed_view.find_child("Daily_action_rest", true, false) as Button
+		_expect(exhausted != null and exhausted.disabled, "Spent actions are disabled with guidance")
+		var refresh: Button = fixed_view.find_child("Daily_NewOrdinaryDay", true, false) as Button
+		_expect(refresh != null, "Exhausted day offers a quick ordinary-day refresh")
+		var index_before: int = int(fixed_view.get("event_index"))
+		if refresh != null:
+			refresh.pressed.emit()
+		_expect(int(free_time.state["actions_left"]) == 3, "Ordinary day refreshes all three actions")
+		_expect(int(fixed_view.get("event_index")) == index_before, "Ordinary day never advances story")
+		fixed_view.call("_show_menu")
+		fixed_view.call("_resume_adventure")
+		var resumed_time = fixed_view.get("interlude_engine")
+		_expect(int(resumed_time.state["actions_left"]) == 3, "Refreshed activities persist after save/resume")
+		fixed_view.call("_start_battle", "Asmodeus", "Haniel")
+		var player_picture: TextureRect = fixed_view.get("actor_sprite") as TextureRect
+		var enemy_picture: TextureRect = fixed_view.get("enemy_sprite") as TextureRect
+		var picture_layer: Control = fixed_view.get("pixel_layer") as Control
+		var battle_ui: Node = fixed_view.get("action_row").get_parent().get_parent().get_parent().get_parent()
+		_expect(player_picture != null and player_picture.flip_h, "Asmodeus mirrored on player side")
+		_expect(picture_layer.get_index() < battle_ui.get_index(), "Battle sprites render BEHIND move controls")
+		_expect(player_picture.anchor_top > 0.40, "Player sprite lowered on stage")
+		_expect(enemy_picture.anchor_bottom <= 0.72, "Enemy feet leave HUD clear")
+		fixed_view.call("_draw_battle")
+		_expect(picture_layer.get_index() < battle_ui.get_index(), "UI stays above sprites on redraw")
+		fixed_view.call("_start_battle", "Haniel", "Asmodeus")
+		_expect(not enemy_picture.flip_h, "Asmodeus faces inward from enemy side")
+		fixed_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
