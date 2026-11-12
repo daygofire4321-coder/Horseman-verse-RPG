@@ -1,0 +1,19 @@
+{
+  "id": "bandit_shield",
+  "name": "Shielded Highwayman",
+  "series": "love_beyond",
+  "max_hp": 64,
+  "exp_reward": 23,
+  "ai": {
+    "damage": 13,
+    "damage_vs_guard": 4
+  },
+  "moves": [
+    {
+      "id": "shield_bash",
+      "name": "Shield Bash",
+      "kind": "damage",
+      "power": 13
+    }
+  ]
+}
