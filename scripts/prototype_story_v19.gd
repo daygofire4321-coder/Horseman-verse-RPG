@@ -30,8 +30,10 @@ func _show_love_campaign() -> void:
 	var menu: VBoxContainer = frontend_body.find_child("CampaignMenuContent", true, false) as VBoxContainer
 	if menu == null:
 		return
-	var next := _front_button(menu, "CONTINUE STORY  •  PART SEVEN: MICHAEL",
-		_start_part_seven, 50.0)
+	var part_names := ["PART SEVEN: MICHAEL", "PART EIGHT: EXPLANATION", "PART NINE: UNDERSTANDING"]
+	var destination: String = str(part_names[clampi(part - 6, 0, 2)])
+	var next := _front_button(menu, "CONTINUE STORY  •  " + destination,
+		_continue_next_chapter, 50.0)
 	next.name = "LoveContinuePartSeven"
 	for node in menu.get_children():
 		if node is Button and node.text == "BACK TO CAMPAIGN SELECT":
@@ -39,17 +41,24 @@ func _show_love_campaign() -> void:
 			break
 
 
-func _start_part_seven() -> void:
-	if _completed_story_part() < 6:
+func _continue_next_chapter() -> void:
+	var completed := _completed_story_part()
+	if completed < 6 or completed >= 9:
 		return
+	var destinations := ["PART SEVEN", "PART EIGHT", "PART NINE"]
+	var next_part: String = str(destinations[completed - 6])
+	_start_story_at_title(next_part)
+
+
+func _start_story_at_title(next_part: String) -> void:
 	_load_story_if_needed()
-	var first_seven := -1
+	var desired_index := -1
 	for i in range(story_events.size()):
 		var event: Dictionary = story_events[i]
-		if str(event.get("kind", "")) == "title" and str(event.get("part", "")) == "PART SEVEN":
-			first_seven = i
+		if str(event.get("kind", "")) == "title" and str(event.get("part", "")) == next_part:
+			desired_index = i
 			break
-	if first_seven < 0:
+	if desired_index < 0:
 		return
 	story_mode = true
 	interlude_mode = false
@@ -57,10 +66,16 @@ func _start_part_seven() -> void:
 	hunt_mode = false
 	alley_mode = false
 	battle_demo = false
-	event_index = first_seven
+	event_index = desired_index
 	if is_instance_valid(frontend):
 		frontend.hide()
 	_show_event()
+
+
+func _start_part_seven() -> void:
+	if _completed_story_part() < 6:
+		return
+	_start_story_at_title("PART SEVEN")
 
 
 func _show_love_adventure() -> void:
