@@ -151,6 +151,80 @@
           "limited": true
         }
       ]
+    },
+    {
+      "id": "homestead_asmodeus",
+      "name": "The First Garden",
+      "pov": "asmodeus",
+      "location": "Cave Homestead",
+      "day_actions": 3,
+      "scene": "forest_camp.jpg",
+      "required_story_part": 9,
+      "hunting_pool": [
+        "wild_boar"
+      ],
+      "actions": [
+        {
+          "id": "rest",
+          "label": "Rest",
+          "description": "Recover 35 HP",
+          "limited": true
+        },
+        {
+          "id": "garden",
+          "label": "Practice Gardening",
+          "description": "Learn planting and care using Joren's and Toren's guidance (one action)",
+          "limited": true
+        },
+        {
+          "id": "train",
+          "label": "Train",
+          "description": "Practice black ice techniques (one action)",
+          "limited": true
+        },
+        {
+          "id": "explore",
+          "label": "Explore the Woods",
+          "description": "Gather a useful bundle of supplies (one action)",
+          "limited": true
+        }
+      ]
+    },
+    {
+      "id": "homestead_haniel",
+      "name": "A Lesson in Woodworking",
+      "pov": "haniel",
+      "location": "Cave Homestead",
+      "day_actions": 3,
+      "scene": "forest_camp.jpg",
+      "required_story_part": 9,
+      "hunting_pool": [],
+      "actions": [
+        {
+          "id": "rest",
+          "label": "Rest",
+          "description": "Recover 35 HP",
+          "limited": true
+        },
+        {
+          "id": "woodwork",
+          "label": "Learn Woodworking",
+          "description": "Practice carpentry with tools Alric brought (one action)",
+          "limited": true
+        },
+        {
+          "id": "train",
+          "label": "Train",
+          "description": "Practice angelic techniques (one action)",
+          "limited": true
+        },
+        {
+          "id": "reflect",
+          "label": "Reflect on Family",
+          "description": "A quiet moment to think about kindness and understanding (one action)",
+          "limited": true
+        }
+      ]
     }
   ],
   "future_pool_hooks": {
@@ -164,5 +238,5 @@
     ],
     "note": "Future zones are not active yet and weaker foes never scale automatically to player level."
   },
-  "notes": "Prototypes 011 and 014: early forest interludes remain Asmodeus-only during Haniel's recovery. After the authored Part Six checkpoint, players may separately run unlimited Cliffside free-time days for Asmodeus (Explore) and Haniel (Patrol), each with three daily actions; no exciting-day story continuation is available until more chapters are written. These optional post-six activities do not alter existing story checkpoints."
+  "notes": "After Part Nine, each lead gets a distinct optional Cave Homestead routine (Asmodeus gardening; Haniel woodworking). These daily actions progress without advancing the manuscript. Cliffside routines remain unlocked after Part Six and earlier forest recovery is preserved. No combat or shop content is invented in Parts 7–9."
 }
