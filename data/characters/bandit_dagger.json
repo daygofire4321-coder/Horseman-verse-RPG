@@ -1,0 +1,19 @@
+{
+  "id": "bandit_dagger",
+  "name": "Roadside Cutpurse",
+  "series": "love_beyond",
+  "max_hp": 44,
+  "exp_reward": 16,
+  "ai": {
+    "damage": 13,
+    "damage_vs_guard": 4
+  },
+  "moves": [
+    {
+      "id": "knife_slash",
+      "name": "Knife Slash",
+      "kind": "damage",
+      "power": 13
+    }
+  ]
+}
