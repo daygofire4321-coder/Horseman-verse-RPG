@@ -5,6 +5,7 @@ extends "res://scripts/prototype_story_v17.gd"
 ## normally and no portrait texture is required.
 
 const DIALOGUE_PORTRAITS_DATA := "res://data/portraits/love_beyond.json"
+const OptionalArt = preload("res://scripts/core/optional_art_loader.gd")
 
 var portrait_catalog: Dictionary = {}
 var dialogue_portrait_layer: Control = null
@@ -127,18 +128,15 @@ func _set_speaking_visual(rect: TextureRect, id: String, expression: String, spe
 	if not is_instance_valid(rect):
 		return
 	var path := _portrait_resource(id, expression)
-	if path == "" or not ResourceLoader.exists(path):
-		rect.texture = null
-		rect.hide()
-		return
-	var tex: Texture2D = load(path) as Texture2D
+	var tex: Texture2D = OptionalArt.texture(path)
 	if tex == null:
+		rect.texture = null
 		rect.hide()
 		return
 	rect.texture = tex
 	rect.show()
 	# Active speaker lights up; their companion remains present but muted.
-	rect.modulate = Color(1.0, 1.0, 1.0, 0.95) if speaking else Color(0.49, 0.57, 0.71, 0.42)
+	rect.modulate = Color(1.0, 1.0, 1.0, 0.95) if speaking else Color(0.60, 0.68, 0.81, 0.60)
 
 
 func _present_speakers(left_id: String, right_id: String, expressions: Dictionary, active_id: String) -> void:
