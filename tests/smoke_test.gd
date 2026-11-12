@@ -1353,6 +1353,25 @@ func _run_tests() -> void:
 	_expect(installed_example != "", "Optional loader discovers an existing repo image at its canonical path")
 	_expect(ArtLoader.texture("assets/love_beyond/pixel_battles/haniel.png") != null,
 		"Optional loader can actually decode real PNG images")
+	# Emulate the Windows ZIP extraction mistake: new WebP files land in
+	# a one-level subfolder AFTER Godot has imported the project.
+	var raw_test_root := "res://Paleverse_Test_Extracted_Art/assets/love_beyond/"
+	var fake_chapter := raw_test_root + "curated_chapters/part_01/01_cave_truce.webp"
+	var fake_portrait := raw_test_root + "dialogue_portraits/haniel/neutral.webp"
+	var raw_image := Image.create(18, 22, false, Image.FORMAT_RGBA8)
+	raw_image.fill(Color(0.85, 0.30, 0.57, 0.90))
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(
+		raw_test_root + "curated_chapters/part_01"))
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(
+		raw_test_root + "dialogue_portraits/haniel"))
+	_expect(raw_image.save_webp(fake_chapter) == OK, "Test fixture can produce real WebP chapter image")
+	_expect(raw_image.save_webp(fake_portrait) == OK, "Test fixture can produce real transparent WebP speaker image")
+	_expect(ArtLoader.resolve("assets/love_beyond/curated_chapters/part_01/01_cave_truce.webp") != "",
+		"Nested Windows Extract All chapter asset is discovered")
+	_expect(ArtLoader.texture("assets/love_beyond/curated_chapters/part_01/01_cave_truce.webp") != null,
+		"New unimported WebP chapter image is decoded correctly")
+	_expect(ArtLoader.texture("assets/love_beyond/dialogue_portraits/haniel/neutral.webp") != null,
+		"New unimported WebP portrait image is decoded correctly")
 	var hotfix_resource: Resource = load("res://scenes/prototype_story_v18.tscn")
 	if hotfix_resource is PackedScene:
 		var repaired_view: Node = (hotfix_resource as PackedScene).instantiate()
@@ -1369,10 +1388,23 @@ func _run_tests() -> void:
 			"Art Check knows all 22 optional curated backgrounds")
 		_expect(int(art_stats.get("portraits_total", 0)) == 16,
 			"Art Check knows all 16 speaking portraits")
-		_expect(int(art_stats.get("chapters_found", 0)) >= 0 and
-			int(art_stats.get("portraits_found", 0)) >= 0,
-			"Art Check reports missing assets without breaking menus")
+		_expect(int(art_stats.get("chapters_found", 0)) >= 1 and
+			int(art_stats.get("portraits_found", 0)) >= 1,
+			"Art Check counts actual WebP assets discovered in the extracted folder")
+		_expect(repaired_view.find_child("ArtCheckChapterPreview", true, false) != null,
+			"Art Check renders a real chapter image preview")
+		_expect(repaired_view.find_child("ArtCheckPortraitPreview", true, false) != null,
+			"Art Check renders a real portrait image preview")
+		_expect(repaired_view.call("_display_curated_image", "part_01/01_cave_truce.webp"),
+			"Live chapter renderer displays freshly copied WebP art")
+		repaired_view.call("_present_speakers", "asmodeus", "haniel",
+			{"asmodeus":"neutral", "haniel":"neutral"}, "haniel")
+		var loaded_speaker: TextureRect = repaired_view.find_child("RightSpeakingPortrait", true, false) as TextureRect
+		_expect(loaded_speaker != null and loaded_speaker.texture != null and loaded_speaker.visible,
+			"Speaking portrait is visibly rendered from the freshly extracted image")
 		repaired_view.queue_free()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(fake_chapter))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(fake_portrait))
 
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
