@@ -563,7 +563,7 @@ func _run_tests() -> void:
 	var unlock: Dictionary = reopened_trainer.session("asmodeus", 4)
 	_expect(bool(unlock.get("learned", false)), "Third training session unlocks Black Ice Lance")
 	_expect(reopened_trainer.learned("asmodeus").has("black_ice_lance"), "Learned move ID stored exactly once")
-	var before_locked := reopened_trainer.state.duplicate(true)
+	var before_locked: Dictionary = reopened_trainer.state.duplicate(true)
 	var denied_training: Dictionary = reopened_trainer.session("asmodeus", 4)
 	_expect(not bool(denied_training.get("ok", true)), "Second technique is locked until Part Six")
 	_expect(reopened_trainer.state == before_locked, "Unavailable techniques never alter training points")
