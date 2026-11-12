@@ -1,5 +1,21 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 008 — Skip dialogue safely
+
+The default scene is now `scenes/prototype_story_v8.tscn` (earlier prototypes remain for rollback).
+
+- **SKIP INTRO DIALOGUE** jumps directly to the prologue's **Choose your fighter** prompt; it does not skip the tutorial battle.
+- **SKIP DIALOGUE • Next gameplay** appears during the main story's dialogue and chapter-title screens. It fast-forwards narration until the next required interaction: branch gathering, the scripted bear encounter, an optional free-time interlude, or a Cliffside combat wave.
+- Skipping does **not** automate gameplay, force an exciting day, remove story beats from the data, bypass a fight, or erase your progress. Skipped part-title labels and completion checkpoints are still processed.
+- The old scene `prototype_story_v7.tscn` remains available if needed.
+
+**To try:** In GitHub Desktop select **Fetch origin → Pull origin**, then run **F5** in Godot. **No new art ZIP is needed.**
+
+Next: the four dedicated battle backgrounds, then expanded leveling and party management systems.
+
+---
+
+
 ## F5: Prototype 007 — Daily-action and battle-layout fixes
 
 The default Godot scene is now `scenes/prototype_story_v7.tscn`. All earlier prototypes remain for rollback.
