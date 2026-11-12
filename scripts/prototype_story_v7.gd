@@ -2,6 +2,8 @@ extends "res://scripts/prototype_story_v6.gd"
 ## Prototype 007: Daily-life UX fix + grounded, correctly layered battle sprites.
 ## Story scripts, save progression, hunt EXP and canonical battle outcomes remain untouched.
 
+var stage_spacer: Control
+
 
 func _ensure_pixel_layer() -> void:
 	super._ensure_pixel_layer()
@@ -10,10 +12,30 @@ func _ensure_pixel_layer() -> void:
 	var main_ui: Node = action_row.get_parent().get_parent().get_parent().get_parent()
 	if main_ui.get_parent() == self and pixel_layer.get_parent() == self and pixel_layer.get_index() > main_ui.get_index():
 		move_child(pixel_layer, main_ui.get_index())
+	# In the original layout, hiding character portraits caused the command
+	# panel to jump into the center of the battle sprites. Keep the stage's
+	# upper space reserved and push commands toward the bottom of the screen.
+	if not is_instance_valid(stage_spacer):
+		var dialogue_panel: Node = action_row.get_parent().get_parent()
+		var stack: VBoxContainer = dialogue_panel.get_parent() as VBoxContainer
+		stage_spacer = Control.new()
+		stage_spacer.name = "BattleSpace"
+		stage_spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		stage_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		stack.add_child(stage_spacer)
+		stack.move_child(stage_spacer, dialogue_panel.get_index())
+		stage_spacer.hide()
+
+
+func _hide_pixel_stage() -> void:
+	super._hide_pixel_stage()
+	if is_instance_valid(stage_spacer):
+		stage_spacer.hide()
 
 
 func _show_pixel_stage(area_id: String, actor_id: String, target_id: String, player_name: String, enemy_name: String) -> void:
 	super._show_pixel_stage(area_id, actor_id, target_id, player_name, enemy_name)
+	stage_spacer.show()
 	# Put feet near the battlefield's lower edge WITHOUT covering the combat HUD.
 	_place_battler(actor_sprite, actor_placeholder, 0.08, 0.425, 0.30, 0.71)
 	_place_battler(enemy_sprite, enemy_placeholder, 0.64, 0.425, 0.88, 0.71)
