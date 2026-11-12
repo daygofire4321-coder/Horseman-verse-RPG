@@ -125,7 +125,7 @@ func _inventory_show() -> void:
 	choices.add_theme_constant_override("separation", 8)
 	content.add_child(choices)
 	for id in party_engine.unlocked:
-		var text_label := id.to_upper()
+		var text_label: String = str(id).to_upper()
 		if id == inventory_selected:
 			text_label += "  [SELECTED]"
 		var button := _front_button(choices, text_label, Callable(self, "_inventory_choose").bind(id), 42.0)
@@ -140,7 +140,7 @@ func _inventory_show() -> void:
 	var slots: Array = inventory_engine.slots_for(inventory_selected)
 	for i in range(3):
 		var item_id: String = str(slots[i])
-		var item_name := "EMPTY — equip from backpack" if item_id == "" else inventory_engine.name_of(item_id)
+		var item_name: String = "EMPTY — equip from backpack" if item_id == "" else inventory_engine.name_of(item_id)
 		var button := _front_button(content, "SLOT %d  •  %s" % [i + 1, item_name],
 			Callable(self, "_inventory_slot_actions").bind(i), 46.0)
 		button.name = "InventorySlot_%d" % i
