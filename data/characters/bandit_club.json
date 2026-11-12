@@ -1,0 +1,19 @@
+{
+  "id": "bandit_club",
+  "name": "Club-Wielding Thug",
+  "series": "love_beyond",
+  "max_hp": 48,
+  "exp_reward": 16,
+  "ai": {
+    "damage": 12,
+    "damage_vs_guard": 4
+  },
+  "moves": [
+    {
+      "id": "club_swing",
+      "name": "Club Swing",
+      "kind": "damage",
+      "power": 12
+    }
+  ]
+}
