@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "required_story_part": 6,
+  "currency": "gold",
+  "sell_rate": 0.5,
+  "notes": "Cliffside market is independent of Alric's future smithy; Friends and Family discount is NOT applied to these vendors. No story purchases in Part Six. Buying and selling do not consume daily activities.",
+  "merchants": [
+    {
+      "id": "grocer",
+      "name": "Cliffside Provisioner",
+      "tagline": "Fresh food for the road.",
+      "offers": [
+        {
+          "item_id": "travel_rations",
+          "price": 15
+        },
+        {
+          "item_id": "herbal_bread",
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "outfitter",
+      "name": "Market Outfitter",
+      "tagline": "Bracers and charms for those headed outside town.",
+      "offers": [
+        {
+          "item_id": "leather_bracers",
+          "price": 45
+        },
+        {
+          "item_id": "iron_charm",
+          "price": 100
+        },
+        {
+          "item_id": "bowstring_wrap",
+          "price": 85
+        },
+        {
+          "item_id": "black_ice_focus",
+          "price": 90
+        }
+      ]
+    }
+  ]
+}
