@@ -203,6 +203,45 @@ func bonuses_for(character_id: String) -> Dictionary:
 	}
 
 
+
+func add_to_backpack(item_id: String, quantity: int = 1) -> bool:
+	error_text = ""
+	if definition(item_id).is_empty() or quantity < 1:
+		error_text = "Invalid item or quantity."
+		return false
+	var backpack: Dictionary = state.get("backpack", {})
+	backpack[item_id] = backpack_count(item_id) + quantity
+	state["backpack"] = backpack
+	return true
+
+
+func take_from_backpack(item_id: String, quantity: int = 1) -> bool:
+	error_text = ""
+	if definition(item_id).is_empty() or quantity < 1 or backpack_count(item_id) < quantity:
+		error_text = "Not enough of that item in the backpack."
+		return false
+	var backpack: Dictionary = state.get("backpack", {})
+	backpack[item_id] = backpack_count(item_id) - quantity
+	state["backpack"] = backpack
+	return true
+
+
+func consume_battle_food(character_id: String, slot_index: int, item_id: String, unlocked: Array) -> bool:
+	# Called immediately after a *real daily encounter* successfully consumes
+	# its temporary battle copy. Practice battles never call this method.
+	error_text = ""
+	if not unlocked.has(character_id) or slot_index < 0 or slot_index >= SLOTS_PER_CHARACTER:
+		error_text = "Invalid character or item slot."
+		return false
+	var slots := slots_for(character_id)
+	if str(slots[slot_index]) != item_id or str(definition(item_id).get("category", "")) != "consumable":
+		error_text = "That food is no longer in the character's slot."
+		return false
+	slots[slot_index] = ""
+	_put_slots(character_id, slots)
+	return true
+
+
 func write_to(save_data: Dictionary) -> void:
 	var campaigns: Dictionary = save_data.get("campaigns", {})
 	var lb: Dictionary = campaigns.get("love_beyond", {})
