@@ -8,6 +8,7 @@ extends "res://scripts/prototype_story_v16.gd"
 
 const CURATED_STORY_ROOT := "res://assets/love_beyond/curated_chapters/"
 const PART_THREE_BEAR_FIGHT := "part_03/02_bear_confrontation.webp"
+const OptionalArt = preload("res://scripts/core/optional_art_loader.gd")
 
 var current_curated_image := ""
 
@@ -34,10 +35,7 @@ func _curated_image_for(index: int) -> String:
 func _display_curated_image(relative_path: String) -> bool:
 	if relative_path == "" or relative_path.begins_with("/") or ".." in relative_path:
 		return false
-	var path := CURATED_STORY_ROOT + relative_path
-	if not ResourceLoader.exists(path):
-		return false
-	var image: Texture2D = load(path) as Texture2D
+	var image: Texture2D = OptionalArt.texture(CURATED_STORY_ROOT + relative_path)
 	if image == null:
 		return false
 	scene_image.texture = image
