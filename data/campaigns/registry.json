@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "title": "THE PALE HORSEMAN",
+  "tagline": "A WORLD OF INTERTWINED STORIES",
+  "campaigns": [
+    {
+      "id": "love_beyond",
+      "title": "Love Beyond Heaven or Hell",
+      "short_title": "LOVE BEYOND",
+      "subtitle": "An angel, a demon, and the lives they choose.",
+      "status": "playable",
+      "accent": "celestial_gold",
+      "save_key": "love_beyond"
+    },
+    {
+      "id": "blades",
+      "title": "Blades of Courage and Ferocity",
+      "short_title": "BLADES",
+      "subtitle": "A tale of courage, ferocity, and sacrifice.",
+      "status": "coming_soon",
+      "accent": "midnight_blue",
+      "save_key": "blades"
+    }
+  ],
+  "notes": "Campaigns are data-driven. Only Love Beyond has gameplay at present; Blades is a disabled Coming Soon listing and must not initialize or write any campaign save. Additional campaigns may be added without appending buttons to the root title menu."
+}
