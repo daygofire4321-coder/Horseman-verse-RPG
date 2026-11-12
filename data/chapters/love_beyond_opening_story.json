@@ -8,7 +8,8 @@
       "kind": "title",
       "part": "PART ONE",
       "title": "AFTERMATH",
-      "image": "cave_after.jpg"
+      "image": "cave_after.jpg",
+      "curated_image": "part_01/01_cave_truce.webp"
     },
     {
       "kind": "line",
@@ -28,7 +29,8 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "The angel regarded him with azure eyes and white pupils that seemed to mimic the endless sky."
+      "text": "The angel regarded him with azure eyes and white pupils that seemed to mimic the endless sky.",
+      "curated_image": "part_01/05_haniel_closeup.webp"
     },
     {
       "kind": "line",
@@ -48,7 +50,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "I'm the demon of lust. I've had perverse encounters with hundreds, perhaps thousands... maybe more people. A few mutes have come my way."
+      "text": "I'm the demon of lust. I've had perverse encounters with hundreds, perhaps thousands... maybe more people. A few mutes have come my way.",
+      "curated_image": "part_01/04_asmodeus_closeup.webp"
     },
     {
       "kind": "line",
@@ -79,7 +82,8 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "The angel considered this for several moments, then traced letters in the air in Enochian.",
-      "image": "cave_names.jpg"
+      "image": "cave_names.jpg",
+      "curated_image": "part_01/02_cave_dialogue.webp"
     },
     {
       "kind": "line",
@@ -109,13 +113,15 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "Asmodeus sighed and leaned back against the rocky wall. He heard Haniel do the same."
+      "text": "Asmodeus sighed and leaned back against the rocky wall. He heard Haniel do the same.",
+      "curated_image": "part_01/03_cave_parting.webp"
     },
     {
       "kind": "title",
       "part": "PART TWO",
       "title": "THE NATURAL ORDER",
-      "image": "forest_gather.jpg"
+      "image": "forest_gather.jpg",
+      "curated_image": "part_02/01_gather_branches.webp"
     },
     {
       "kind": "line",
@@ -161,18 +167,21 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "She knelt and rubbed two sticks together. The only thing growing warm was her wrists.",
-      "image": "forest_fire.jpg"
+      "image": "forest_fire.jpg",
+      "curated_image": "part_02/02_haniel_firewood.webp"
     },
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "She sighed. If she had to spend eternity somewhere, at least Earth had grass, birds, and trees unlike her own home."
+      "text": "She sighed. If she had to spend eternity somewhere, at least Earth had grass, birds, and trees unlike her own home.",
+      "curated_image": "part_02/03_haniel_reflection.webp"
     },
     {
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "A presence approached. Asmodeus emerged, dragging a boar—the fear it had felt before dying still seemed to cling to it.",
-      "image": "campfire.jpg"
+      "image": "campfire.jpg",
+      "curated_image": "part_02/04_asmodeus_fire.webp"
     },
     {
       "kind": "line",
@@ -252,13 +261,15 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "Asmodeus butchered the boar with unsettling accuracy and set the meat over the fire. The thought sickened Haniel—but the smell wasn't unappetizing."
+      "text": "Asmodeus butchered the boar with unsettling accuracy and set the meat over the fire. The thought sickened Haniel—but the smell wasn't unappetizing.",
+      "curated_image": "part_02/05_campfire.webp"
     },
     {
       "kind": "title",
       "part": "PART THREE",
       "title": "TO BE PREYED UPON",
-      "image": "forest_hunt.jpg"
+      "image": "forest_hunt.jpg",
+      "curated_image": "part_03/01_pre_bear.webp"
     },
     {
       "kind": "line",
@@ -279,7 +290,8 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "Something heavy and furred slammed into him, hurling him into a tree.",
-      "image": "bear_ambush.jpg"
+      "image": "bear_ambush.jpg",
+      "curated_image": "part_03/02_bear_confrontation.webp"
     },
     {
       "kind": "line",
@@ -315,7 +327,8 @@
       "kind": "battle",
       "enemy": "grizzly_bear",
       "threshold": 0.5,
-      "image": "bear_boss.jpg"
+      "image": "bear_boss.jpg",
+      "curated_image": "part_03/02_bear_confrontation.webp"
     },
     {
       "kind": "line",
@@ -341,7 +354,8 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "Wind brushed his face. The bear howled in pain as a brilliant blue arrow struck it.",
-      "image": "haniel_rescue.jpg"
+      "image": "haniel_rescue.jpg",
+      "curated_image": "part_03/03_haniel_rescue.webp"
     },
     {
       "kind": "line",
@@ -372,7 +386,8 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "The bear charged again. Haniel released her invisible bowstring, and a blue arrow of angelic power struck the beast's head.",
-      "image": "bear_aftermath.jpg"
+      "image": "bear_aftermath.jpg",
+      "curated_image": "part_03/04_bear_aftermath.webp"
     },
     {
       "kind": "line",
