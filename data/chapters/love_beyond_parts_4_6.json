@@ -28,12 +28,14 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Hey."
+      "text": "Hey.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Why?"
+      "text": "Why?",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -44,7 +46,8 @@
       "kind": "line",
       "speaker": "ASMODEUS",
       "text": "I told you the strong's duty is to do as they please with the weak. That bear had me at its mercy. Yet despite disagreeing with my worldview, you still saved my ass yesterday... why?",
-      "curated_image": "part_04/03_haniel_resting.webp"
+      "curated_image": "part_04/03_haniel_resting.webp",
+      "portrait_expression": "neutral"
     },
     {
       "kind": "line",
@@ -54,7 +57,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Then, as the one who defeated it, it was my right to save you and to take its life, given your own philosophy."
+      "text": "Then, as the one who defeated it, it was my right to save you and to take its life, given your own philosophy.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -65,7 +69,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Just don't let its body be wasted. All the beasts of the land deserve that respect, at least."
+      "text": "Just don't let its body be wasted. All the beasts of the land deserve that respect, at least.",
+      "portrait_expression": "neutral"
     },
     {
       "kind": "line",
@@ -75,7 +80,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "I figured you'd say something cliche like that."
+      "text": "I figured you'd say something cliche like that.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -95,12 +101,14 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Thank you."
+      "text": "Thank you.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Nah, I should be the one kissing your ass. You saved my life, not even a week after we tried killing each other, and I'm sure your bosses wouldn't be thrilled knowing you saved the prince of lust."
+      "text": "Nah, I should be the one kissing your ass. You saved my life, not even a week after we tried killing each other, and I'm sure your bosses wouldn't be thrilled knowing you saved the prince of lust.",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -110,7 +118,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Then we both owe thanks, so none needs to be given."
+      "text": "Then we both owe thanks, so none needs to be given.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -137,7 +146,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Damnit."
+      "text": "Damnit.",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -162,7 +172,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Do you miss it?"
+      "text": "Do you miss it?",
+      "portrait_expression": "neutral"
     },
     {
       "kind": "line",
@@ -174,7 +185,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Yes."
+      "text": "Yes.",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -199,7 +211,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Whatever, let's just eat or whatever."
+      "text": "Whatever, let's just eat or whatever.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -226,7 +239,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Cliffside. What weird namers humans are."
+      "text": "Cliffside. What weird namers humans are.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -246,7 +260,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Stay here."
+      "text": "Stay here.",
+      "portrait_expression": "neutral"
     },
     {
       "kind": "line",
@@ -256,7 +271,8 @@
     {
       "kind": "line",
       "speaker": "BLOND YOUTH",
-      "text": "Hey, miss, could ya come and give my friend some help? He's hurt pretty bad."
+      "text": "Hey, miss, could ya come and give my friend some help? He's hurt pretty bad.",
+      "portrait_expression": "villainsmirk"
     },
     {
       "kind": "line",
@@ -266,7 +282,8 @@
     {
       "kind": "line",
       "speaker": "BLOND YOUTH",
-      "text": "He's right down there."
+      "text": "He's right down there.",
+      "portrait_expression": "villainsmirk"
     },
     {
       "kind": "line",
@@ -292,7 +309,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Why don't we talk?"
+      "text": "Why don't we talk?",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -312,7 +330,8 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "Oi, you lil' rats causing trouble again?"
+      "text": "Oi, you lil' rats causing trouble again?",
+      "portrait_expression": "angry"
     },
     {
       "kind": "line",
@@ -327,7 +346,8 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "It's my business when you're doing it in the town my children were raised in."
+      "text": "It's my business when you're doing it in the town my children were raised in.",
+      "portrait_expression": "angry"
     },
     {
       "kind": "line",
@@ -357,7 +377,8 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "Little bastards..."
+      "text": "Little bastards...",
+      "portrait_expression": "angry"
     },
     {
       "kind": "line",
@@ -397,7 +418,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Asmodeus."
+      "text": "Asmodeus.",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -412,7 +434,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Asmodeus."
+      "text": "Asmodeus.",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -427,7 +450,8 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "I understand you want to aid him, but you should let him learn his lesson."
+      "text": "I understand you want to aid him, but you should let him learn his lesson.",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -437,7 +461,8 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "I'll call his folks. They were too soft on him when he was a boy, so I'm sure they will mend him."
+      "text": "I'll call his folks. They were too soft on him when he was a boy, so I'm sure they will mend him.",
+      "portrait_expression": "neutral"
     },
     {
       "kind": "line",
