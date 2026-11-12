@@ -35,7 +35,7 @@
     "asmodeus": "asmodeus.png",
     "wild_boar": "wild_boar.png",
     "haniel": "haniel.png",
-    "joren": "joren.png",
+    "joren": "joren_boss.png",
     "alric": "alric.png",
     "bandit_thug": "bandit_knife.png",
     "bandit_club": "bandit_club.png",
@@ -57,7 +57,8 @@
     "azrael_boss": "variants/azrael_boss.png",
     "michael_boss_damaged": "variants/michael_boss_damaged.png",
     "gabriel": "variants/gabriel.png",
-    "uriel": "variants/uriel.png"
+    "uriel": "variants/uriel.png",
+    "joren_idle": "joren_idle.png"
   },
   "routes": {
     "prologue": "thundercloud",
@@ -65,5 +66,5 @@
     "bear": "forest_clearing",
     "alley": "cliffside_alley"
   },
-  "notes": "Character sprites are extracted from the user's original paired sprite sheets. Prototype 006 displays the existing story fighters and a gallery; later character variants are organized for future content. All PNGs are optional; visual placeholders appear when the pack is not installed."
+  "notes": "Split from the user's source art. Joren uses his villain/boss pose in the alley; the alternate Joren_idle.png comes from the Joren+Alric sheet. Two separate thug sprites avoid depicting Joren twice in Wave 1. Art is optional with graceful fallback."
 }
