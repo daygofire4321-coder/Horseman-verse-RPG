@@ -79,6 +79,78 @@
           "limited": true
         }
       ]
+    },
+    {
+      "id": "cliffside_asmodeus",
+      "name": "Cliffside Ordinary Days",
+      "pov": "asmodeus",
+      "location": "Cliffside Town",
+      "day_actions": 3,
+      "scene": "cliffside_street.jpg",
+      "required_story_part": 6,
+      "hunting_pool": [],
+      "actions": [
+        {
+          "id": "rest",
+          "label": "Rest",
+          "description": "Recover 35 HP",
+          "limited": true
+        },
+        {
+          "id": "explore",
+          "label": "Explore Cliffside",
+          "description": "Investigate the streets and roads; face repeatable bandits for gold and EXP (1 action)",
+          "limited": true
+        },
+        {
+          "id": "train",
+          "label": "Train",
+          "description": "Practice a new move (+10 move-training points)",
+          "limited": true
+        },
+        {
+          "id": "camp",
+          "label": "Help Around Town",
+          "description": "Small repairs, useful supplies, and a few quiet hours",
+          "limited": true
+        }
+      ]
+    },
+    {
+      "id": "cliffside_haniel",
+      "name": "Haniel's Quiet Patrol",
+      "pov": "haniel",
+      "location": "Cliffside Town",
+      "day_actions": 3,
+      "scene": "cliffside_street.jpg",
+      "required_story_part": 6,
+      "hunting_pool": [],
+      "actions": [
+        {
+          "id": "rest",
+          "label": "Rest",
+          "description": "Recover 35 HP",
+          "limited": true
+        },
+        {
+          "id": "patrol",
+          "label": "Patrol the Streets",
+          "description": "Watch for trouble, protect citizens, and face bandit encounters for gold and EXP (1 action)",
+          "limited": true
+        },
+        {
+          "id": "train",
+          "label": "Train",
+          "description": "Practice a new move (+10 move-training points)",
+          "limited": true
+        },
+        {
+          "id": "explore_safely",
+          "label": "Observe the Town",
+          "description": "Find a quiet place and reflect on the city's everyday life",
+          "limited": true
+        }
+      ]
     }
   ],
   "future_pool_hooks": {
@@ -92,5 +164,5 @@
     ],
     "note": "Future zones are not active yet and weaker foes never scale automatically to player level."
   },
-  "notes": "Train uses one daily action and adds move-training points independently of hunt EXP. The first forest-camp routines train their POV character Asmodeus while Haniel recovers. Advanced routines and character-specific sessions come later."
+  "notes": "Prototypes 011 and 014: early forest interludes remain Asmodeus-only during Haniel's recovery. After the authored Part Six checkpoint, players may separately run unlimited Cliffside free-time days for Asmodeus (Explore) and Haniel (Patrol), each with three daily actions; no exciting-day story continuation is available until more chapters are written. These optional post-six activities do not alter existing story checkpoints."
 }
