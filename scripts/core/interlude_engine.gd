@@ -20,6 +20,11 @@ func begin(config: Dictionary, saved_state: Dictionary = {}, character_progress:
 		"complete": false
 	}
 	state.merge(saved_state, true)
+	# The saved state can belong to a previously finished interlude (e.g.
+	# when replaying Part Four after choosing an exciting day). Entering a
+	# playable free-time scene is always a NEW active session: keep the day,
+	# EXP, HP and supplies, but don't inherit the old 'completed' lockout.
+	state["complete"] = false
 	state["actions_left"] = clampi(int(state.get("actions_left", 3)), 0, int(profile.get("day_actions", 3)))
 
 
@@ -80,6 +85,9 @@ func earn_hunt_exp(amount: int) -> String:
 func ordinary_day() -> void:
 	# This deliberately does not know about or change the story cursor.
 	state["day"] = int(state["day"]) + 1
+	# A new ordinary morning must always allow actions/hunting again.
+	# Previously a stale complete flag made 3/3 actions appear disabled.
+	state["complete"] = false
 	state["actions_left"] = maxi(1, int(profile.get("day_actions", 3)))
 	state["hp"] = mini(int(state["max_hp"]), int(state["hp"]) + 12)
 
