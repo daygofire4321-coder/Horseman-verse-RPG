@@ -1293,7 +1293,7 @@ func _run_tests() -> void:
 		var youth_state: Dictionary = portrait_view.call("_portrait_state_at", first_count + 48)
 		_expect(youth_state.get("right") == "joren" and youth_state.get("expressions", {}).get("joren") == "villainsmirk", "Part Six shows Joren only after his introduction")
 		var alric_state: Dictionary = portrait_view.call("_portrait_state_at", first_count + 59)
-		_expect(alric_state.get("left") == "alric" and alric_state.get("right") == "joren", "Alric appears next to Joren when he enters the scene")
+		_expect(alric_state.get("left") == "alric" and alric_state.get("right") == "haniel", "Alric appears opposite Haniel when intervening in the alley")
 		var early_six: Dictionary = portrait_view.call("_portrait_state_at", first_count + 40)
 		_expect(early_six.get("left") == "asmodeus" and early_six.get("right") == "haniel", "Part Six resets the on-screen cast without changing chapter art")
 		portrait_view.call("_show_menu")
@@ -1324,7 +1324,7 @@ func _run_tests() -> void:
 			_expect(enemy_battler.position.x < ally_battler.position.x, "Enemies are on the left and allies face them from the right")
 			_expect(enemy_battler.find_child("BattlerSprite_", true, false) == null, "Battler identities use named actual sprite IDs")
 			var enemy_image: TextureRect = enemy_battler.find_child("BattlerSprite_wild_boar", true, false) as TextureRect
-			var ally_image: TextureRect = ally_battler.find_child("BattlerSprite_haniel", true, false) as TextureRect
+			var ally_image: TextureRect = ally_battler.find_child("BattlerSprite_asmodeus", true, false) as TextureRect
 			_expect(enemy_image != null and not enemy_image.flip_h, "Enemies face the party")
 			_expect(ally_image != null and ally_image.flip_h, "Allied sprites face toward opponents")
 		_expect(portrait_view.find_child("EnemyWing", true, false) != null, "Enemy HP information stays on enemy's side")
