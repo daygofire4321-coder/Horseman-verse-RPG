@@ -1,0 +1,19 @@
+{
+  "id": "bandit_veteran",
+  "name": "Veteran Brigand",
+  "series": "love_beyond",
+  "max_hp": 75,
+  "exp_reward": 36,
+  "ai": {
+    "damage": 18,
+    "damage_vs_guard": 6
+  },
+  "moves": [
+    {
+      "id": "sword_cut",
+      "name": "Sword Cut",
+      "kind": "damage",
+      "power": 18
+    }
+  ]
+}
