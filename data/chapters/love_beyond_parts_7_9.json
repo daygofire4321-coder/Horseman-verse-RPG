@@ -103,15 +103,10 @@
     {
       "kind": "line",
       "speaker": "MICHAEL",
-      "text": "We shouldn",
+      "text": "We shouldn’t bother Father with such nonsense, lest we all suffer the consequences. I have this under control,",
       "source_part": 7,
       "source_paragraph": 10,
       "portrait_expression": "angry"
-    },
-    {
-      "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "t bother Father with such nonsense, lest we all suffer the consequences. I have this under control,” Michael said."
     },
     {
       "kind": "line",
@@ -221,7 +216,7 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Didn",
+      "text": "Didn’t think you’d know signs like that,",
       "source_part": 8,
       "source_paragraph": 3,
       "portrait_expression": "smile"
@@ -250,7 +245,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "Aye, the boy did have a broken bone or two coming. That group",
+      "text": "Aye, the boy did have a broken bone or two coming. That group’s been acting up for a while now. Hopefully you knocked some sense into them,",
       "source_part": 8,
       "source_paragraph": 6,
       "portrait_expression": "neutral"
@@ -258,7 +253,7 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "s been acting up for a while now. Hopefully you knocked some sense into them,” Alric said, setting cups in front of them along with a plate of pastries."
+      "text": "Alric said, setting cups in front of them along with a plate of pastries."
     },
     {
       "kind": "line",
@@ -285,7 +280,7 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "I",
+      "text": "I’m not sorry,",
       "source_part": 8,
       "source_paragraph": 10,
       "portrait_expression": "mad"
@@ -301,7 +296,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "And neither of you should be. My wife and I don",
+      "text": "And neither of you should be. My wife and I don’t always see eye-to-eye,",
       "source_part": 8,
       "source_paragraph": 12,
       "portrait_expression": "smile"
@@ -316,15 +311,10 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Can",
+      "text": "Can’t believe I’m in the doghouse when I’m not even getting any,",
       "source_part": 8,
       "source_paragraph": 14,
       "portrait_expression": "smile"
-    },
-    {
-      "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "t believe I’m in the doghouse when I’m not even getting any,” Asmodeus said with a sigh."
     },
     {
       "kind": "line",
@@ -337,7 +327,7 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Yeah, because young people don",
+      "text": "Yeah, because young people don’t talk about those things,",
       "source_part": 8,
       "source_paragraph": 16,
       "portrait_expression": "smile"
@@ -352,7 +342,7 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Fine, damn. I swear I",
+      "text": "Fine, damn. I swear I’ve bedded priests who were less conformist than you.",
       "source_part": 8,
       "source_paragraph": 18,
       "portrait_expression": "smile"
@@ -427,15 +417,10 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "I",
+      "text": "I’m a demon and she’s an angel. We fought, and now we’re weakened and trying to survive. We live a few miles east of here,",
       "source_part": 8,
       "source_paragraph": 28,
       "portrait_expression": "neutral"
-    },
-    {
-      "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "m a demon and she’s an angel. We fought, and now we’re weakened and trying to survive. We live a few miles east of here,” Asmodeus said bluntly."
     },
     {
       "kind": "line",
@@ -448,7 +433,7 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Why aren",
+      "text": "Why aren’t you surprised?",
       "source_part": 8,
       "source_paragraph": 30,
       "portrait_expression": "neutral"
@@ -456,7 +441,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "A couple weeks ago, I saw blue and red lightning in the clouds. Then today I saw a man with a tail and a woman who certainly looks the part of an angel. The dots aren",
+      "text": "A couple weeks ago, I saw blue and red lightning in the clouds. Then today I saw a man with a tail and a woman who certainly looks the part of an angel. The dots aren’t hard to connect,",
       "source_part": 8,
       "source_paragraph": 31,
       "portrait_expression": "smile"
@@ -499,15 +484,10 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "My table? I built this when I married my wife, so unfortunately I can",
+      "text": "My table? I built this when I married my wife, so unfortunately I can’t part with it,",
       "source_part": 8,
       "source_paragraph": 36,
       "portrait_expression": "neutral"
-    },
-    {
-      "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "t part with it,” Alric said, receiving a shake of Haniel’s head in response."
     },
     {
       "kind": "line",
@@ -542,34 +522,24 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "I",
+      "text": "I’m a smith and carpenter by trade, so I can certainly teach ya,",
       "source_part": 8,
       "source_paragraph": 41
     },
     {
       "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "m a smith and carpenter by trade, so I can certainly teach ya,” Alric said."
-    },
-    {
-      "kind": "line",
       "speaker": "ALRIC",
-      "text": "You seem like a lady who",
+      "text": "You seem like a lady who’s good with her hands,",
       "source_part": 8,
       "source_paragraph": 42
     },
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "And I",
+      "text": "And I’ll even get you a book on gardening and some equipment for it,",
       "source_part": 8,
       "source_paragraph": 43,
       "portrait_expression": "smile"
-    },
-    {
-      "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "ll even get you a book on gardening and some equipment for it,” Alric said with a smile."
     },
     {
       "kind": "checkpoint",
@@ -620,7 +590,7 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "That",
+      "text": "That’s the brat from before,",
       "source_part": 9,
       "source_paragraph": 3,
       "portrait_expression": "mad"
@@ -643,7 +613,7 @@
     {
       "kind": "line",
       "speaker": "JOREN",
-      "text": "I",
+      "text": "I’m sorry…",
       "source_part": 9,
       "source_paragraph": 6,
       "portrait_expression": "sheepish"
@@ -679,20 +649,15 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "He",
+      "text": "He’s a foolish brat, but his family are farmers, so he can show ya the ropes of farming,",
       "source_part": 9,
       "source_paragraph": 10,
       "portrait_expression": "neutral"
     },
     {
       "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "s a foolish brat, but his family are farmers, so he can show ya the ropes of farming,” Alric said, annoyance coloring Asmodeus’s aura."
-    },
-    {
-      "kind": "line",
       "speaker": "ALRIC",
-      "text": "If you still need to get in a few whacks after he",
+      "text": "If you still need to get in a few whacks after he’s done helping you, I won’t stop ya,",
       "source_part": 9,
       "source_paragraph": 11,
       "portrait_expression": "smile"
@@ -764,7 +729,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "I like that one. He",
+      "text": "I like that one. He’s honest,",
       "source_part": 9,
       "source_paragraph": 20,
       "portrait_expression": "smile"
@@ -779,7 +744,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "He",
+      "text": "He’ll heal,",
       "source_part": 9,
       "source_paragraph": 22,
       "portrait_expression": "smile"
@@ -810,15 +775,10 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "Aye, he did. My wife and I aren",
+      "text": "Aye, he did. My wife and I aren’t perfect either. We do things all the time that the other one doesn’t like, but do you know what helps with that?",
       "source_part": 9,
       "source_paragraph": 26,
       "portrait_expression": "neutral"
-    },
-    {
-      "kind": "line",
-      "speaker": "NARRATOR",
-      "text": "t perfect either. We do things all the time that the other one doesn’t like, but do you know what helps with that?” Alric asked."
     },
     {
       "kind": "line",
@@ -830,7 +790,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "We understand why each other does the things we do, even if we don",
+      "text": "We understand why each other does the things we do, even if we don’t agree with them,",
       "source_part": 9,
       "source_paragraph": 28,
       "curated_image": "part_09/04_family_conversation.webp",
@@ -839,7 +799,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "As a father, I don",
+      "text": "As a father, I don’t approve of such an action, but as a man, I understand the truth. He just wanted to protect you. Can’t fault him for that,",
       "source_part": 9,
       "source_paragraph": 29,
       "portrait_expression": "sad"
@@ -847,12 +807,12 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "t approve of such an action, but as a man, I understand the truth. He just wanted to protect you. Can’t fault him for that,” Alric said with a shrug as they watched the three work upon the land from afar, Joren explaining various things and Asmodeus listening and nodding."
+      "text": "Alric said with a shrug as they watched the three work upon the land from afar, Joren explaining various things and Asmodeus listening and nodding."
     },
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "It",
+      "text": "It’s a natural part of being a family,",
       "source_part": 9,
       "source_paragraph": 30,
       "portrait_expression": "smile"
@@ -892,7 +852,7 @@
     {
       "kind": "line",
       "speaker": "ALRIC",
-      "text": "What",
+      "text": "What’s on your mind?",
       "source_part": 9,
       "source_paragraph": 35,
       "portrait_left": "alric",
