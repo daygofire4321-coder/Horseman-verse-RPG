@@ -33,7 +33,31 @@
   ],
   "sprites": {
     "asmodeus": "asmodeus.png",
-    "wild_boar": "wild_boar.png"
+    "wild_boar": "wild_boar.png",
+    "haniel": "haniel.png",
+    "joren": "joren.png",
+    "alric": "alric.png",
+    "bandit_thug": "bandit_knife.png",
+    "bandit_club": "bandit_club.png",
+    "grizzly_bear": "grizzly_bear.png",
+    "michael": "michael.png",
+    "deer": "deer.png",
+    "goat": "goat.png",
+    "rabbit": "rabbit.png",
+    "pheasant": "pheasant.png",
+    "duck": "duck.png",
+    "asmodeus_idle": "variants/asmodeus_idle.png",
+    "haniel_idle": "variants/haniel_idle.png",
+    "explore_bandit_dagger": "variants/explore_bandit_dagger.png",
+    "explore_bandit_sword_shield": "variants/explore_bandit_sword_shield.png",
+    "explore_bandit_heavy": "variants/explore_bandit_heavy.png",
+    "explore_bandit_veteran": "variants/explore_bandit_veteran.png",
+    "azrael": "variants/azrael.png",
+    "azazel": "variants/azazel.png",
+    "azrael_boss": "variants/azrael_boss.png",
+    "michael_boss_damaged": "variants/michael_boss_damaged.png",
+    "gabriel": "variants/gabriel.png",
+    "uriel": "variants/uriel.png"
   },
   "routes": {
     "prologue": "thundercloud",
@@ -41,5 +65,5 @@
     "bear": "forest_clearing",
     "alley": "cliffside_alley"
   },
-  "notes": "Battle visuals are independent of illustrated story CGs. Add sprite images to this map as they are created. All battle art assets are optional and have a fallback."
+  "notes": "Character sprites are extracted from the user's original paired sprite sheets. Prototype 006 displays the existing story fighters and a gallery; later character variants are organized for future content. All PNGs are optional; visual placeholders appear when the pack is not installed."
 }
