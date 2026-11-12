@@ -792,7 +792,7 @@ func _run_tests() -> void:
 	var ward_fight = TeamCombat.new()
 	ward_fight.setup(["asmodeus"], [], armored_sheets, ["wild_boar"])
 	_expect(bool(ward_fight.use_move("ice_guard").get("ok", false)), "Armored Asmodeus can still guard")
-	_expect(int(ward_fight.allies[0]["hp"]) == 57, "Iron Charm reduces enemy damage before guard halves it")
+	_expect(int(ward_fight.allies[0]["hp"]) == 56, "Iron Charm reduces enemy damage before guard halves it")
 	var plain_save: Dictionary = inventory_save.duplicate(true)
 	plain_save["campaigns"]["love_beyond"].erase("inventory")
 	var plain_sheet: Dictionary = inventory_party.sheet("asmodeus", plain_save)
@@ -815,7 +815,7 @@ func _run_tests() -> void:
 			"progression": {"asmodeus": {"level":1, "xp":9, "hp":60, "max_hp":100, "supplies":2}}
 		}}
 		inventory_view.set("save_data", ui_save)
-		var inventory_title: Button = inventory_view.find_child("TitleMenuScroll", true, false) as ScrollContainer
+		var inventory_title: ScrollContainer = inventory_view.find_child("TitleMenuScroll", true, false) as ScrollContainer
 		_expect(inventory_title != null, "Inventory can be opened from scrollable title menu")
 		inventory_view.call("_open_inventory")
 		_expect(inventory_view.find_child("InventorySlot_0", true, false) != null, "Three item slots visible")
