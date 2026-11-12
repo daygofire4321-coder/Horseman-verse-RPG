@@ -1525,6 +1525,15 @@ func _run_tests() -> void:
 		story_view.call("_continue_next_chapter")
 		_expect(int(story_view.get("event_index")) == part_nine_start,
 			"Completed Part Eight resumes exactly at Part Nine")
+		# Actually traversing Part Nine's final checkpoint should enter the
+		# real homestead scene, not display "INTERLUDE CONTENT MISSING".
+		story_view.set("event_index", story_view.get("story_events").size() - 2)
+		story_view.set("story_mode", true)
+		story_view.call("_show_event")
+		_expect(str(story_view.get("current_interlude_id")) == "homestead_haniel",
+			"Part Nine's final checkpoint opens Haniel's actual homestead")
+		_expect(bool(story_view.get("interlude_mode")),
+			"Chapter Nine automatically enters a playable daily-life scene")
 		var new_stats: Dictionary = story_view.call("_art_counts")
 		_expect(int(new_stats.get("chapters_total", 0)) == 36,
 			"Art check counts 22 existing plus 14 new chapter illustrations")
