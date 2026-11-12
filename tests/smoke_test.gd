@@ -1046,6 +1046,87 @@ func _run_tests() -> void:
 
 		town_view.queue_free()
 
+
+	# Prototype 015 — real top-level campaign selector, reusable hierarchy,
+	# disabled Blades placeholder, title theme and old Love Beyond features.
+	var campaign_register: Dictionary = ContentStore.read_dictionary("res://data/campaigns/registry.json")
+	var known_campaigns: Array = campaign_register.get("campaigns", [])
+	_expect(known_campaigns.size() == 2, "Campaign registry starts with two properly named campaigns")
+	_expect(str(known_campaigns[0].get("title", "")) == "Love Beyond Heaven or Hell", "Love Beyond campaign title matches the requested label")
+	_expect(str(known_campaigns[1].get("title", "")) == "Blades of Courage and Ferocity", "Blades has its own campaign entry")
+	_expect(str(known_campaigns[1].get("status", "")) == "coming_soon", "Blades is coming soon rather than playable")
+	var campaign_scene: Resource = load("res://scenes/prototype_story_v15.tscn")
+	_expect(campaign_scene is PackedScene, "Polished campaign selector scene imports")
+	if campaign_scene is PackedScene:
+		var hub: Node = (campaign_scene as PackedScene).instantiate()
+		root.add_child(hub)
+		hub.set("party_disable_disk_writes", true)
+		var empty_campaign_save: Dictionary = SaveStore.new_save()
+		hub.set("save_data", empty_campaign_save)
+		hub.call("_show_menu")
+		var entry_love: Button = hub.find_child("CampaignChoice_love_beyond", true, false) as Button
+		var entry_blades: Button = hub.find_child("CampaignChoice_blades", true, false) as Button
+		_expect(entry_love != null and not entry_love.disabled, "Love Beyond campaign can be opened")
+		_expect(entry_blades != null and entry_blades.disabled, "Blades choice is visibly present but not clickable")
+		_expect(hub.find_child("CampaignMenuScroll", true, false) != null, "Campaign selector handles smaller displays with scrolling")
+		_expect(hub.find_child("TitleMenuScroll", true, false) == null, "Legacy 14-button menu no longer clutters the title")
+		_expect(hub.find_child("OpenCliffsideMarket", true, false) == null, "Market entry isn't dumped onto the title screen")
+		_expect(entry_love.get_theme_stylebox("normal") is StyleBoxFlat, "Campaign buttons have themed backgrounds and trim")
+		var before_blades: Dictionary = hub.get("save_data").duplicate(true)
+		hub.call("_open_campaign", "blades")
+		_expect(str(hub.get("selected_campaign")) == "", "Blades cannot be selected through code or UI")
+		_expect(hub.get("save_data") == before_blades, "Coming Soon campaign never creates or changes any save")
+		_expect(hub.find_child("CampaignChoice_blades", true, false) != null, "Denied Blades selection leaves campaign menu visible")
+		if entry_love != null:
+			entry_love.pressed.emit()
+		_expect(str(hub.get("selected_campaign")) == "love_beyond", "Playable campaign enters Love Beyond")
+		var love_begin: Button = hub.find_child("LoveBegin", true, false) as Button
+		var love_continue: Button = hub.find_child("LoveContinue", true, false) as Button
+		_expect(love_begin != null, "Story is reachable inside Love Beyond")
+		_expect(love_continue != null and love_continue.disabled, "No Continue action when no save checkpoint exists")
+		_expect(hub.find_child("LoveAdventure", true, false) != null, "Love Beyond includes an Adventure submenu")
+		_expect(hub.find_child("LoveExtras", true, false) != null, "Love Beyond includes an Extras submenu")
+		hub.call("_show_love_adventure")
+		_expect(hub.find_child("LoveParty", true, false) != null, "Party menu remains reachable")
+		_expect(hub.find_child("LoveInventory", true, false) != null, "Shared backpack remains reachable")
+		var locked_cliffside: Button = hub.find_child("LoveCliffside", true, false) as Button
+		var locked_market: Button = hub.find_child("LoveMarket", true, false) as Button
+		_expect(locked_cliffside != null and locked_cliffside.disabled, "Cliffside free time is locked before Part Six")
+		_expect(locked_market != null and locked_market.disabled, "Market is locked before Part Six")
+		hub.call("_open_party_from_love")
+		_expect(hub.find_child("PartySlot_0", true, false) != null, "Existing party editing UI opens from campaign adventure")
+		hub.call("_close_party_menu")
+		_expect(hub.find_child("LoveParty", true, false) != null, "Back from party returns to Love Beyond Adventure, not the title")
+		hub.call("_open_inventory_from_love")
+		_expect(hub.find_child("InventorySlot_2", true, false) != null, "Existing 3-slot item system opens from campaign adventure")
+		hub.call("_inventory_close")
+		_expect(hub.find_child("LoveInventory", true, false) != null, "Back from inventory returns to Adventure")
+		hub.call("_show_love_extras")
+		_expect(hub.find_child("LoveBattlePractice", true, false) != null, "Full party combat practice stays under Extras")
+		_expect(hub.find_child("LoveQuickDuel", true, false) != null, "Original tutorial duel stays under Extras")
+		_expect(hub.find_child("LoveLocationGallery", true, false) != null, "Area gallery stays under Extras")
+		_expect(hub.find_child("LoveSpriteGallery", true, false) != null, "Sprite gallery stays under Extras")
+		var mature_campaign_save: Dictionary = SaveStore.new_save()
+		mature_campaign_save["campaigns"] = {"love_beyond": {"opening_parts_completed":6,
+			"interlude_checkpoint":{"id":"after_part_five", "event_index":30}}}
+		hub.set("save_data", mature_campaign_save)
+		hub.call("_show_love_campaign")
+		love_continue = hub.find_child("LoveContinue", true, false) as Button
+		_expect(love_continue != null and not love_continue.disabled, "Existing resumable save enables Continue inside Love Beyond")
+		hub.call("_show_love_adventure")
+		locked_market = hub.find_child("LoveMarket", true, false) as Button
+		locked_cliffside = hub.find_child("LoveCliffside", true, false) as Button
+		_expect(locked_market != null and not locked_market.disabled, "Market appears in adventure after Part Six")
+		_expect(locked_cliffside != null and not locked_cliffside.disabled, "Cliffside free time appears after Part Six")
+		hub.call("_open_market", "love_adventure")
+		_expect(hub.find_child("MarketMerchant_grocer", true, false) != null, "General market still works behind new campaign menu")
+		hub.call("_market_close")
+		_expect(hub.find_child("LoveMarket", true, false) != null, "Back from market returns to Love Beyond adventure")
+		hub.call("_show_menu")
+		_expect(hub.find_child("CampaignChoice_blades", true, false) != null, "Back to title returns to campaign selection")
+		_expect(not hub.get("save_data").get("campaigns", {}).has("blades"), "No empty Blades save slot is ever initialized")
+		hub.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
