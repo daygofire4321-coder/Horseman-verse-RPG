@@ -8,7 +8,7 @@ func _ensure_pixel_layer() -> void:
 	# Prototype 006 added the battlers as the last root child, above the dialogue
 	# panel. Rendering them beneath the main UI protects every combat button.
 	var main_ui: Node = action_row.get_parent().get_parent().get_parent().get_parent()
-	if main_ui.get_parent() == self and pixel_layer.get_parent() == self:
+	if main_ui.get_parent() == self and pixel_layer.get_parent() == self and pixel_layer.get_index() > main_ui.get_index():
 		move_child(pixel_layer, main_ui.get_index())
 
 
