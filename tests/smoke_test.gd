@@ -1339,6 +1339,41 @@ func _run_tests() -> void:
 		_expect(portrait_view.get("save_data") == before_practice, "New sprite arrangement doesn't change combat saves")
 		portrait_view.queue_free()
 
+
+	# Art installation hotfix: verify nested ZIP discovery, raw-file loading
+	# before import, and an in-game status screen rather than a silent fallback.
+	const ArtLoader = preload("res://scripts/core/optional_art_loader.gd")
+	_expect(ArtLoader.resolve("assets/love_beyond/dialogue_portraits/unknown/nope.webp") == "",
+		"Absent optional artwork has an explicit empty-path result")
+	_expect(ArtLoader.resolve("../outside.png") == "",
+		"Optional art loader blocks parent directory traversal")
+	_expect(ArtLoader.texture("assets/love_beyond/dialogue_portraits/unknown/nope.webp") == null,
+		"Unavailable optional textures fail safely without stopping gameplay")
+	var installed_example := ArtLoader.resolve("assets/love_beyond/pixel_battles/haniel.png")
+	_expect(installed_example != "", "Optional loader discovers an existing repo image at its canonical path")
+	_expect(ArtLoader.texture("assets/love_beyond/pixel_battles/haniel.png") != null,
+		"Optional loader can actually decode real PNG images")
+	var hotfix_resource: Resource = load("res://scenes/prototype_story_v18.tscn")
+	if hotfix_resource is PackedScene:
+		var repaired_view: Node = (hotfix_resource as PackedScene).instantiate()
+		root.add_child(repaired_view)
+		repaired_view.set("party_disable_disk_writes", true)
+		repaired_view.call("_show_love_extras")
+		_expect(repaired_view.find_child("LoveArtCheck", true, false) != null,
+			"Story & portrait Art Check is accessible under Love Beyond Extras")
+		repaired_view.call("_show_art_check")
+		_expect(repaired_view.find_child("CampaignPageTitle", true, false) != null,
+			"Art Check displays an instructional panel")
+		var art_stats: Dictionary = repaired_view.call("_art_counts")
+		_expect(int(art_stats.get("chapters_total", 0)) == 22,
+			"Art Check knows all 22 optional curated backgrounds")
+		_expect(int(art_stats.get("portraits_total", 0)) == 16,
+			"Art Check knows all 16 speaking portraits")
+		_expect(int(art_stats.get("chapters_found", 0)) >= 0 and
+			int(art_stats.get("portraits_found", 0)) >= 0,
+			"Art Check reports missing assets without breaking menus")
+		repaired_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
