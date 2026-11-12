@@ -1257,7 +1257,7 @@ func _run_tests() -> void:
 	# resumable expression state and on-field opposing battlers.
 	var portrait_catalog: Dictionary = ContentStore.read_dictionary("res://data/portraits/love_beyond.json")
 	var portrait_characters: Dictionary = portrait_catalog.get("characters", {})
-	_expect(portrait_characters.size() == 4, "Portrait registry contains the four provided characters")
+	_expect(portrait_characters.size() == 7, "Portrait registry covers four original plus Michael, Uriel and Toren")
 	for portrait_id in ["asmodeus", "haniel", "alric", "joren"]:
 		var definition: Dictionary = portrait_characters.get(portrait_id, {})
 		_expect(definition.get("expressions", {}).size() == 4, "Exactly four user-named expressions available for " + portrait_id)
@@ -1407,8 +1407,8 @@ func _run_tests() -> void:
 		var art_stats: Dictionary = repaired_view.call("_art_counts")
 		_expect(int(art_stats.get("chapters_total", 0)) == 22,
 			"Art Check knows all 22 optional curated backgrounds")
-		_expect(int(art_stats.get("portraits_total", 0)) == 16,
-			"Art Check knows all 16 speaking portraits")
+		_expect(int(art_stats.get("portraits_total", 0)) == 26,
+			"Art Check knows all 26 speaking portraits across Parts 1–9")
 		_expect(int(art_stats.get("chapters_found", 0)) >= 1 and
 			int(art_stats.get("portraits_found", 0)) >= 1,
 			"Art Check counts actual WebP assets discovered in the extracted folder")
@@ -1426,6 +1426,130 @@ func _run_tests() -> void:
 		repaired_view.queue_free()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(fake_chapter))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(fake_portrait))
+
+
+	# Prototype 019: manuscript-faithful Parts 7–9, portrait/image mappings,
+	# upgrade path for a completed-six save, and post-nine optional routines.
+	var new_story: Dictionary = ContentStore.read_dictionary("res://data/chapters/love_beyond_parts_7_9.json")
+	var new_events: Array = new_story.get("events", [])
+	_expect(new_events.size() > 115, "The three new chapters are a substantial author-authored story, not placeholders")
+	var new_titles: Array = []
+	var new_checks: Array = []
+	var chapter_art: Dictionary = {}
+	for entry_raw in new_events:
+		var ev: Dictionary = entry_raw
+		if str(ev.get("kind", "")) == "title":
+			new_titles.append([str(ev.get("part", "")), str(ev.get("title", ""))])
+		if str(ev.get("kind", "")) == "checkpoint":
+			new_checks.append(int(ev.get("part", 0)))
+		var img := str(ev.get("curated_image", ""))
+		if img != "":
+			chapter_art[img] = true
+	_expect(new_titles == [
+		["PART SEVEN","MICHAEL"], ["PART EIGHT","EXPLANATION"], ["PART NINE","UNDERSTANDING"]],
+		"New chapters use the exact canonical part numbers and titles")
+	_expect(new_checks == [7,8,9], "Completion saves checkpoints for all three additional parts")
+	_expect(chapter_art.size() == 14, "All 14 supplied backgrounds/story images map to Chapter 7–9 events")
+	_expect(new_events.any(func(e): return str(e.get("text", "")).contains("The bear almost worked")),
+		"Michael's critical bear revelation is included, not skipped")
+	_expect(new_events.any(func(e): return str(e.get("text", "")).contains("Didn’t think you’d know signs")),
+		"Asmodeus's quoted dialogue preserves curly apostrophes and full speech")
+	_expect(new_events.any(func(e): return str(e.get("text", "")).contains("One was a rebel")),
+		"Haniel's concluding signed reflection remains intact")
+	_expect(new_events.any(func(e): return str(e.get("text", "")).contains("It sounds like you love them very much")),
+		"Alric's final response is present in full")
+	_expect(str(new_events[-1].get("id", "")) == "homestead_after_nine" or
+		str(new_events[-1].get("id", "")) == "homestead_haniel",
+		"Part Nine concludes in new homestead free time rather than an invented combat encounter")
+	_expect(portrait_characters.get("michael", {}).get("expressions", {}).size() == 4,
+		"Michael gets his four supplied portraits")
+	_expect(portrait_characters.get("uriel", {}).get("expressions", {}).size() == 4,
+		"Uriel gets all four supplied expressions")
+	_expect(portrait_characters.get("toren", {}).get("expressions", {}).size() == 2,
+		"Toren has his two supplied talking portraits")
+	var interlude_data: Dictionary = ContentStore.read_dictionary("res://data/interludes/love_beyond.json")
+	_expect(interlude_data.get("stages", []).size() == 6,
+		"New homestead profiles supplement the original four daily routines")
+	var scene19: Resource = load("res://scenes/prototype_story_v19.tscn")
+	_expect(scene19 is PackedScene, "Parts 7–9 main scene imports and script parses")
+	if scene19 is PackedScene:
+		var story_view: Node = (scene19 as PackedScene).instantiate()
+		root.add_child(story_view)
+		story_view.set("party_disable_disk_writes", true)
+		story_view.call("_load_story_if_needed")
+		_expect(story_view.get("story_events").size() ==
+			first_events.size() + later_events.size() + new_events.size(),
+			"Chapters 1–6 remain, and 7–9 are appended exactly once")
+		story_view.call("_load_story_if_needed")
+		_expect(story_view.get("story_events").size() ==
+			first_events.size() + later_events.size() + new_events.size(),
+			"Reloading does not duplicate Parts 7–9")
+		var new_start: int = first_events.size() + later_events.size()
+		_expect(str(story_view.get("story_events")[new_start].get("title", "")) == "MICHAEL",
+			"Part Six ends before Michael's title begins")
+		_expect(str(story_view.call("_curated_image_for", new_start)) == "part_07/00_michael_office.webp",
+			"Chapter Seven starts with Heaven office art")
+		var heaven_cast: Dictionary = story_view.call("_portrait_state_at", new_start + 2)
+		_expect(heaven_cast.get("left") == "michael" and heaven_cast.get("right") == "uriel",
+			"Michael and Uriel appear together; Asmodeus/Haniel do not appear in Heaven")
+		var part_six_final: Dictionary = story_view.get("story_events")[new_start - 1]
+		_expect(int(part_six_final.get("part", 0)) == 6,
+			"All original Part Six story events end at the original checkpoint")
+		_expect(not part_six_final.has("curated_image"), "The old Part Six alley artwork remains untouched")
+		var old_six_save: Dictionary = SaveStore.new_save()
+		old_six_save["campaigns"] = {"love_beyond": {"opening_parts_completed": 6, "last_story_event": "end_part_6"}}
+		story_view.set("save_data", old_six_save.duplicate(true))
+		story_view.call("_show_love_campaign")
+		_expect(story_view.find_child("LoveContinuePartSeven", true, false) != null,
+			"Existing Part Six save exposes one-click Continue Part Seven")
+		story_view.call("_start_part_seven")
+		_expect(int(story_view.get("event_index")) == new_start, "Continue starts exactly at Michael's title")
+		_expect(bool(story_view.get("story_mode")), "Story mode is enabled when Part Seven begins")
+		_expect(int(story_view.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"]) == 6,
+			"Viewing Part Seven doesn't prematurely mark it complete")
+		var new_stats: Dictionary = story_view.call("_art_counts")
+		_expect(int(new_stats.get("chapters_total", 0)) == 36,
+			"Art check counts 22 existing plus 14 new chapter illustrations")
+		_expect(int(new_stats.get("portraits_total", 0)) == 26,
+			"Art check counts 16 existing plus 10 new character expressions")
+		story_view.set("save_data", {"campaigns":{"love_beyond":{
+			"opening_parts_completed":9,
+			"progression":{"asmodeus":{"hp":90,"max_hp":100,"level":2,"xp":15},
+				"haniel":{"hp":95,"max_hp":100,"level":1,"xp":11}}}}})
+		story_view.call("_show_love_adventure")
+		_expect(story_view.find_child("LoveHomestead", true, false) != null,
+			"Chapter Nine unlocks homestead activities in Love Beyond Adventure")
+		story_view.call("_open_homestead_selector")
+		_expect(story_view.find_child("HomesteadChooseHaniel", true, false) != null,
+			"Homestead opens distinct Haniel and Asmodeus daily routines")
+		story_view.call("_enter_homestead", "haniel")
+		_expect(str(story_view.get("current_interlude_id")) == "homestead_haniel",
+			"Haniel woodworking uses her own saved daily profile")
+		var before_woodwork: int = int(story_view.get("interlude_engine").state.get("actions_left", 0))
+		story_view.call("_take_interlude_action", "woodwork")
+		_expect(int(story_view.get("interlude_engine").state.get("woodwork_sessions", 0)) == 1,
+			"Haniel gains persistent woodworking-practice progress")
+		_expect(int(story_view.get("interlude_engine").state.get("actions_left", 0)) == before_woodwork - 1,
+			"Woodworking costs one daily activity")
+		_expect(not story_view.get("save_data")["campaigns"]["love_beyond"].has("interlude_checkpoint"),
+			"Homestead never creates a phantom storyline checkpoint")
+		story_view.call("_bedtime_question")
+		_expect(story_view.find_child("HomesteadOrdinaryTomorrow", true, false) != null,
+			"After Part Nine, only an ordinary day is available until next chapter exists")
+		story_view.call("_ordinary_tomorrow")
+		_expect(int(story_view.get("interlude_engine").state.get("actions_left", -1)) == 3,
+			"An ordinary morning refills all three daily activities")
+		story_view.call("_enter_homestead", "asmodeus")
+		_expect(str(story_view.get("current_interlude_id")) == "homestead_asmodeus",
+			"Asmodeus has a separate gardening and hunting day")
+		story_view.call("_take_interlude_action", "garden")
+		_expect(int(story_view.get("interlude_engine").state.get("gardening_sessions", 0)) == 1,
+			"Asmodeus gains gardening experience through a free-time action")
+		_expect(story_view.get("save_data")["campaigns"]["love_beyond"]["interludes"].has("homestead_haniel"),
+			"Switching POV preserves Haniel's woodwork progress")
+		_expect(int(story_view.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"]) == 9,
+			"Ordinary days and woodwork cannot advance the authored story")
+		story_view.queue_free()
 
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
