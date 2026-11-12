@@ -86,7 +86,9 @@ func _front_panel() -> VBoxContainer:
 	var panel: PanelContainer = content.get_parent() as PanelContainer
 	panel.add_theme_stylebox_override("panel", _panel_style())
 	var screen_width: float = get_viewport_rect().size.x
-	panel.custom_minimum_size.x = minf(785.0, maxf(320.0, screen_width - 32.0))
+	var normal_width := minf(785.0, maxf(320.0, screen_width - 32.0))
+	frontend_body.custom_minimum_size = Vector2(normal_width, 0)
+	panel.custom_minimum_size.x = normal_width
 	return content
 
 
