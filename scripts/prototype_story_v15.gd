@@ -14,6 +14,7 @@ const UI_TEXT := Color(0.95, 0.94, 0.91, 1.0)
 
 var campaign_registry: Dictionary = {}
 var selected_campaign := ""
+var return_to_love_adventure := false
 
 
 func _ready() -> void:
@@ -112,6 +113,7 @@ func _show_menu() -> void:
 	if was_live:
 		return
 	selected_campaign = ""
+	return_to_love_adventure = false
 	_show_campaign_select()
 
 
@@ -257,16 +259,16 @@ func _show_love_campaign() -> void:
 func _show_love_adventure() -> void:
 	var content := _title_panel("YOUR ADVENTURE", "Manage your Love Beyond party, or visit unlocked locations.")
 	var party_button := _front_button(content, "PARTY & CHARACTER SHEETS",
-		Callable(self, "_show_party_menu").bind(false), 49.0)
+		_open_party_from_love, 49.0)
 	party_button.name = "LoveParty"
-	var inventory_button := _front_button(content, "SHARED BACKPACK & EQUIPMENT", _open_inventory, 48.0)
+	var inventory_button := _front_button(content, "SHARED BACKPACK & EQUIPMENT", _open_inventory_from_love, 48.0)
 	inventory_button.name = "LoveInventory"
 	var town := _front_button(content, "CLIFFSIDE FREE TIME  •  EXPLORE / PATROL",
 		_cliffside_day_selector, 48.0)
 	town.name = "LoveCliffside"
 	town.disabled = _completed_story_part() < 6
 	var market := _front_button(content, "CLIFFSIDE MARKET  •  BUY / SELL",
-		_open_market, 48.0)
+		Callable(self, "_open_market").bind("love_adventure"), 48.0)
 	market.name = "LoveMarket"
 	market.disabled = _completed_story_part() < 6
 	if _completed_story_part() < 6:
@@ -306,3 +308,36 @@ func _show_about() -> void:
 		"UI panels use deep navy, gold and pale blue. Add your supplied title illustration to assets/paleverse/campaign_title.webp.",
 		14, Color(0.78, 0.83, 0.88)).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_front_button(content, "BACK TO EXTRAS", _show_love_extras, 45.0)
+
+
+
+func _open_party_from_love() -> void:
+	return_to_love_adventure = true
+	_show_party_menu(false)
+
+
+func _close_party_menu() -> void:
+	if return_to_love_adventure and not party_return_to_daily:
+		return_to_love_adventure = false
+		_show_love_adventure()
+	else:
+		return_to_love_adventure = false
+		super._close_party_menu()
+
+
+func _open_inventory_from_love() -> void:
+	_open_inventory("", "love_adventure")
+
+
+func _inventory_close() -> void:
+	if inventory_origin == "love_adventure":
+		_show_love_adventure()
+	else:
+		super._inventory_close()
+
+
+func _market_close() -> void:
+	if market_origin == "love_adventure":
+		_show_love_adventure()
+	else:
+		super._market_close()
