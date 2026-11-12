@@ -1,0 +1,19 @@
+{
+  "id": "bandit_heavy",
+  "name": "Heavy Outlaw",
+  "series": "love_beyond",
+  "max_hp": 87,
+  "exp_reward": 30,
+  "ai": {
+    "damage": 16,
+    "damage_vs_guard": 5
+  },
+  "moves": [
+    {
+      "id": "heavy_swing",
+      "name": "Heavy Swing",
+      "kind": "damage",
+      "power": 16
+    }
+  ]
+}
