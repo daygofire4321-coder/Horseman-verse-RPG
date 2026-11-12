@@ -135,18 +135,16 @@ func _show_character_sheet(id: String) -> void:
 			_front_label(content, "Training unlocks after Part %d." % int(target.get("unlock_after_part", 0)), 14, Color(0.97, 0.80, 0.61))
 		else:
 			_front_label(content, "Practice this move through the Train daily activity when this character is available.", 14)
-	# Place the new bar above BACK TO PARTY, not below it.
+	# Put the whole training section immediately above BACK TO PARTY.
 	var back_button: Node = null
 	for child in content.get_children():
 		if child is Button and child.text == "BACK TO PARTY":
 			back_button = child
 			break
 	if back_button != null:
+		var new_section: Array = []
 		for child in content.get_children():
-			if child is Label and child.name == "CharacterTrainingHeader":
-				var insert_index := back_button.get_index()
-				var first_index := child.get_index()
-				while first_index < insert_index:
-					content.move_child(content.get_child(first_index + 1), first_index)
-					first_index += 1
-				break
+			if child.get_index() >= train_title.get_index():
+				new_section.append(child)
+		for child in new_section:
+			content.move_child(child, back_button.get_index())
