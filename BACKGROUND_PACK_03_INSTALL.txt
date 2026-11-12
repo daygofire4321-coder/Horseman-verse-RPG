@@ -1,0 +1,16 @@
+PALE HORSEMAN RPG — LOVE BEYOND BACKGROUND PACK 03
+
+Extract this ZIP directly into Horseman-verse-RPG/, next to project.godot.
+The files should land in assets/love_beyond/pixel_battles/*.webp.
+DO NOT extract into assets/ (that would create assets/assets/).
+
+You also need to pull the updated code in GitHub Desktop so that Godot
+uses the new backgrounds, including the separate Bear Forest.
+
+Current battle backgrounds: thundercloud, forest clearing, bear forest, cliffside alley.
+The camp shows during Asmodeus's daily interludes.
+Market and Alric's smithy are preview locations awaiting a shop system.
+
+Godot 4 imports WEBP normally. Images are 1280x720 to match the game's
+reference window size; they were optimized from the supplied 1672x941 PNGs.
+Source PNG originals remain yours; the WEBP files are non-destructive copies.
