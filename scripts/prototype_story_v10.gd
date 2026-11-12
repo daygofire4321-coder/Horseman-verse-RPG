@@ -33,6 +33,16 @@ func _show_menu() -> void:
 	var panel: Node = frontend_body.get_child(0)
 	var content: Node = panel.get_child(0)
 	_front_button(content, "PARTY & CHARACTER SHEETS", Callable(self, "_show_party_menu").bind(false), 45.0)
+	# There are now several prototype/debug buttons on the title screen.
+	# Without scrolling, the newest one falls below a 1280x720 window.
+	var scroll := ScrollContainer.new()
+	scroll.name = "TitleMenuScroll"
+	scroll.custom_minimum_size = Vector2(810, minf(612.0, get_viewport_rect().size.y * 0.85))
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	frontend_body.add_child(scroll)
+	frontend_body.remove_child(panel)
+	scroll.add_child(panel)
 
 
 func _draw_interlude() -> void:
