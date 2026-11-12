@@ -312,6 +312,10 @@ func _run_tests() -> void:
 		_expect(enemy_picture.anchor_bottom <= 0.72, "Enemy feet leave HUD clear")
 		fixed_view.call("_draw_battle")
 		_expect(picture_layer.get_index() < battle_ui.get_index(), "UI stays above sprites on redraw")
+		var battle_gap: Control = fixed_view.get("stage_spacer") as Control
+		_expect(battle_gap != null and battle_gap.visible, "Battlefield reserves vertical room above move buttons")
+		fixed_view.call("_hide_pixel_stage")
+		_expect(not battle_gap.visible, "Returning to story hides battlefield spacer")
 		fixed_view.call("_start_battle", "Haniel", "Asmodeus")
 		_expect(not enemy_picture.flip_h, "Asmodeus faces inward from enemy side")
 		fixed_view.queue_free()
