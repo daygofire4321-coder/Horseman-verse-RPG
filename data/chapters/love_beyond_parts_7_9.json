@@ -1,0 +1,956 @@
+{
+  "id": "love_beyond_parts_7_9",
+  "title": "A Love Stronger Than Heaven or Hell",
+  "source": "Author-supplied manuscript: Part Seven Michael; Part Eight Explanation; Part Nine Understanding",
+  "note": "Narration split into readable sections; spoken dialogue is preserved as supplied. Portrait expressions and curated images are presentation metadata; no combat was invented for these chapters.",
+  "events": [
+    {
+      "kind": "title",
+      "part": "PART SEVEN",
+      "title": "MICHAEL",
+      "curated_image": "part_07/00_michael_office.webp",
+      "portrait_left": "michael",
+      "portrait_right": "uriel"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Michael stood in his ivory tower, facing one panel of the large encirclement of windows surrounding his office. He heard Uriel enter through the sole door behind him.",
+      "source_part": 7,
+      "source_paragraph": 0,
+      "curated_image": "part_07/01_heaven_approach.webp"
+    },
+    {
+      "kind": "line",
+      "speaker": "MICHAEL",
+      "text": "Yes, Uriel?",
+      "source_part": 7,
+      "source_paragraph": 1,
+      "curated_image": "part_07/02_michael_and_uriel.webp",
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Michael asked, not taking his eyes off the golden bridges below, connecting the sea of clouded islands."
+    },
+    {
+      "kind": "line",
+      "speaker": "URIEL",
+      "text": "My sources have confirmed that Asmodeus and Haniel both survived. Shall I send aid?",
+      "source_part": 7,
+      "source_paragraph": 2,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "MICHAEL",
+      "text": "No,",
+      "source_part": 7,
+      "source_paragraph": 3,
+      "portrait_expression": "annoyed"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "There was silence.",
+      "source_part": 7,
+      "source_paragraph": 4
+    },
+    {
+      "kind": "line",
+      "speaker": "URIEL",
+      "text": "Are you certain of that? Haniel is likely weak, and she is our sister.",
+      "source_part": 7,
+      "source_paragraph": 5,
+      "portrait_expression": "concerned"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Flecks of white flame glimmered in and out of existence around him. Uriel was the most pragmatic of their siblings, the calmest and most calculated, which was precisely why they were not fit for a leadership position. Leadership was for one with passion, someone with a burning inferno in their heart and molten lead flowing through their veins.",
+      "source_part": 7,
+      "source_paragraph": 6
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "As God’s wrath, that was Michael’s natural role."
+    },
+    {
+      "kind": "line",
+      "speaker": "MICHAEL",
+      "text": "I already have things well in hand, Uriel.",
+      "source_part": 7,
+      "source_paragraph": 7,
+      "portrait_expression": "angry"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "From beneath Uriel’s many cloaks, Michael saw a curious look full of doubt.",
+      "source_part": 7,
+      "source_paragraph": 8
+    },
+    {
+      "kind": "line",
+      "speaker": "URIEL",
+      "text": "Perhaps I should inform Father,",
+      "source_part": 7,
+      "source_paragraph": 9,
+      "portrait_expression": "skeptical"
+    },
+    {
+      "kind": "line",
+      "speaker": "MICHAEL",
+      "text": "We shouldn",
+      "source_part": 7,
+      "source_paragraph": 10,
+      "portrait_expression": "angry"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "t bother Father with such nonsense, lest we all suffer the consequences. I have this under control,” Michael said."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He felt the blade at his side grow hot within its sheath, burning to unleash its fury.",
+      "source_part": 7,
+      "source_paragraph": 11
+    },
+    {
+      "kind": "line",
+      "speaker": "URIEL",
+      "text": "Very well. However, I would rather not see Haniel go the way of our brother. It would be a shame for our seven to become five.",
+      "source_part": 7,
+      "source_paragraph": 12,
+      "portrait_expression": "concerned"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Uriel exited the room without another word.",
+      "source_part": 7,
+      "source_paragraph": 13
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Michael’s windows cracked as Uriel left, leaving him unsure if it was a release of his own pent-up rage or a threat from Uriel. He walked to his chair, a comfortable wooden armchair, and sat facing the small pedestal with a soft blue ball of glass resting upon it.",
+      "source_part": 7,
+      "source_paragraph": 14,
+      "curated_image": "part_07/03_blue_orb.webp",
+      "portrait_right": ""
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "His first attempt had failed.",
+      "source_part": 7,
+      "source_paragraph": 15
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "His attempt to help his sister, a delicate thing who could not even speak for herself.",
+      "source_part": 7,
+      "source_paragraph": 16
+    },
+    {
+      "kind": "line",
+      "speaker": "MICHAEL",
+      "text": "The bear almost worked,",
+      "source_part": 7,
+      "source_paragraph": 17,
+      "curated_image": "part_07/04_michael_reflection.webp",
+      "portrait_expression": "contemplative"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Had Haniel not been so soft, his plan would have worked. He would not forget such treason, yet he would forgive her, just as their Father had taught.",
+      "source_part": 7,
+      "source_paragraph": 18
+    },
+    {
+      "kind": "checkpoint",
+      "part": 7
+    },
+    {
+      "kind": "title",
+      "part": "PART EIGHT",
+      "title": "EXPLANATION",
+      "curated_image": "part_08/00_alric_living_room.webp",
+      "portrait_left": "asmodeus",
+      "portrait_right": "haniel"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus sat at Alric’s oaken table. It wasn’t as well built as his furniture in Hell, though compared to his drying rack, it might as well have been made for royalty. Looking to Haniel, he saw her discomfort.",
+      "source_part": 8,
+      "source_paragraph": 0
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She hadn’t seemed content since the alley incident, even though he let them linger until the boy’s parents arrived and took him home safe and sound, minus the broken arm. That child deserved much worse than what he got."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Had it been his choice, had he known it wouldn’t upset Haniel, he likely would have ripped the thug’s throat out and called it even."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "You gonna get over this soon?",
+      "source_part": 8,
+      "source_paragraph": 1,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "He didn’t receive hand signs in the traditional sense, but rather a crude gesture.",
+      "source_part": 8,
+      "source_paragraph": 2
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Didn",
+      "source_part": 8,
+      "source_paragraph": 3,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "I have siblings,",
+      "source_part": 8,
+      "source_paragraph": 4,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "she signed in response. Her signs were quick and sloppy from agitation, so reading them was a hassle."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Why are you even mad? Kid was gonna cut you up. He deserved worse if you ask me,",
+      "source_part": 8,
+      "source_paragraph": 5,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Aye, the boy did have a broken bone or two coming. That group",
+      "source_part": 8,
+      "source_paragraph": 6,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "s been acting up for a while now. Hopefully you knocked some sense into them,” Alric said, setting cups in front of them along with a plate of pastries."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Yet I suspect your lass is less angry about the extremes you went through and more angry you did it when you already had him at your mercy. She seems like the good-natured sort,",
+      "source_part": 8,
+      "source_paragraph": 7,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus could see that Alric was a man who had worked his whole life, and looking to Haniel’s gentle nodding, he saw that Alric was correct.",
+      "source_part": 8,
+      "source_paragraph": 8
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "It amazed Asmodeus how vicious Haniel could be in battle, yet outside of it, without the orders of Heaven, she was kind and gentle, though perhaps too much so.",
+      "source_part": 8,
+      "source_paragraph": 9
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I",
+      "source_part": 8,
+      "source_paragraph": 10,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "I know you aren",
+      "source_part": 8,
+      "source_paragraph": 11,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "And neither of you should be. My wife and I don",
+      "source_part": 8,
+      "source_paragraph": 12,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus eyed the room around them. Things like books he doubted Alric would read, sappy romantic things, and toys were spread through the house, indicating children of a variety of ages.",
+      "source_part": 8,
+      "source_paragraph": 13
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Can",
+      "source_part": 8,
+      "source_paragraph": 14,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "t believe I’m in the doghouse when I’m not even getting any,” Asmodeus said with a sigh."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Watch your mouth. Children could be around,",
+      "source_part": 8,
+      "source_paragraph": 15,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Yeah, because young people don",
+      "source_part": 8,
+      "source_paragraph": 16,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel didn’t respond with signs, but rather gave him a stern look.",
+      "source_part": 8,
+      "source_paragraph": 17
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Fine, damn. I swear I",
+      "source_part": 8,
+      "source_paragraph": 18,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The room was quiet as Haniel and Alric stared blankly at him.",
+      "source_part": 8,
+      "source_paragraph": 19
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Well… regardless… my three children are off doing their schooling,",
+      "source_part": 8,
+      "source_paragraph": 20,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Might I ask what brings such interesting, not-human folks to my town?",
+      "source_part": 8,
+      "source_paragraph": 21
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel flinched and Asmodeus prepared himself for violence.",
+      "source_part": 8,
+      "source_paragraph": 22
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "How did you know?",
+      "source_part": 8,
+      "source_paragraph": 23,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "She has wings and white hair… and you have a tail and red eyes…",
+      "source_part": 8,
+      "source_paragraph": 24,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus looked behind him to his own tail, then noticed Haniel had also glanced at his tail.",
+      "source_part": 8,
+      "source_paragraph": 25
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Pervert!",
+      "source_part": 8,
+      "source_paragraph": 26,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel made a quick, semi-panicked motion before looking indignantly in his direction, then looking to Alric for support. Asmodeus was pleased with the results of his teasing.",
+      "source_part": 8,
+      "source_paragraph": 27
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "I",
+      "source_part": 8,
+      "source_paragraph": 28,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "m a demon and she’s an angel. We fought, and now we’re weakened and trying to survive. We live a few miles east of here,” Asmodeus said bluntly."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Mighty exciting people you are indeed,",
+      "source_part": 8,
+      "source_paragraph": 29,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Why aren",
+      "source_part": 8,
+      "source_paragraph": 30,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "A couple weeks ago, I saw blue and red lightning in the clouds. Then today I saw a man with a tail and a woman who certainly looks the part of an angel. The dots aren",
+      "source_part": 8,
+      "source_paragraph": 31,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Did you get what ya came here for?",
+      "source_part": 8,
+      "source_paragraph": 32
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Yeah, herbs to help Haniel. She was weakened further after saving my ungrateful ass from a bear,",
+      "source_part": 8,
+      "source_paragraph": 33,
+      "portrait_expression": "sad"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Asmodeus said, tapping his finger against the table."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I see. Is there anything I can do to help you?",
+      "source_part": 8,
+      "source_paragraph": 34
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric’s gaze moved to Haniel, and Asmodeus’s followed. She was pointing at the very table they were sitting at.",
+      "source_part": 8,
+      "source_paragraph": 35,
+      "curated_image": "part_08/01_haniel_woodworking_request.webp"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "My table? I built this when I married my wife, so unfortunately I can",
+      "source_part": 8,
+      "source_paragraph": 36,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "t part with it,” Alric said, receiving a shake of Haniel’s head in response."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric’s eyes widened with the gleam of an understanding that still eluded Asmodeus.",
+      "source_part": 8,
+      "source_paragraph": 37
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "You want to learn carpentry?",
+      "source_part": 8,
+      "source_paragraph": 38,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Makes sense. My drying rack turned out poorly,",
+      "source_part": 8,
+      "source_paragraph": 39
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "You can hunt, and I will make what we need,",
+      "source_part": 8,
+      "source_paragraph": 40,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I",
+      "source_part": 8,
+      "source_paragraph": 41
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "m a smith and carpenter by trade, so I can certainly teach ya,” Alric said."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "You seem like a lady who",
+      "source_part": 8,
+      "source_paragraph": 42
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "And I",
+      "source_part": 8,
+      "source_paragraph": 43,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "ll even get you a book on gardening and some equipment for it,” Alric said with a smile."
+    },
+    {
+      "kind": "checkpoint",
+      "part": 8
+    },
+    {
+      "kind": "title",
+      "part": "PART NINE",
+      "title": "UNDERSTANDING",
+      "curated_image": "part_09/00_cave_outside.webp",
+      "portrait_left": "asmodeus",
+      "portrait_right": "haniel"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel sat outside their cave. Alric told them he would visit to get Asmodeus started on gardening and to teach her some woodworking. A few hours after sunrise, a small wooden wagon neared. Alric was walking next to it, and the wagon was being pulled by a pair of boys, one she recognized and one she did not.",
+      "source_part": 9,
+      "source_paragraph": 0,
+      "curated_image": "part_09/01_joren_arrival.webp"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric stopped in the clearing by their cave, motioning to the boys: the teenage thug from before and a younger boy in the waning years of his childhood."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I brought aid,",
+      "source_part": 9,
+      "source_paragraph": 1,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Get over here, boys,",
+      "source_part": 9,
+      "source_paragraph": 2,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric said, motioning them over."
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "That",
+      "source_part": 9,
+      "source_paragraph": 3,
+      "portrait_expression": "mad"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Joren, do you have something to say to these fine people?",
+      "source_part": 9,
+      "source_paragraph": 4,
+      "portrait_expression": "angry"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "It wasn’t a request from Alric, but a demand.",
+      "source_part": 9,
+      "source_paragraph": 5
+    },
+    {
+      "kind": "line",
+      "speaker": "JOREN",
+      "text": "I",
+      "source_part": 9,
+      "source_paragraph": 6,
+      "portrait_expression": "sheepish"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Is that enough?",
+      "source_part": 9,
+      "source_paragraph": 7,
+      "portrait_expression": "angry"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The pregnant pause seemed to expand infinitely.",
+      "source_part": 9,
+      "source_paragraph": 8
+    },
+    {
+      "kind": "line",
+      "speaker": "JOREN",
+      "text": "No,",
+      "source_part": 9,
+      "source_paragraph": 9,
+      "portrait_expression": "sheepish"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Joren said, a mix of fear, embarrassment, and sadness coloring his aura."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "He",
+      "source_part": 9,
+      "source_paragraph": 10,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "s a foolish brat, but his family are farmers, so he can show ya the ropes of farming,” Alric said, annoyance coloring Asmodeus’s aura."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "If you still need to get in a few whacks after he",
+      "source_part": 9,
+      "source_paragraph": 11,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "Fine,",
+      "source_part": 9,
+      "source_paragraph": 12,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The other boy walked up to them and bowed politely.",
+      "source_part": 9,
+      "source_paragraph": 13
+    },
+    {
+      "kind": "line",
+      "speaker": "TOREN",
+      "text": "My name is Toren,",
+      "source_part": 9,
+      "source_paragraph": 14,
+      "curated_image": "part_09/02_toren_introduction.webp",
+      "portrait_expression": "cheerful"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The child was adorable, but she did not know what to convey. She had never been a child and didn’t know how to interact with them. Would waving be enough, or would a pat on the head be in order? Or would such a familiar touch be rude or seen as condescending?",
+      "source_part": 9,
+      "source_paragraph": 15
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Toren will also help you get some farming started. It will take several days, but they are strong lads,",
+      "source_part": 9,
+      "source_paragraph": 16,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "ASMODEUS",
+      "text": "And what will you be doing then?",
+      "source_part": 9,
+      "source_paragraph": 17
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I brought my extra tools and some lumber, so I will be teaching the lady woodworking,",
+      "source_part": 9,
+      "source_paragraph": 18,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "The explanation seemed enough for Asmodeus, and he left with the boys for his lesson on living alongside nature.",
+      "source_part": 9,
+      "source_paragraph": 19,
+      "curated_image": "part_09/03_farming_lesson.webp",
+      "portrait_left": "alric",
+      "portrait_right": "haniel"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I like that one. He",
+      "source_part": 9,
+      "source_paragraph": 20,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel nodded, watching the boy whose arm was in a sling pull buckets from the wagon—an arm Asmodeus had damaged.",
+      "source_part": 9,
+      "source_paragraph": 21
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "He",
+      "source_part": 9,
+      "source_paragraph": 22,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "I took my fair share of punishment when I was a young man. They heal quickly and hopefully learn an important lesson,",
+      "source_part": 9,
+      "source_paragraph": 23,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "He still did it,",
+      "source_part": 9,
+      "source_paragraph": 24,
+      "portrait_expression": "sad"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric thought for a moment.",
+      "source_part": 9,
+      "source_paragraph": 25
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Aye, he did. My wife and I aren",
+      "source_part": 9,
+      "source_paragraph": 26,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "t perfect either. We do things all the time that the other one doesn’t like, but do you know what helps with that?” Alric asked."
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel shook her head. There was no way she could know about a woman she had never seen before.",
+      "source_part": 9,
+      "source_paragraph": 27
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "We understand why each other does the things we do, even if we don",
+      "source_part": 9,
+      "source_paragraph": 28,
+      "curated_image": "part_09/04_family_conversation.webp",
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "As a father, I don",
+      "source_part": 9,
+      "source_paragraph": 29,
+      "portrait_expression": "sad"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "t approve of such an action, but as a man, I understand the truth. He just wanted to protect you. Can’t fault him for that,” Alric said with a shrug as they watched the three work upon the land from afar, Joren explaining various things and Asmodeus listening and nodding."
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "It",
+      "source_part": 9,
+      "source_paragraph": 30,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel opened her mouth to correct, to argue, but Alric spoke once more.",
+      "source_part": 9,
+      "source_paragraph": 31
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Even if you are not husband and wife, it is clear that there is fondness between the two of you. Regardless of what form that takes, it is precious.",
+      "source_part": 9,
+      "source_paragraph": 32,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Haniel stared at a patch of earth. She had to go back to heaven, had to see Azriel and the others, yet Alric was correct. She was beginning to care for this hellspawn, and that was sinful.",
+      "source_part": 9,
+      "source_paragraph": 33
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "A memory crossed her mind, a single image: her forsaken brother wrapped in chains as he was cast to the land below. His face had been twisted into something ugly, a face of anger and fear, yelling and crying. She didn’t understand it then, but perhaps she was beginning the journey to understanding such things.",
+      "source_part": 9,
+      "source_paragraph": 34,
+      "curated_image": "part_09/05_memory_brother.webp",
+      "portrait_left": "",
+      "portrait_right": ""
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "What",
+      "source_part": 9,
+      "source_paragraph": 35,
+      "portrait_left": "alric",
+      "portrait_right": "haniel",
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "Thinking about my brothers, one younger and one older,",
+      "source_part": 9,
+      "source_paragraph": 36,
+      "portrait_expression": "sad"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "Mind telling me about them?",
+      "source_part": 9,
+      "source_paragraph": 37,
+      "portrait_expression": "neutral"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "Alric asked, taking some wood from the wagon."
+    },
+    {
+      "kind": "line",
+      "speaker": "HANIEL [SIGNING]",
+      "text": "One was a rebel, and the other is the kindest soul I have ever met,",
+      "source_part": 9,
+      "source_paragraph": 38,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "ALRIC",
+      "text": "It sounds like you love them very much,",
+      "source_part": 9,
+      "source_paragraph": 39,
+      "portrait_expression": "smile"
+    },
+    {
+      "kind": "line",
+      "speaker": "NARRATOR",
+      "text": "She did love them. She loved all her siblings, even the one she was told not to, because to love was simply her nature.",
+      "source_part": 9,
+      "source_paragraph": 40,
+      "curated_image": "part_09/06_cave_homestead.webp"
+    },
+    {
+      "kind": "checkpoint",
+      "part": 9
+    },
+    {
+      "kind": "interlude",
+      "id": "homestead_after_nine"
+    }
+  ]
+}
