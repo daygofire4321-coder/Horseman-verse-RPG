@@ -11,12 +11,14 @@
       "kind": "title",
       "part": "PART FOUR",
       "title": "TO GIVE THANKS",
-      "image": "haniel_water.jpg"
+      "image": "haniel_water.jpg",
+      "curated_image": "part_04/01_cave_care.webp"
     },
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "Cool water touched Haniel's lips and coaxed her awake. Asmodeus knelt beside her, holding a particularly large seashell to her mouth."
+      "text": "Cool water touched Haniel's lips and coaxed her awake. Asmodeus knelt beside her, holding a particularly large seashell to her mouth.",
+      "curated_image": "part_04/02_seashell_water.webp"
     },
     {
       "kind": "line",
@@ -41,7 +43,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "I told you the strong's duty is to do as they please with the weak. That bear had me at its mercy. Yet despite disagreeing with my worldview, you still saved my ass yesterday... why?"
+      "text": "I told you the strong's duty is to do as they please with the weak. That bear had me at its mercy. Yet despite disagreeing with my worldview, you still saved my ass yesterday... why?",
+      "curated_image": "part_04/03_haniel_resting.webp"
     },
     {
       "kind": "line",
@@ -56,7 +59,8 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "She signed slowly with heavy, clumsy hands. She remembered the fear the bear had felt when she killed it."
+      "text": "She signed slowly with heavy, clumsy hands. She remembered the fear the bear had felt when she killed it.",
+      "curated_image": "part_04/04_talking_outside_cave.webp"
     },
     {
       "kind": "line",
@@ -111,7 +115,8 @@
     {
       "kind": "line",
       "speaker": "NARRATOR",
-      "text": "Haniel smiled. Asmodeus smiled back."
+      "text": "Haniel smiled. Asmodeus smiled back.",
+      "curated_image": "part_04/05_cave_recovery.webp"
     },
     {
       "kind": "interlude",
@@ -121,7 +126,8 @@
       "kind": "title",
       "part": "PART FIVE",
       "title": "PLAYING HOUSE",
-      "image": "camp_hiderack.jpg"
+      "image": "camp_hiderack.jpg",
+      "curated_image": "part_05/01_hiderack.webp"
     },
     {
       "kind": "line",
@@ -162,7 +168,8 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "Haniel climbed down from the ledge. She mulled his question over like a puzzle.",
-      "image": "camp_conversation.jpg"
+      "image": "camp_conversation.jpg",
+      "curated_image": "part_05/02_haniel_by_cave.webp"
     },
     {
       "kind": "line",
@@ -198,7 +205,8 @@
       "kind": "line",
       "speaker": "NARRATOR",
       "text": "He turned to their charcoal-filled firepit. If he had to play house with an angel, he was glad it was this one.",
-      "image": "camp_hiderack.jpg"
+      "image": "camp_hiderack.jpg",
+      "curated_image": "part_05/03_camp_sunset.webp"
     },
     {
       "kind": "interlude",
