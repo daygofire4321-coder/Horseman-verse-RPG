@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 017 — Curated Story Art (Parts 1–5)
+
+The new default scene is `scenes/prototype_story_v17.tscn`. The author supplied **22 illustrations** in `1-6.zip` for Parts One through Five, plus a note specifying the order of the Part Three bear images. The story events now select the matching pictures during the cave truce, collecting firewood, bear confrontation/rescue, recovery, and camp-building scenes.
+
+**Part Six remains completely unchanged.** No art was provided for it, so the original Cliffside streets and both story-battle backdrops remain in place. The event renderer also prevents earlier scenes from leaking into Part Six.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin** → extract the separately provided **Paleverse_Curated_Chapter_Art_017.zip** into your Godot project root → press **F5**. The artwork ZIP is only ~3.9 MB and contains `assets/love_beyond/curated_chapters/part_01/...` through `part_05/...`. No GitHub images or previous files need to be removed. The game runs with original background art even if you skip the optional pack.
+
+**No story text, save files, combat mechanics, or campaign menus were changed.** See [Prototype 017 curated art guide](docs/curated_chapter_art_017.md) for placement details and the author's Part Three bear-battle instructions.
+
+---
+
+
 ## F5: Prototype 016 — JRPG-Style Combat UI
 
 **NEW IN 016:** The multi-campaign main menu no longer shows the empty black rectangle left behind by the old dialogue panel. It returns properly when the story begins.
