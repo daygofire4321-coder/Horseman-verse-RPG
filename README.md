@@ -1,5 +1,22 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 007 — Daily-action and battle-layout fixes
+
+The default Godot scene is now `scenes/prototype_story_v7.tscn`. All earlier prototypes remain for rollback.
+
+**Daily routine:** The activity screen now scrolls instead of clipping long options. You can select Rest, Care for Haniel, Explore, or Work on Camp while you have daily actions remaining. When all three activities are used, the game explains why they are disabled and shows a direct **START ANOTHER ORDINARY DAY** button. Choosing an ordinary day restores actions **without moving forward in the canonical story**. The original Go to Bed screen still allows choosing between ordinary and exciting days, and a save/resume keeps the refreshed activity count.
+
+**Battle presentation:** Asmodeus faces toward the enemy from the left, sprite slots are more compact and lower, the battle stage reserves room above the commands, and combat images render **behind** the HUD and move buttons instead of blocking them. The cliffside multi-character formation is retained. Story scene illustrations and all authored fight outcomes are unchanged.
+
+**Install:** This update changes code only. Pull the latest `main` with GitHub Desktop and press **F5**. Keep the existing `Paleverse_Sprites_COMPLETE_Fresh_Link.zip` characters and earlier pixel background art extracted under `assets/love_beyond/pixel_battles/`; there is **no new sprite download** for this fix.
+
+**Automated coverage:** `tests/smoke_test.gd` now presses the Rest, Care, Explore and next ordinary-day buttons and checks that the story cursor remains unchanged. It checks saves, sprite orientation, dedicated stage spacing and UI layering, plus the earlier six-part combat/story tests.
+
+**Next work:** Dedicated pixel battle environments, followed by expanded leveling/party management, inventory/shops, and character-specific daily routines. Neither the new battle backgrounds nor the new systems are included in this patch.
+
+---
+
+
 ## F5: Prototype 006 — Your Love Beyond character sprites
 
 The default scene is now `scenes/prototype_story_v6.tscn`; earlier versions remain available for testing and rollback.
