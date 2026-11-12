@@ -56,7 +56,44 @@
         "sad": "alric/sad.webp",
         "smile": "alric/smile.webp"
       }
+    },
+    "michael": {
+      "default": "neutral",
+      "default_side": "left",
+      "aliases": [
+        "MICHAEL"
+      ],
+      "expressions": {
+        "neutral": "michael/neutral.webp",
+        "annoyed": "michael/annoyed.webp",
+        "angry": "michael/angry.webp",
+        "contemplative": "michael/contemplative.webp"
+      }
+    },
+    "uriel": {
+      "default": "neutral",
+      "default_side": "right",
+      "aliases": [
+        "URIEL"
+      ],
+      "expressions": {
+        "neutral": "uriel/neutral.webp",
+        "concerned": "uriel/concerned.webp",
+        "skeptical": "uriel/skeptical.webp",
+        "annoyed": "uriel/annoyed.webp"
+      }
+    },
+    "toren": {
+      "default": "neutral",
+      "default_side": "right",
+      "aliases": [
+        "TOREN"
+      ],
+      "expressions": {
+        "neutral": "toren/neutral.webp",
+        "cheerful": "toren/cheerful.webp"
+      }
     }
   },
-  "notes": "All names retained exactly as supplied in the 16-PNG zip; Asmo folder standardized to 'asmodeus'. Speaker aliases support signed/thought dialogue and the initially unnamed Blond Youth. Missing sprites fall back to no portrait without blocking text. Chapter illustration placements and Part Six artwork are untouched."
+  "notes": "Seven dialogue characters: 4 original faces x4 expressions, plus Michael x4, Uriel x4, Toren x2. The author's archive folders 'micheal' and 'toen' are normalized in installed paths, while expressions preserve their meaning; 'contimplative' is normalized to contemplative. Missing portrait assets fall back gracefully. Original four NPCs unaffected."
 }
