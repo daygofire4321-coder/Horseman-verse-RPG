@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 012 — Party Battle Practice
+
+The game now launches `scenes/prototype_story_v12.tscn`. From the title screen, scroll to **PARTY BATTLE PRACTICE** and select Woodland Skirmish (boar + wolf) or Cliffside Drill (two thugs). The mode loads your **saved three-character party and trained moves**.
+
+**Playable now:** Speed-ordered ally turns, selecting a move and enemy/ally target, healing, guarding, individual HP and KO states, enemy retaliation, winning/losing, and switching a current fighter for an unlocked reserve **at the cost of that turn**. In this optional practice mode, Attack/Defense influence damage. Asmodeus gets +2 on black-ice moves from his provisional affinity, and Haniel gains +3 healing from her provisional grace. The existing sprite sheets and background pack are reused.
+
+**Not changed:** These are **non-canon, reward-free practice battles**. They never alter saved EXP, HP, story checkpoints or training progress. Existing opening duel, bear rescue, and Joren story fights still use their authored outcome scripts. Alric's Friends and Family discount remains for the future shop pass; no equipment/items or main-story party turn integration yet. Gray Wolf battle art is pending, so the wolf has a text/name fallback.
+
+**Try it:** In GitHub Desktop, **Fetch origin → Pull origin**, then open Godot and press **F5**. No new art ZIP is necessary. See [Party Combat 012 playtest guide](docs/party_battle_012.md).
+
+---
+
+
 ## F5: Prototype 011 — Train to unlock moves
 
 The default scene is now `scenes/prototype_story_v11.tscn`. On ordinary days after Parts Four and Five, Asmodeus now has a **Train** activity: spend **one of three daily actions** to earn **10 move-training points** on a technique's bar. At **30 points**, the first prototype move **Black Ice Lance** is learned and appears in the fourth slot on his character sheet. A later technique remains gated until Part Six. Existing choices (Rest, Care, Explore, Work on Camp, Hunt, Sleep) still function normally. Ordinary days never force story progress.
