@@ -735,6 +735,160 @@ func _run_tests() -> void:
 		_expect(swap_available.allies[1]["id"] == "alric", "UI switch consumes current actor's turn and substitutes Alric")
 		combat_view.queue_free()
 
+
+	# Prototype 013: persistent backpack, three-slot equipment, one-use food,
+	# real sheet/combat bonuses and safe in-memory battle item use.
+	const InventorySystem = preload("res://scripts/core/inventory_engine.gd")
+	var item_catalog: Dictionary = ContentStore.read_dictionary("res://data/items/love_beyond.json")
+	var inventory_save: Dictionary = SaveStore.new_save()
+	inventory_save["campaigns"] = {"love_beyond": {
+		"opening_parts_completed": 4,
+		"interludes": {"after_part_four": {"day": 8, "actions_left": 2}},
+		"progression": {"asmodeus": {"level": 1, "xp": 12, "hp": 60, "max_hp": 100, "supplies": 2}}
+	}}
+	var inventory_party = PartySystem.new()
+	inventory_party.begin(inventory_save, party_config)
+	var starter = InventorySystem.new()
+	starter.begin(inventory_save, item_catalog)
+	_expect(starter.just_granted, "Legacy save is offered starter gear once")
+	_expect(starter.backpack_count("travel_rations") == 3, "Starter backpack contains stackable rations")
+	_expect(starter.slots_for("asmodeus").size() == 3, "Every character receives exactly 3 slots")
+	_expect(not starter.equip("alric", 0, "leather_bracers", inventory_party.unlocked), "Cannot equip characters not yet recruited")
+	_expect(not starter.equip("haniel", 0, "black_ice_focus", inventory_party.unlocked), "Character-locked equipment cannot be misused")
+	_expect(starter.equip("asmodeus", 0, "black_ice_focus", inventory_party.unlocked), "Asmodeus can equip his appropriate black ice focus")
+	_expect(starter.backpack_count("black_ice_focus") == 0, "Equipping removes one instance from shared backpack")
+	_expect(not starter.equip("asmodeus", 0, "iron_charm", inventory_party.unlocked), "Occupied slot must first be cleared")
+	_expect(starter.equip("asmodeus", 1, "iron_charm", inventory_party.unlocked), "Equipment may occupy a second shared slot")
+	_expect(starter.equip("asmodeus", 2, "travel_rations", inventory_party.unlocked), "Food may occupy third item slot")
+	_expect(not starter.equip("asmodeus", 3, "herbal_bread", inventory_party.unlocked), "Fourth item slot is invalid")
+	_expect(starter.slots_for("asmodeus")[2] == "travel_rations", "Food is in the shared third item slot")
+	_expect(int(starter.bonuses_for("asmodeus").get("attack", 0)) == 4, "Black ice focus provides +4 ATK")
+	_expect(int(starter.bonuses_for("asmodeus").get("damage_reduction", 0)) == 2, "Iron charm grants its special ward effect")
+	var invalid_food: Dictionary = starter.consume("asmodeus", 1, 60, 100, inventory_party.unlocked)
+	_expect(not bool(invalid_food.get("ok", true)), "Equipment cannot be eaten")
+	var full_food: Dictionary = starter.consume("asmodeus", 2, 100, 100, inventory_party.unlocked)
+	_expect(not bool(full_food.get("ok", true)) and starter.slots_for("asmodeus")[2] == "travel_rations", "Food is never wasted at full HP")
+	var eaten: Dictionary = starter.consume("asmodeus", 2, 60, 100, inventory_party.unlocked)
+	_expect(bool(eaten.get("ok", false)) and int(eaten.get("hp", 0)) == 80, "Single serving heals 20 HP")
+	_expect(starter.slots_for("asmodeus")[2] == "" and starter.backpack_count("travel_rations") == 2, "Consumed food disappears instead of returning to backpack")
+	_expect(not starter.consume("asmodeus", 2, 50, 100, inventory_party.unlocked).get("ok", true), "Empty slot cannot create a free meal")
+	_expect(starter.unequip("asmodeus", 1, inventory_party.unlocked), "Can return enchanted accessory to backpack")
+	_expect(starter.backpack_count("iron_charm") == 1, "Unequipping restores exactly one unit to shared backpack")
+	_expect(starter.equip("asmodeus", 1, "iron_charm", inventory_party.unlocked), "Re-equipping returns ward without duplication")
+	var before_reopen: Dictionary = starter.state.duplicate(true)
+	starter.write_to(inventory_save)
+	var reopened_inventory = InventorySystem.new()
+	reopened_inventory.begin(inventory_save, item_catalog)
+	_expect(not reopened_inventory.just_granted, "Reloading cannot mint a second starter kit")
+	_expect(reopened_inventory.state == before_reopen, "Inventory slot layout, consumed food and backpack counts survive save/reload")
+	var asmo_equipped: Dictionary = inventory_party.sheet("asmodeus", inventory_save)
+	_expect(int(asmo_equipped.get("attack", 0)) == 26, "Equipped focus changes displayed ATK for practice")
+	_expect(int(asmo_equipped.get("defense", 0)) == 27, "Equipped charm raises DEF")
+	_expect(int(asmo_equipped.get("damage_reduction", 0)) == 2, "Equipped charm passive is propagated to combat sheets")
+	_expect(int(inventory_save["campaigns"]["love_beyond"]["progression"]["asmodeus"]["xp"]) == 12, "Gear changes preserve XP and levels")
+	_expect(int(inventory_save["campaigns"]["love_beyond"]["interludes"]["after_part_four"]["day"]) == 8, "Inventory writes preserve existing camp checkpoints")
+	_expect(int(reopened_inventory.bonuses_for("asmodeus").get("damage_reduction", 0)) == 2, "Ward persists after reload")
+	var armored_sheets: Dictionary = {"asmodeus":asmo_equipped}
+	var ward_fight = TeamCombat.new()
+	ward_fight.setup(["asmodeus"], [], armored_sheets, ["wild_boar"])
+	_expect(bool(ward_fight.use_move("ice_guard").get("ok", false)), "Armored Asmodeus can still guard")
+	_expect(int(ward_fight.allies[0]["hp"]) == 57, "Iron Charm reduces enemy damage before guard halves it")
+	var plain_save: Dictionary = inventory_save.duplicate(true)
+	plain_save["campaigns"]["love_beyond"].erase("inventory")
+	var plain_sheet: Dictionary = inventory_party.sheet("asmodeus", plain_save)
+	var unarmored = TeamCombat.new()
+	unarmored.setup(["asmodeus"], [], {"asmodeus":plain_sheet}, ["wild_boar"])
+	unarmored.use_move("ice_guard")
+	_expect(int(unarmored.allies[0]["hp"]) == 55, "Guard takes more damage without equipment and ward")
+	_expect(ward_fight.allies[0]["hp"] > unarmored.allies[0]["hp"], "Equipment special effect changes combat damage")
+
+	# The game scene exposes functional inventory from title, sheets and camp.
+	var v13_resource: Resource = load("res://scenes/prototype_story_v13.tscn")
+	_expect(v13_resource is PackedScene, "Inventory scene must load")
+	if v13_resource is PackedScene:
+		var inventory_view: Node = (v13_resource as PackedScene).instantiate()
+		root.add_child(inventory_view)
+		inventory_view.set("party_disable_disk_writes", true)
+		var ui_save: Dictionary = SaveStore.new_save()
+		ui_save["campaigns"] = {"love_beyond": {
+			"opening_parts_completed": 4,
+			"progression": {"asmodeus": {"level":1, "xp":9, "hp":60, "max_hp":100, "supplies":2}}
+		}}
+		inventory_view.set("save_data", ui_save)
+		var inventory_title: Button = inventory_view.find_child("TitleMenuScroll", true, false) as ScrollContainer
+		_expect(inventory_title != null, "Inventory can be opened from scrollable title menu")
+		inventory_view.call("_open_inventory")
+		_expect(inventory_view.find_child("InventorySlot_0", true, false) != null, "Three item slots visible")
+		_expect(inventory_view.find_child("InventorySlot_2", true, false) != null, "Third item slot visible")
+		_expect(inventory_view.get("save_data").get("campaigns", {}).get("love_beyond", {}).has("inventory"), "Starter kit is immediately saved as additive data")
+		inventory_view.call("_inventory_slot_actions", 0)
+		var focus_button: Button = inventory_view.find_child("InventoryEquip_black_ice_focus", true, false) as Button
+		_expect(focus_button != null, "Empty slot lists compatible equipment")
+		if focus_button != null:
+			focus_button.pressed.emit()
+		_expect(inventory_view.get("save_data").get("campaigns", {}).get("love_beyond", {}).get("inventory", {}).get("slots", {}).get("asmodeus", [])[0] == "black_ice_focus", "Equip button saves item into character slot")
+		inventory_view.call("_inventory_slot_actions", 1)
+		var ration_button: Button = inventory_view.find_child("InventoryEquip_travel_rations", true, false) as Button
+		_expect(ration_button != null, "Shared backpack offers a consumable for equipping")
+		if ration_button != null:
+			ration_button.pressed.emit()
+		inventory_view.call("_inventory_slot_actions", 1)
+		var eat_button: Button = inventory_view.find_child("InventoryConsume", true, false) as Button
+		_expect(eat_button != null, "Prepared food has a one-use action")
+		if eat_button != null:
+			eat_button.pressed.emit()
+		_expect(int(inventory_view.get("save_data")["campaigns"]["love_beyond"]["progression"]["asmodeus"]["hp"]) == 80, "Eating food from menu heals saved HP")
+		_expect(inventory_view.get("save_data")["campaigns"]["love_beyond"]["inventory"]["slots"]["asmodeus"][1] == "", "Food vanishes from item slot after use")
+		inventory_view.call("_show_party_menu", false)
+		inventory_view.call("_show_character_sheet", "asmodeus")
+		_expect(inventory_view.find_child("CharacterManageItems", true, false) != null, "Character sheet links to equipment menu")
+		inventory_view.call("_load_story_if_needed")
+		inventory_view.call("_enter_interlude", "after_part_four")
+		var day_before: int = int(inventory_view.get("interlude_engine").state.get("actions_left", 0))
+		inventory_view.call("_open_inventory", "asmodeus", "daily")
+		inventory_view.call("_inventory_slot_actions", 2)
+		var bread_button: Button = inventory_view.find_child("InventoryEquip_herbal_bread", true, false) as Button
+		_expect(bread_button != null, "Second food type can be equipped in the camp")
+		if bread_button != null:
+			bread_button.pressed.emit()
+		inventory_view.get("interlude_engine").state["hp"] = 38
+		inventory_view.call("_inventory_consume", 2)
+		_expect(int(inventory_view.get("interlude_engine").state.get("hp", 0)) == 53, "Using food during daily life heals the current interlude, not stale HP")
+		_expect(int(inventory_view.get("interlude_engine").state.get("actions_left", 0)) == day_before, "Managing or eating food costs no daily activity")
+		_expect(int(inventory_view.get("save_data")["campaigns"]["love_beyond"]["interludes"]["after_part_four"]["hp"]) == 53, "Food healing persists in interlude checkpoint")
+		inventory_view.call("_inventory_close")
+		_expect(inventory_view.find_child("DailyActivitiesScroll", true, false) != null, "Inventory returns to active camp menu")
+		_expect(int(inventory_view.get("save_data")["campaigns"]["love_beyond"]["progression"]["asmodeus"]["xp"]) == 9, "Eating food preserves character XP")
+
+		# Practice battle takes a snapshot; food use in it never consumes
+		# the permanently equipped copy or modifies story HP.
+		inventory_view.call("_open_inventory", "asmodeus", "daily")
+		inventory_view.call("_inventory_slot_actions", 2)
+		var more_rations: Button = inventory_view.find_child("InventoryEquip_travel_rations", true, false) as Button
+		if more_rations != null:
+			more_rations.pressed.emit()
+		var pre_practice_save: Dictionary = inventory_view.get("save_data").duplicate(true)
+		inventory_view.call("_party_battle_start", "forest_clearing")
+		var mock_battle = inventory_view.get("party_battle")
+		_expect(str(mock_battle.current_actor().get("id", "")) == "haniel", "Haniel starts before Asmodeus with food")
+		inventory_view.call("_party_battle_use", "heal", 0)
+		_expect(str(mock_battle.current_actor().get("id", "")) == "asmodeus", "Second ally can use food")
+		var use_food_button: Button = inventory_view.find_child("PartyUseFood", true, false) as Button
+		_expect(use_food_button != null and not use_food_button.disabled, "Food appears as a battle action when wounded")
+		if use_food_button != null:
+			use_food_button.pressed.emit()
+		var combat_food_slot: Button = inventory_view.find_child("BattleFoodSlot_2", true, false) as Button
+		_expect(combat_food_slot != null, "Battle food screen lists actual equipped slot")
+		if combat_food_slot != null:
+			combat_food_slot.pressed.emit()
+		var combat_food_target: Button = inventory_view.find_child("BattleFoodTarget_0", true, false) as Button
+		_expect(combat_food_target != null, "Player can select wounded ally for a meal")
+		if combat_food_target != null:
+			combat_food_target.pressed.emit()
+		_expect(mock_battle.allies[0]["items"][2].is_empty(), "Battle food disappears from temporary combat slot")
+		_expect(inventory_view.get("save_data") == pre_practice_save, "Practice battle never consumes persistent inventory or changes HP")
+		inventory_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
