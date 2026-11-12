@@ -1019,6 +1019,30 @@ func _run_tests() -> void:
 		_expect(int(town_view.get("save_data")["campaigns"]["love_beyond"]["economy"]["gold"]) == gold_before_retreat, "Retreat earns no gold")
 		_expect(int(town_view.get("save_data")["campaigns"]["love_beyond"]["progression"]["asmodeus"]["xp"]) == 0, "Retreat gives no EXP")
 		_expect(int(town_view.get("event_index")) == story_cursor_before, "Neither POV can advance authored story events")
+		# In a *real* encounter, eaten food is permanently removed from the
+		# save even on retreat, unlike the isolated practice battle.
+		town_view.call("_party_load")
+		town_view.call("_inventory_load")
+		var real_inv = town_view.get("inventory_engine")
+		var real_party = town_view.get("party_engine")
+		_expect(real_inv.equip("asmodeus", 0, "travel_rations", real_party.unlocked), "Real encounter test can equip food")
+		real_inv.write_to(town_view.get("save_data"))
+		town_view.get("interlude_engine").state["hp"] = 55
+		town_view.call("_save_interlude")
+		town_view.call("_take_interlude_action", "explore")
+		var daily_team = town_view.get("party_battle")
+		_expect(daily_team != null and str(daily_team.current_actor().get("id", "")) == "haniel", "Daily battle begins with the faster ally")
+		town_view.call("_party_battle_use", "heal", 0)
+		_expect(str(daily_team.current_actor().get("id", "")) == "asmodeus", "Asmodeus can now use the readied meal")
+		_expect(daily_team.food_targets(0).has(0), "Actual daily battle has a wounded food target")
+		town_view.call("_party_battle_use_food", 0, 0)
+		var eaten_slots: Array = town_view.get("save_data")["campaigns"]["love_beyond"]["inventory"]["slots"]["asmodeus"]
+		_expect(str(eaten_slots[0]) == "", "Eating food in real daily battle clears saved item slot immediately")
+		_expect(int(town_view.get("save_data")["campaigns"]["love_beyond"]["inventory"]["backpack"]["travel_rations"]) == 2, "Real encounter food was not returned or duplicated")
+		var gold_after_food: int = int(town_view.get("save_data")["campaigns"]["love_beyond"]["economy"]["gold"])
+		town_view.call("_retreat_outlaw")
+		_expect(int(town_view.get("save_data")["campaigns"]["love_beyond"]["economy"]["gold"]) == gold_after_food, "Retreat after eating never pays additional gold")
+		_expect(int(town_view.get("event_index")) == story_cursor_before, "Using food and retreating never changes story position")
 
 		town_view.queue_free()
 
