@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "campaign": "love_beyond",
+  "points_per_session": 10,
+  "notes": "Training earns points from one ordinary-day action, independently of battle EXP. Move names/powers are prototype candidates, not final canon. In the first forest interludes only Asmodeus trains, because Haniel is recovering.",
+  "paths": {
+    "asmodeus": [
+      {
+        "id": "black_ice_lance",
+        "name": "Black Ice Lance",
+        "kind": "damage",
+        "power": 27,
+        "points_required": 30,
+        "unlock_after_part": 4,
+        "description": "A focused spear of black ice; prototype move."
+      },
+      {
+        "id": "ice_aegis",
+        "name": "Ice Aegis",
+        "kind": "guard",
+        "power": 0,
+        "points_required": 50,
+        "unlock_after_part": 6,
+        "description": "A denser black-ice shield; prototype move."
+      }
+    ],
+    "haniel": [
+      {
+        "id": "focused_arrow",
+        "name": "Focused Arrow",
+        "kind": "damage",
+        "power": 27,
+        "points_required": 30,
+        "unlock_after_part": 6,
+        "description": "A carefully aimed celestial arrow; future routine."
+      }
+    ],
+    "alric": [
+      {
+        "id": "hammer_guard",
+        "name": "Hammer Guard",
+        "kind": "guard",
+        "power": 0,
+        "points_required": 30,
+        "unlock_after_part": 6,
+        "description": "Alric braces himself and protects an ally; future routine."
+      }
+    ]
+  }
+}
