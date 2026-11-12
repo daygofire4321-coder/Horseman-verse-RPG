@@ -533,6 +533,102 @@ func _run_tests() -> void:
 		_expect(party_view.find_child("DailyActivitiesScroll", true, false) != null, "Party screen returns to functional daily routines")
 		party_view.queue_free()
 
+
+	# Prototype 011: Training points are independent of EXP/levels, persist
+	# across days, unlock moves, and never bypass story milestones.
+	const MoveTraining = preload("res://scripts/core/training_engine.gd")
+	var training_config: Dictionary = ContentStore.read_dictionary("res://data/training/love_beyond.json")
+	var t_save: Dictionary = SaveStore.new_save()
+	t_save["campaigns"] = {"love_beyond": {
+		"opening_parts_completed": 4,
+		"progression": {"asmodeus": {"level": 4, "xp": 17, "hp": 88, "max_hp": 124}}
+	}}
+	var trainer = MoveTraining.new()
+	trainer.begin(training_config, t_save)
+	_expect(trainer.can_train("asmodeus", 4), "Asmodeus can train during Part Four free time")
+	_expect(not trainer.can_train("haniel", 4), "Haniel's future techniques are story-gated")
+	_expect(not trainer.can_train("alric", 4), "Alric's training is unavailable before recruitment")
+	var first_session: Dictionary = trainer.session("asmodeus", 4)
+	_expect(bool(first_session.get("ok", false)) and not bool(first_session.get("learned", true)), "First practice earns points without instantly learning")
+	_expect(int(first_session.get("points", -1)) == 10, "Training bar starts at 10 of 30 points")
+	_expect(int(trainer.next_move("asmodeus", 4).get("progress", 0)) == 10, "Move bar reflects earned practice points")
+	trainer.write_to(t_save)
+	var saved_training: Dictionary = t_save.get("campaigns", {}).get("love_beyond", {}).get("training", {})
+	_expect(int(saved_training.get("asmodeus", {}).get("points", 0)) == 10, "Training points persist in campaign save")
+	_expect(int(t_save.get("campaigns", {}).get("love_beyond", {}).get("progression", {}).get("asmodeus", {}).get("xp", 0)) == 17, "Training does not spend or grant EXP")
+	var reopened_trainer = MoveTraining.new()
+	reopened_trainer.begin(training_config, t_save)
+	_expect(int(reopened_trainer.next_move("asmodeus", 4).get("progress", 0)) == 10, "Training bar resumes after reload")
+	reopened_trainer.session("asmodeus", 4)
+	var unlock: Dictionary = reopened_trainer.session("asmodeus", 4)
+	_expect(bool(unlock.get("learned", false)), "Third training session unlocks Black Ice Lance")
+	_expect(reopened_trainer.learned("asmodeus").has("black_ice_lance"), "Learned move ID stored exactly once")
+	var before_locked := reopened_trainer.state.duplicate(true)
+	var denied_training: Dictionary = reopened_trainer.session("asmodeus", 4)
+	_expect(not bool(denied_training.get("ok", true)), "Second technique is locked until Part Six")
+	_expect(reopened_trainer.state == before_locked, "Unavailable techniques never alter training points")
+	reopened_trainer.write_to(t_save)
+	var known_sheet: Dictionary = party.sheet("asmodeus", t_save)
+	_expect(str(known_sheet.get("moves", [])[3].get("id", "")) == "black_ice_lance", "Fourth equipped slot shows learned technique")
+	_expect(int(known_sheet.get("level", 0)) == 4, "Training unlocks moves without raising character level")
+	var unlocked_second: Dictionary = reopened_trainer.session("asmodeus", 6)
+	_expect(bool(unlocked_second.get("ok", false)) and not bool(unlocked_second.get("learned", true)), "Part Six enables advanced training without instant unlock")
+	_expect(int(reopened_trainer.next_move("asmodeus", 6).get("progress", 0)) == 10, "Progress rolls into next technique safely")
+	_expect(not reopened_trainer.session("haniel", 4).get("ok", false), "Haniel technique is still gated before Part Six")
+	_expect(bool(reopened_trainer.session("haniel", 6).get("ok", false)), "Later routine can train Haniel's own path")
+
+	var v11_resource: Resource = load("res://scenes/prototype_story_v11.tscn")
+	_expect(v11_resource is PackedScene, "Move-training scene must import")
+	if v11_resource is PackedScene:
+		var training_view: Node = (v11_resource as PackedScene).instantiate()
+		root.add_child(training_view)
+		var fresh_training_save: Dictionary = SaveStore.new_save()
+		fresh_training_save["campaigns"] = {"love_beyond": {"opening_parts_completed": 4}}
+		training_view.set("save_data", fresh_training_save)
+		training_view.call("_load_story_if_needed")
+		training_view.call("_enter_interlude", "after_part_four")
+		var daily_train: Button = training_view.find_child("Daily_action_train", true, false) as Button
+		_expect(daily_train != null and not daily_train.disabled, "Train is a clickable ordinary-day option")
+		var interlude = training_view.get("interlude_engine")
+		var initial_actions: int = int(interlude.state.get("actions_left", 0))
+		var initial_index: int = int(training_view.get("event_index"))
+		if daily_train != null:
+			daily_train.pressed.emit()
+		_expect(training_view.find_child("TrainMoveBar", true, false) != null, "Training menu displays a move progress bar")
+		var cancel_train: Button = training_view.find_child("TrainCancel", true, false) as Button
+		_expect(cancel_train != null, "Players can decline to spend an activity on training")
+		if cancel_train != null:
+			cancel_train.pressed.emit()
+		_expect(int(interlude.state.get("actions_left", -1)) == initial_actions, "Canceling training never spends an action")
+		for practice in range(3):
+			training_view.call("_open_training_menu")
+			var train_confirm: Button = training_view.find_child("TrainConfirm", true, false) as Button
+			_expect(train_confirm != null and not train_confirm.disabled, "Practice is selectable until current move bar fills")
+			if train_confirm != null:
+				train_confirm.pressed.emit()
+		_expect(int(interlude.state.get("actions_left", -1)) == 0, "Three training sessions spend exactly three daily actions")
+		_expect(int(training_view.get("event_index")) == initial_index, "Training never advances the authored story")
+		_expect(int(interlude.state.get("xp", -1)) == 0 and int(interlude.state.get("level", -1)) == 1, "Practice never adds combat EXP or levels")
+		var recorded_training: Dictionary = training_view.get("save_data").get("campaigns", {}).get("love_beyond", {}).get("training", {}).get("asmodeus", {})
+		_expect(recorded_training.get("learned", []).has("black_ice_lance"), "UI training records learned move in existing save schema")
+		training_view.call("_show_party_menu", true)
+		training_view.call("_show_character_sheet", "asmodeus")
+		_expect(training_view.find_child("CharacterTrainingHeader", true, false) != null, "Character sheet displays training section")
+		_expect(training_view.find_child("CharacterTrainingBar", true, false) != null, "Character sheet shows next move bar")
+		training_view.call("_close_party_menu")
+		_expect(bool(training_view.get("interlude_mode")), "Character sheet returns to the same free-time day")
+		training_view.call("_ordinary_tomorrow")
+		_expect(int(interlude.state.get("actions_left", 0)) == 3, "New ordinary day restores training opportunities")
+		training_view.call("_open_training_menu")
+		var locked_train: Button = training_view.find_child("TrainConfirm", true, false) as Button
+		_expect(locked_train != null and locked_train.disabled, "Future technique cannot be trained before its part unlock")
+		training_view.call("_train_current_character")
+		_expect(int(interlude.state.get("actions_left", 0)) == 3, "Blocked training never spends an action")
+		# Old free-time state and unlocked skills survive a change of interlude.
+		training_view.call("_enter_interlude", "after_part_five")
+		_expect(training_view.get("save_data").get("campaigns", {}).get("love_beyond", {}).get("training", {}).get("asmodeus", {}).get("learned", []).has("black_ice_lance"), "Move unlock is global across separate interludes")
+		training_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
