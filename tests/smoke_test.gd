@@ -344,6 +344,73 @@ func _run_tests() -> void:
 		_expect(not enemy_picture.flip_h, "Asmodeus faces inward from enemy side")
 		fixed_view.queue_free()
 
+
+	# Prototype 008: one-click narration skips must stop at ALL gameplay.
+	var v8_resource: Resource = load("res://scenes/prototype_story_v8.tscn")
+	_expect(v8_resource is PackedScene, "Dialogue skip scene must load")
+	if v8_resource is PackedScene:
+		var skipper: Node = (v8_resource as PackedScene).instantiate()
+		root.add_child(skipper)
+		skipper.set("save_data", SaveStore.new_save())
+		skipper.call("_start_dialogue")
+		var intro_lines: Array = skipper.get("chapter_data").get("dialogue", [])
+		_expect(skipper.find_child("SkipDialogueButton", true, false) != null, "Prologue has a skip-dialogue option")
+		skipper.call("_skip_intro_dialogue")
+		_expect(int(skipper.get("line_index")) == intro_lines.size() - 1, "Intro skip lands on choose fighter")
+		_expect(skipper.find_child("SkipDialogueButton", true, false) == null, "Intro skip does not bypass fighter selection")
+		skipper.call("_begin_story_events")
+		_expect(skipper.find_child("SkipDialogueButton", true, false) != null, "Story line has a skip-dialogue option")
+		skipper.call("_skip_story_dialogue")
+		var chain: Array = skipper.get("story_events")
+		var beat: Dictionary = chain[int(skipper.get("event_index"))]
+		_expect(str(beat.get("kind", "")) == "gather", "Skip Part One and dialogue in Part Two, stopping at branch gathering")
+		_expect(str(skipper.get("part_label")) == "PART TWO", "Skipped part headers update correctly")
+		var before_gather := int(skipper.get("event_index"))
+		skipper.call("_skip_story_dialogue")
+		_expect(int(skipper.get("event_index")) == before_gather, "Skip must not advance a gathering activity")
+		for twig in range(3):
+			skipper.call("_collect_branch")
+		skipper.call("_advance_event")
+		skipper.call("_skip_story_dialogue")
+		_expect(bool(skipper.get("bear_mode")), "Skip stops at required grizzly battle")
+		beat = chain[int(skipper.get("event_index"))]
+		_expect(str(beat.get("kind", "")) == "battle", "Bear fight is never skipped")
+		var before_bear := int(skipper.get("event_index"))
+		skipper.call("_skip_story_dialogue")
+		_expect(int(skipper.get("event_index")) == before_bear, "Skip button cannot bypass active battle")
+		skipper.queue_free()
+
+		var chapter_skip: Node = (v8_resource as PackedScene).instantiate()
+		root.add_child(chapter_skip)
+		chapter_skip.set("save_data", SaveStore.new_save())
+		chapter_skip.call("_load_story_if_needed")
+		var authored: Array = chapter_skip.get("story_events")
+		var part_four := -1
+		for j in range(authored.size()):
+			if str(authored[j].get("kind", "")) == "title" and str(authored[j].get("part", "")) == "PART FOUR":
+				part_four = j
+				break
+		_expect(part_four >= 0, "Part Four title exists for skip tests")
+		if part_four >= 0:
+			chapter_skip.set("story_mode", true)
+			chapter_skip.set("event_index", part_four)
+			chapter_skip.call("_show_event")
+			chapter_skip.call("_skip_story_dialogue")
+			_expect(bool(chapter_skip.get("interlude_mode")), "Skip stops at Part Four free-time decisions")
+			_expect(str(chapter_skip.get("current_interlude_id")) == "after_part_four", "First free-time stage preserved")
+			var day_index := int(chapter_skip.get("event_index"))
+			chapter_skip.call("_skip_story_dialogue")
+			_expect(int(chapter_skip.get("event_index")) == day_index, "Cannot skip free-time choices")
+			chapter_skip.call("_exciting_tomorrow")
+			_expect(str(authored[int(chapter_skip.get("event_index"))].get("kind", "")) == "title", "Exciting day continues authored Part Five")
+			chapter_skip.call("_skip_story_dialogue")
+			_expect(bool(chapter_skip.get("interlude_mode")), "Skip stops at second free-time stage")
+			chapter_skip.call("_exciting_tomorrow")
+			chapter_skip.call("_skip_story_dialogue")
+			_expect(bool(chapter_skip.get("alley_mode")), "Skip stops at Part Six alley wave one")
+			_expect(int(chapter_skip.get("wave_engine").wave) == 1, "Skipping dialogue does not skip combat waves")
+		chapter_skip.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
