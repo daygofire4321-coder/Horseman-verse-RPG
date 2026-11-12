@@ -1,8 +1,10 @@
 extends RefCounted
 ## Reusable three-character party state. No save-file or story-cursor writes.
-## Stat sheets include trained moves; ATK/DEF/SPD bonuses and items remain previews.
+## Stat sheets include trained moves and equipped item bonuses.
 
 const ContentStore = preload("res://scripts/core/content_store.gd")
+const InventoryEngine = preload("res://scripts/core/inventory_engine.gd")
+const INVENTORY_CATALOG := "res://data/items/love_beyond.json"
 const MAX_ACTIVE := 3
 const MAX_MOVES := 4
 const ITEM_SLOTS := 3
@@ -96,6 +98,9 @@ func sheet(character_id: String, save_data: Dictionary) -> Dictionary:
 	var max_hp := maxi(base_hp, int(progress.get("max_hp", base_hp)))
 	var current_hp := clampi(int(progress.get("hp", max_hp)), 0, max_hp)
 	var base: Dictionary = definition.get("base_stats", {})
+	var inventory = InventoryEngine.new()
+	inventory.begin(save_data, ContentStore.read_dictionary(INVENTORY_CATALOG))
+	var bonuses: Dictionary = inventory.bonuses_for(character_id)
 	# Base moves stay equipped. Trained techniques occupy empty move slots;
 	# excess learned moves remain saved for a future move-loadout editor.
 	var moves: Array = original.get("moves", []).duplicate(true)
@@ -123,13 +128,16 @@ func sheet(character_id: String, save_data: Dictionary) -> Dictionary:
 		"xp_target":30 * level,
 		"hp":current_hp,
 		"max_hp":max_hp,
-		"attack":int(base.get("attack", 10)) + (level - 1) * 2,
-		"defense":int(base.get("defense", 10)) + (level - 1) * 2,
-		"speed":int(base.get("speed", 10)) + (level - 1),
+		"attack":int(base.get("attack", 10)) + (level - 1) * 2 + int(bonuses.get("attack", 0)),
+		"defense":int(base.get("defense", 10)) + (level - 1) * 2 + int(bonuses.get("defense", 0)),
+		"speed":int(base.get("speed", 10)) + (level - 1) + int(bonuses.get("speed", 0)),
 		"ability":definition.get("ability", {}),
 		"moves":move_slots,
 		"learned_move_count":known.size(),
 		"item_slots":ITEM_SLOTS,
+		"item_slot_details":inventory.equipped_details(character_id),
+		"equipment_bonuses":bonuses,
+		"damage_reduction":int(bonuses.get("damage_reduction", 0)),
 		"party_slot":active.find(character_id),
 		"unlocked":is_unlocked(character_id),
 		"unlock_after_part":int(definition.get("unlock_after_part", 0))
