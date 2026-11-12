@@ -358,3 +358,101 @@ func _party_battle_food_targets(slot_index: int) -> void:
 	super._party_battle_food_targets(slot_index)
 	if party_battle != null and not party_battle.finished:
 		_field_target_markers(false, party_battle.food_targets(slot_index))
+
+
+
+func _show_love_extras() -> void:
+	super._show_love_extras()
+	var content: VBoxContainer = frontend_body.find_child("CampaignMenuContent", true, false) as VBoxContainer
+	if content == null:
+		return
+	var check := _front_button(content, "CHECK INSTALLED STORY & PORTRAIT ART",
+		_show_art_check, 44.0)
+	check.name = "LoveArtCheck"
+	for child in content.get_children():
+		if child is Button and child.text == "BACK TO LOVE BEYOND":
+			content.move_child(check, child.get_index())
+			break
+
+
+func _art_counts() -> Dictionary:
+	_load_story_if_needed()
+	_load_portrait_catalog()
+	var scenes: Dictionary = {}
+	for event_raw in story_events:
+		var event: Dictionary = event_raw
+		var relative := str(event.get("curated_image", ""))
+		if relative != "":
+			scenes[relative] = true
+	var scene_found := 0
+	for relative in scenes:
+		if OptionalArt.available(CURATED_STORY_ROOT + str(relative)):
+			scene_found += 1
+	var portraits_found := 0
+	var portraits_total := 0
+	for raw_character in portrait_catalog.get("characters", {}):
+		var definition: Dictionary = portrait_catalog.get("characters", {})[raw_character]
+		var expressions: Dictionary = definition.get("expressions", {})
+		for expression in expressions:
+			portraits_total += 1
+			var path := _portrait_resource(str(raw_character), str(expression))
+			if OptionalArt.available(path):
+				portraits_found += 1
+	return {
+		"chapters_found":scene_found, "chapters_total":scenes.size(),
+		"portraits_found":portraits_found, "portraits_total":portraits_total
+	}
+
+
+func _show_art_check() -> void:
+	var counts := _art_counts()
+	var content := _title_panel("ART INSTALLATION CHECK",
+		"Confirm that Godot can find the chapter illustrations and speaker portraits.")
+	var chapter_count: int = int(counts.get("chapters_found", 0))
+	var chapter_total: int = int(counts.get("chapters_total", 22))
+	var portrait_count: int = int(counts.get("portraits_found", 0))
+	var portrait_total: int = int(counts.get("portraits_total", 16))
+	var chapter_good := chapter_count == chapter_total and chapter_total > 0
+	var portrait_good := portrait_count == portrait_total and portrait_total > 0
+	_front_label(content, "CHAPTER BACKGROUNDS: %d / %d FOUND" % [
+		chapter_count, chapter_total], 19,
+		HUD_AQUA if chapter_good else HUD_GOLD)
+	_front_label(content, "SPEAKING PORTRAITS: %d / %d FOUND" % [
+		portrait_count, portrait_total], 19,
+		HUD_AQUA if portrait_good else HUD_GOLD)
+	var instructions := "Installed! The next story scenes should use the selected images." if chapter_good and portrait_good else (
+		"Missing assets: open the GitHub Desktop project folder in Explorer (it contains project.godot). " +
+		"Copy the ASSETS folder from the combined art ZIP into that folder, merging with the existing assets. " +
+		"Don't leave the ZIP in Downloads or extract it next to the project instead.")
+	_front_label(content, instructions, 15, UI_TEXT).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_front_label(content, "Expected paths inside the Godot project:", 14, UI_ICE)
+	_front_label(content,
+		"assets/love_beyond/curated_chapters/part_01/01_cave_truce.webp", 13,
+		Color(0.79, 0.84, 0.91)).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_front_label(content,
+		"assets/love_beyond/dialogue_portraits/haniel/neutral.webp", 13,
+		Color(0.79, 0.84, 0.91)).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
+	# Visual previews confirm that the discovered files are actually
+	# loadable pictures, not just filenames in the wrong format.
+	var sample_background: Texture2D = OptionalArt.texture(
+		CURATED_STORY_ROOT + "part_01/01_cave_truce.webp")
+	if sample_background != null:
+		var preview := TextureRect.new()
+		preview.name = "ArtCheckChapterPreview"
+		preview.texture = sample_background
+		preview.custom_minimum_size = Vector2(300, 145)
+		preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		content.add_child(preview)
+	var sample_portrait: Texture2D = OptionalArt.texture(_portrait_resource("haniel", "neutral"))
+	if sample_portrait != null:
+		var preview_portrait := TextureRect.new()
+		preview_portrait.name = "ArtCheckPortraitPreview"
+		preview_portrait.texture = sample_portrait
+		preview_portrait.custom_minimum_size = Vector2(250, 180)
+		preview_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		preview_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		content.add_child(preview_portrait)
+	_front_button(content, "RECHECK INSTALLED ART", _show_art_check, 44.0)
+	_front_button(content, "BACK TO EXTRAS", _show_love_extras, 44.0)
