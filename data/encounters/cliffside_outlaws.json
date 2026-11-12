@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "min_story_part": 6,
+  "encounter_action_cost": 1,
+  "notes": "Repeatable optional Cliffside free time only; none of these events replace the authored alley/Joren fight. Victories award one roll of gold and EXP, no rewards for defeat/retreat. Each is a non-lethal roadside intervention.",
+  "scenarios": {
+    "asmodeus": [
+      {
+        "id": "shake_down",
+        "title": "The Toll Nobody Authorized",
+        "intro": "Two thugs block a cobbled street and claim to collect a toll. Asmodeus does not look impressed.",
+        "enemies": [
+          "bandit_thug",
+          "bandit_club"
+        ],
+        "area": "cliffside_alley",
+        "gold_min": 14,
+        "gold_max": 22,
+        "exp": 17
+      },
+      {
+        "id": "roadside_crooks",
+        "title": "Roadside Shortcuts",
+        "intro": "A pair of bandits mistake a lone traveler for easy money. Asmodeus almost laughs.",
+        "enemies": [
+          "bandit_dagger",
+          "bandit_club"
+        ],
+        "area": "forest_clearing",
+        "gold_min": 18,
+        "gold_max": 28,
+        "exp": 19
+      },
+      {
+        "id": "merchant_wagon",
+        "title": "Wagon Held Hostage",
+        "intro": "Highwaymen try to extort a supply cart on the town road. The driver asks for help.",
+        "enemies": [
+          "bandit_shield",
+          "bandit_dagger"
+        ],
+        "area": "cliffside_alley",
+        "gold_min": 27,
+        "gold_max": 40,
+        "exp": 26
+      },
+      {
+        "id": "blockade",
+        "title": "The Outlaw Barricade",
+        "intro": "A veteran outlaw and an armored bruiser have commandeered a back alley. They're a tougher challenge.",
+        "enemies": [
+          "bandit_heavy",
+          "bandit_veteran"
+        ],
+        "area": "cliffside_alley",
+        "gold_min": 54,
+        "gold_max": 76,
+        "exp": 39
+      }
+    ],
+    "haniel": [
+      {
+        "id": "quiet_intervention",
+        "title": "A Silent Warning",
+        "intro": "Haniel spots a cutpurse cornering someone by a stairway. She raises her angelic bow without speaking.",
+        "enemies": [
+          "bandit_thug"
+        ],
+        "area": "cliffside_alley",
+        "gold_min": 8,
+        "gold_max": 15,
+        "exp": 12
+      },
+      {
+        "id": "stall_extortion",
+        "title": "Market Street Extortion",
+        "intro": "Two thugs demand a vendor's earnings. Haniel steps between them and the trembling shopkeeper.",
+        "enemies": [
+          "bandit_thug",
+          "bandit_club"
+        ],
+        "area": "market_street",
+        "gold_min": 17,
+        "gold_max": 26,
+        "exp": 18
+      },
+      {
+        "id": "missing_courier",
+        "title": "The Missing Courier",
+        "intro": "A courier's dropped satchel leads Haniel to two highwaymen hiding outside the town walls.",
+        "enemies": [
+          "bandit_dagger",
+          "bandit_shield"
+        ],
+        "area": "forest_clearing",
+        "gold_min": 28,
+        "gold_max": 42,
+        "exp": 28
+      },
+      {
+        "id": "night_watch",
+        "title": "The Lantern Patrol",
+        "intro": "Lanterns light an uneasy back lane. A veteran brigand and heavy outlaw refuse Haniel's quiet warning.",
+        "enemies": [
+          "bandit_veteran",
+          "bandit_heavy"
+        ],
+        "area": "cliffside_alley",
+        "gold_min": 52,
+        "gold_max": 74,
+        "exp": 38
+      }
+    ]
+  }
+}
