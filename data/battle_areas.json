@@ -5,30 +5,58 @@
     {
       "id": "thundercloud",
       "label": "Thundercloud Sky",
-      "background": "thundercloud.png",
+      "background": "thundercloud_battle.webp",
+      "legacy_background": "thundercloud.png",
       "fallback": "storm_duel.jpg",
-      "mood": "The First Encounter"
+      "mood": "Asmodeus and Haniel's opening aerial duel"
     },
     {
       "id": "forest_clearing",
       "label": "Forest Clearing",
-      "background": "forest_clearing.png",
+      "background": "forest_clearing_battle.webp",
+      "legacy_background": "forest_clearing.png",
       "fallback": "forest_hunt.jpg",
-      "mood": "Hunting Grounds"
+      "mood": "Daytime wildlife hunts"
     },
     {
-      "id": "forest_camp",
-      "label": "Forest Camp",
-      "background": "forest_camp.png",
-      "fallback": "campfire.jpg",
-      "mood": "Forest Edge"
+      "id": "bear_forest",
+      "label": "Deep Forest — Bear Ambush",
+      "background": "bear_forest_battle.webp",
+      "legacy_background": "forest_clearing.png",
+      "fallback": "bear_boss.jpg",
+      "mood": "The authored grizzly encounter"
     },
     {
       "id": "cliffside_alley",
       "label": "Cliffside Alley",
-      "background": "cliffside_alley.png",
+      "background": "cliffside_alley_battle.webp",
+      "legacy_background": "cliffside_alley.png",
       "fallback": "cliffside_alley.jpg",
-      "mood": "The Nature of Man and Demons"
+      "mood": "Joren and the thugs"
+    },
+    {
+      "id": "forest_camp",
+      "label": "Forest Camp",
+      "background": "forest_camp_bg.webp",
+      "legacy_background": "forest_camp.png",
+      "fallback": "camp_hiderack.jpg",
+      "mood": "Optional ordinary-day routine"
+    },
+    {
+      "id": "market_street",
+      "label": "Market Street",
+      "background": "market_street_bg.webp",
+      "legacy_background": "",
+      "fallback": "cliffside_street.jpg",
+      "mood": "Future general market and shops"
+    },
+    {
+      "id": "alric_smithy",
+      "label": "Alric's Smithy",
+      "background": "alric_smithy_bg.webp",
+      "legacy_background": "",
+      "fallback": "cliffside_street.jpg",
+      "mood": "Future equipment store; Alric in party gives a discount"
     }
   ],
   "sprites": {
@@ -63,8 +91,12 @@
   "routes": {
     "prologue": "thundercloud",
     "hunt": "forest_clearing",
-    "bear": "forest_clearing",
-    "alley": "cliffside_alley"
+    "bear": "bear_forest",
+    "alley": "cliffside_alley",
+    "daily": "forest_camp",
+    "market": "market_street",
+    "smithy": "alric_smithy"
   },
-  "notes": "Split from the user's source art. Joren uses his villain/boss pose in the alley; the alternate Joren_idle.png comes from the Joren+Alric sheet. Two separate thug sprites avoid depicting Joren twice in Wave 1. Art is optional with graceful fallback."
+  "notes": "User-supplied 7-image environment pack optimized as WEBP for Godot 4.7.2. Older PNGs remain valid legacy fallbacks. Camp is used for daily interludes. Market and Alric smithy are location previews until shopping/inventory systems arrive. Original sprite mapping, story and saves are unchanged.",
+  "background_pack_version": 3
 }
