@@ -1,5 +1,21 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 006 — Your Love Beyond character sprites
+
+The default scene is now `scenes/prototype_story_v6.tscn`; earlier versions remain available for testing and rollback.
+
+**New:** User-supplied sprite sheets have been separated into 26 transparent character/creature PNGs in a downloadable pack, and `data/battle_areas.json` maps the assets to active encounters. The title screen's **VIEW NEW CHARACTER SPRITES** button opens a three-page gallery; **PIXEL BATTLE PREVIEW** launches Asmodeus vs Wild Boar.
+
+The prologue shows Asmodeus and Haniel. The bear encounter shows Asmodeus and the grizzly bear. The Cliffside alley now shows **Haniel/Asmodeus plus Alric versus two thugs, adding Joren in Wave 2**. Story dialogue, scripted resolutions, ordinary/exciting day choices, EXP and existing saves are unchanged.
+
+**Install:** Download `Paleverse_Love_Beyond_Sprite_Pack_02.zip` from this conversation, extract it directly into the repository root (beside `project.godot`), accepting overwrite of the older `asmodeus.png` and `wild_boar.png`. The existing Pixel Battle Pass 01 backgrounds and Parts 1–6 story art are still used separately.
+
+See [the detailed sprite integration steps](docs/sprite_integration_02.md) and [current sprite mapping](data/battle_areas.json). If the pack isn't installed, fallback labels appear instead of missing-image crashes.
+
+**Limitations:** The new sprites are static. The current two-wave alley combat engine remains simplified, with shared enemy progression rather than individually selectable targets. Future boss/angel sprite variants are prepared but not yet given gameplay events.
+
+---
+
 ## F5: Prototype 005 — Battle Visual Pass 1
 
 The default Godot scene is now `scenes/prototype_story_v5.tscn`. **All six Love Beyond story parts, both interludes, EXP and save data remain intact.** Prototype 004 is preserved in `scenes/prototype_story_v4.tscn`.
