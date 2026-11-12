@@ -1299,6 +1299,25 @@ func _run_tests() -> void:
 		portrait_view.call("_show_menu")
 		var overlay: Control = portrait_view.find_child("DialoguePortraitLayer", true, false) as Control
 		_expect(overlay != null and not overlay.visible, "Portraits don't cover the title/campaign selector")
+		# The early prototype's big face cards must not overlap our newer
+		# full-height speaking portraits during the intro.
+		var old_face_row: HBoxContainer = portrait_view.get("portraits") as HBoxContainer
+		portrait_view.call("_start_dialogue")
+		_expect(old_face_row != null and not old_face_row.visible,
+			"Old face boxes are hidden when the opening dialogue starts")
+		portrait_view.call("_advance_dialogue")
+		_expect(old_face_row != null and not old_face_row.visible,
+			"Legacy portrait boxes remain hidden when the speaker changes")
+		_expect(str(portrait_view.get("last_portrait_speaker")) == "asmodeus",
+			"The new transparent portrait layer still tracks Asmodeus speaking")
+		portrait_view.call("_choose_fighter")
+		_expect(old_face_row != null and not old_face_row.visible,
+			"Fighter selection does not expose the duplicate legacy face row")
+		portrait_view.get("frontend").hide()
+		portrait_view.call("_start_battle", "Asmodeus", "Haniel")
+		_expect(old_face_row != null and old_face_row.visible,
+			"The opening duel still has its functional HP cards and visual effect anchors")
+		portrait_view.call("_show_menu")
 		portrait_view.set("story_mode", true)
 		portrait_view.set("event_index", 2)
 		portrait_view.call("_show_event")
