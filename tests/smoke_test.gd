@@ -246,6 +246,27 @@ func _run_tests() -> void:
 		_expect(str(pixel_view.get("stage_area")) == "forest_clearing", "Bear encounter uses forest")
 		pixel_view.queue_free()
 
+
+	# Prototype 006: the new sprite roster renders and the multi-unit alley
+	# formation works with graceful placeholders when the art ZIP is absent.
+	var v6_resource: Resource = load("res://scenes/prototype_story_v6.tscn")
+	_expect(v6_resource is PackedScene, "User sprite scene must import")
+	if v6_resource is PackedScene:
+		var cast_view: Node = (v6_resource as PackedScene).instantiate()
+		root.add_child(cast_view)
+		cast_view.call("_show_sprite_gallery", 0)
+		var cast_map: Dictionary = cast_view.get("pixel_data")
+		var images: Dictionary = cast_map.get("sprites", {})
+		for sprite_id in ["asmodeus", "haniel", "alric", "joren", "bandit_thug", "grizzly_bear", "wild_boar"]:
+			_expect(images.has(sprite_id), "User asset ID must be mapped: " + sprite_id)
+		cast_view.call("_start_alley_wave", 1, "cliffside_alley.jpg")
+		_expect(str(cast_view.get("stage_area")) == "cliffside_alley", "Sprite alley uses correct area")
+		_expect(cast_view.get("ally_sprite") != null, "Alric has a visible battle slot")
+		_expect(cast_view.get("extra_thug_sprite") != null, "Second thug has a battle slot")
+		cast_view.call("_start_alley_wave", 2, "cliffside_alley_2.jpg")
+		_expect(cast_view.get("joren_boss_sprite") != null, "Joren has a boss slot in wave 2")
+		cast_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
