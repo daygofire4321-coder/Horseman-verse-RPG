@@ -1,0 +1,141 @@
+{
+  "source": "User-supplied sprite sheets, cropped without reillustrating",
+  "images": [
+    {
+      "file": "asmodeus.png",
+      "width": 515,
+      "height": 680
+    },
+    {
+      "file": "haniel.png",
+      "width": 515,
+      "height": 680
+    },
+    {
+      "file": "variants/asmodeus_idle.png",
+      "width": 515,
+      "height": 680
+    },
+    {
+      "file": "variants/haniel_idle.png",
+      "width": 515,
+      "height": 680
+    },
+    {
+      "file": "joren_idle.png",
+      "width": 494,
+      "height": 680
+    },
+    {
+      "file": "alric.png",
+      "width": 534,
+      "height": 680
+    },
+    {
+      "file": "joren_boss.png",
+      "width": 519,
+      "height": 680
+    },
+    {
+      "file": "bandit_club.png",
+      "width": 510,
+      "height": 680
+    },
+    {
+      "file": "bandit_knife.png",
+      "width": 600,
+      "height": 643
+    },
+    {
+      "file": "variants/explore_bandit_sword_shield.png",
+      "width": 591,
+      "height": 641
+    },
+    {
+      "file": "variants/explore_bandit_heavy.png",
+      "width": 600,
+      "height": 656
+    },
+    {
+      "file": "variants/explore_bandit_veteran.png",
+      "width": 599,
+      "height": 656
+    },
+    {
+      "file": "michael.png",
+      "width": 425,
+      "height": 680
+    },
+    {
+      "file": "grizzly_bear.png",
+      "width": 609,
+      "height": 680
+    },
+    {
+      "file": "deer.png",
+      "width": 512,
+      "height": 600
+    },
+    {
+      "file": "wild_boar.png",
+      "width": 512,
+      "height": 600
+    },
+    {
+      "file": "goat.png",
+      "width": 512,
+      "height": 597
+    },
+    {
+      "file": "rabbit.png",
+      "width": 512,
+      "height": 404
+    },
+    {
+      "file": "pheasant.png",
+      "width": 512,
+      "height": 404
+    },
+    {
+      "file": "duck.png",
+      "width": 512,
+      "height": 404
+    },
+    {
+      "file": "variants/azrael.png",
+      "width": 516,
+      "height": 680
+    },
+    {
+      "file": "variants/azazel.png",
+      "width": 514,
+      "height": 680
+    },
+    {
+      "file": "variants/azrael_boss.png",
+      "width": 806,
+      "height": 680
+    },
+    {
+      "file": "variants/michael_boss_damaged.png",
+      "width": 795,
+      "height": 680
+    },
+    {
+      "file": "variants/gabriel.png",
+      "width": 341,
+      "height": 680
+    },
+    {
+      "file": "variants/uriel.png",
+      "width": 345,
+      "height": 680
+    }
+  ],
+  "notes": [
+    "Unknown identities are held in variants/ and are not used as named characters.",
+    "Asmodeus and Haniel use provided battle poses; their neutral versions are saved for later story UI.",
+    "Michael, Azrael, Azazel, Gabriel and Uriel are organized but not yet story-playable.",
+    "Do not treat deer/goat/rabbit/pheasant/duck as active hunting enemies until corresponding character data is authored."
+  ]
+}
