@@ -45,13 +45,15 @@ func spend(action_id: String) -> String:
 		"rest":
 			var restored: int = mini(int(state["max_hp"]) - int(state["hp"]), 35)
 			state["hp"] = int(state["hp"]) + restored
-			return "Asmodeus takes time to recover. Restored %d HP." % restored
+			return "%s takes time to recover. Restored %d HP." % [str(profile.get("pov", "asmodeus")).capitalize(), restored]
 		"care":
 			state["care_count"] = int(state["care_count"]) + 1
 			return "Asmodeus brings Haniel water and checks that the bear-fur blanket is still covering her. She answers with a grateful nod."
 		"camp":
 			state["camp_works"] = int(state["camp_works"]) + 1
 			state["supplies"] = int(state["supplies"]) + 1
+			if str(profile.get("location", "")) == "Cliffside Town":
+				return "Asmodeus helps repair a creaking market stall and collects 1 useful supply."
 			return "The hide-drying rack gets a little sturdier. Salvaged 1 useful supply."
 		"explore":
 			state["discovered"] = int(state["discovered"]) + 1
