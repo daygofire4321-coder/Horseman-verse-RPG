@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "campaign": "love_beyond",
+  "max_party_size": 3,
+  "max_moves": 4,
+  "item_slots": 3,
+  "character_order": [
+    "asmodeus",
+    "haniel",
+    "alric"
+  ],
+  "characters": {
+    "asmodeus": {
+      "role": "Black Ice / Defense",
+      "unlock_after_part": 0,
+      "base_stats": {
+        "attack": 22,
+        "defense": 26,
+        "speed": 18
+      },
+      "ability": {
+        "name": "Black Ice Affinity",
+        "description": "Unique passive under design. No combat bonus yet.",
+        "implemented": false
+      }
+    },
+    "haniel": {
+      "role": "Divine Bow / Healing",
+      "unlock_after_part": 0,
+      "base_stats": {
+        "attack": 19,
+        "defense": 18,
+        "speed": 25
+      },
+      "ability": {
+        "name": "Angelic Grace",
+        "description": "Unique passive under design. No combat bonus yet.",
+        "implemented": false
+      }
+    },
+    "alric": {
+      "role": "Blacksmith / Bruiser",
+      "unlock_after_part": 6,
+      "base_stats": {
+        "attack": 24,
+        "defense": 28,
+        "speed": 13
+      },
+      "ability": {
+        "name": "Friends and Family",
+        "description": "Planned: 20% off at Alric's smithy while he is in your active party. Shop system is not live yet.",
+        "implemented": false
+      }
+    }
+  },
+  "notes": "Prototype numeric ATK/DEF/SPD are for character-sheet layout and balance testing only; current scripted combat still uses its existing move/HP logic. No story-dependent character is recruited before their unlock milestone. Training points and 3 item slots will become interactive in later versions."
+}
