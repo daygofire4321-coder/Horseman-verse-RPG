@@ -5,7 +5,6 @@ extends "res://scripts/prototype_story_v17.gd"
 ## normally and no portrait texture is required.
 
 const DIALOGUE_PORTRAITS_DATA := "res://data/portraits/love_beyond.json"
-const OptionalArt = preload("res://scripts/core/optional_art_loader.gd")
 
 var portrait_catalog: Dictionary = {}
 var dialogue_portrait_layer: Control = null
