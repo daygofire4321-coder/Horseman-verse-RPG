@@ -1200,6 +1200,58 @@ func _run_tests() -> void:
 		_expect(old_panel != null and not old_panel.visible, "No black title bar after practice battle")
 		jrpg.queue_free()
 
+
+	# Prototype 017 — author-curated story illustrations for Parts 1–5.
+	# Part Six has no supplied artwork and must retain its original images.
+	var first_parts: Dictionary = ContentStore.read_dictionary("res://data/chapters/love_beyond_opening_story.json")
+	var later_parts: Dictionary = ContentStore.read_dictionary("res://data/chapters/love_beyond_parts_4_6.json")
+	var first_events: Array = first_parts.get("events", [])
+	var later_events: Array = later_parts.get("events", [])
+	var curated_paths: Array[String] = []
+	var curated_count := 0
+	for section in [first_events, later_events]:
+		for raw_event in section:
+			var art_event: Dictionary = raw_event
+			var art_path := str(art_event.get("curated_image", ""))
+			if art_path == "":
+				continue
+			curated_count += 1
+			if not curated_paths.has(art_path):
+				curated_paths.append(art_path)
+			_expect(art_path.begins_with("part_0"), "Curated chapter path is relative to art pack")
+			_expect(art_path.ends_with(".webp"), "Curated chapter images are optimized WebP")
+			_expect(not art_path.contains(".."), "Curated chapter art paths cannot escape their folder")
+	_expect(curated_paths.size() == 22, "Exactly 22 supplied images from Parts One through Five are mapped")
+	_expect(curated_count >= 22, "Every supplied chapter image is attached to a story moment")
+	_expect(str(first_events[0].get("curated_image", "")) == "part_01/01_cave_truce.webp", "Chapter One begins with the new cave truce picture")
+	_expect(str(first_events[21].get("curated_image", "")) == "part_02/01_gather_branches.webp", "Chapter Two uses the forest branch gathering art")
+	_expect(str(first_events[60].get("curated_image", "")) == "part_03/02_bear_confrontation.webp", "Author's second bear image marks boss fight")
+	_expect(str(first_events[65].get("curated_image", "")) == "part_03/03_haniel_rescue.webp", "Author's third bear image follows fight for Haniel's rescue")
+	_expect(str(first_events[71].get("curated_image", "")) == "part_03/04_bear_aftermath.webp", "Author's fourth bear image covers the aftermath")
+	_expect(str(later_events[1].get("curated_image", "")) == "part_04/01_cave_care.webp", "Chapter Four starts in the recovery cave")
+	_expect(str(later_events[23].get("curated_image", "")) == "part_05/01_hiderack.webp", "Chapter Five opens at the hide-drying rack")
+	for part_six_index in range(40, later_events.size()):
+		_expect(not later_events[part_six_index].has("curated_image"), "Part Six event %d retains its original artwork" % part_six_index)
+	_expect(str(later_events[40].get("image", "")) == "cliffside_street.jpg", "Part Six title keeps existing Cliffside street art")
+	_expect(str(later_events[52].get("image", "")) == "cliffside_alley.jpg", "Part Six alley remains unchanged")
+	_expect(str(later_events[66].get("image", "")) == "cliffside_alley.jpg", "Part Six first story fight is untouched")
+	_expect(str(later_events[73].get("image", "")) == "cliffside_alley_2.jpg", "Part Six second story fight is untouched")
+	var illustrated_scene: Resource = load("res://scenes/prototype_story_v17.tscn")
+	_expect(illustrated_scene is PackedScene, "Curated chapter scene must load")
+	if illustrated_scene is PackedScene:
+		var curated_view: Node = (illustrated_scene as PackedScene).instantiate()
+		root.add_child(curated_view)
+		curated_view.set("party_disable_disk_writes", true)
+		curated_view.call("_load_story_if_needed")
+		_expect(curated_view.get("story_events").size() == first_events.size() + later_events.size(), "All chapters including the unchanged Part Six still load")
+		_expect(str(curated_view.call("_curated_image_for", 0)) == "part_01/01_cave_truce.webp", "Curated art resolver finds Part One title image")
+		_expect(str(curated_view.call("_curated_image_for", 6)) == "part_01/05_haniel_closeup.webp", "Illustration is retained between dialogue lines")
+		_expect(str(curated_view.call("_curated_image_for", 53)) == "part_03/02_bear_confrontation.webp", "Story changes to the author-supplied bear confrontation")
+		_expect(str(curated_view.call("_curated_image_for", first_events.size() + 23)) == "part_05/01_hiderack.webp", "Merged Part Five image resolves correctly after Part Four interlude")
+		_expect(str(curated_view.call("_curated_image_for", first_events.size() + 40)) == "", "Part Six title resets curated imagery to original art")
+		_expect(str(curated_view.call("_curated_image_for", first_events.size() + 61)) == "", "Part Six never accidentally inherits an image from Part Five")
+		curated_view.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
