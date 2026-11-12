@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## Art fix — Portraits or Chapter Backgrounds Not Showing
+
+**Pulling code does not install the separate image ZIPs.** Download **Paleverse_Story_Art_and_Portraits_Fix.zip** from this ChatGPT conversation. It combines all **22 curated story backgrounds** and **16 dialogue expression portraits** into one small asset pack.
+
+GitHub Desktop → Fetch/Pull → **Repository → Show in Explorer** → open the ZIP and copy its **assets** folder into the directory containing `project.godot` (merge folders), then F5. Alternatively, extract the ZIP and run its `INSTALL_IMAGES.cmd` Windows installer. The new `optional_art_loader.gd` tolerates one extra extraction folder and can decode raw WebP files before they are imported.
+
+For an exact check, go to **Love Beyond → Practice & Extras → CHECK INSTALLED STORY & PORTRAIT ART**. It should show **22/22 chapter backgrounds and 16/16 portraits**, with previews. The original prologue and Part Six backgrounds are intentionally untouched.
+
+[Full troubleshooting and installation guide](docs/optional_art_install_repair.md).
+
+---
+
+
 ## F5: Prototype 018 — Speaking Portraits & Facing Battle Sprites
 
 **NEW:** Four user-supplied expressions each for **Asmodeus, Haniel, Joren and Alric** appear during dialogue, dimming whoever isn't speaking. Story scenes use a two-sided portrait layer behind the readable text box. Signed/thought Haniel lines and Joren's initial "BLOND YOUTH" alias are recognized. Expressions persist through scenes and are reconstructed when skipping/resuming dialogue; missing art never breaks the story.
