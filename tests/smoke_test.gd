@@ -1127,6 +1127,79 @@ func _run_tests() -> void:
 		_expect(not hub.get("save_data").get("campaigns", {}).has("blades"), "No empty Blades save slot is ever initialized")
 		hub.queue_free()
 
+
+	# Prototype 016 — battle layout inspired by the supplied JRPG reference,
+	# compact sided HP, working command tabs, targeting, and title bar cleanup.
+	var jrpg_scene: Resource = load("res://scenes/prototype_story_v16.tscn")
+	_expect(jrpg_scene is PackedScene, "JRPG combat UI scene imports")
+	if jrpg_scene is PackedScene:
+		var jrpg: Node = (jrpg_scene as PackedScene).instantiate()
+		root.add_child(jrpg)
+		jrpg.set("party_disable_disk_writes", true)
+		var jrpg_save: Dictionary = SaveStore.new_save()
+		jrpg_save["campaigns"] = {"love_beyond": {
+			"opening_parts_completed":6,
+			"party":{"active":["asmodeus","haniel","alric"]},
+			"training":{"asmodeus":{"learned":["black_ice_lance"],"points":0}},
+			"inventory":{"starter_granted":true,
+				"backpack":{"travel_rations":2},
+				"slots":{"haniel":["herbal_bread","",""],"asmodeus":["","",""],"alric":["","",""]}}
+		}}
+		jrpg.set("save_data", jrpg_save)
+		jrpg.call("_show_menu")
+		var old_panel: Control = jrpg.call("_legacy_dialogue_frame")
+		_expect(old_panel != null and not old_panel.visible, "Empty legacy dialogue panel is hidden on campaign select")
+		_expect(jrpg.find_child("CampaignChoice_love_beyond", true, false) != null, "Campaign art menu remains interactive")
+		jrpg.call("_start_dialogue")
+		_expect(old_panel != null and old_panel.visible, "Legacy dialogue frame reappears when beginning the story")
+		jrpg.call("_show_menu")
+		_expect(old_panel != null and not old_panel.visible, "Returning to campaign select hides black dialogue bar again")
+
+		var before_practice: Dictionary = jrpg.get("save_data").duplicate(true)
+		jrpg.call("_party_battle_start", "forest_clearing")
+		var live_ui = jrpg.get("party_battle")
+		_expect(live_ui != null and live_ui.allies.size() == 3, "JRPG battle uses three saved party members")
+		var enemy_wing: VBoxContainer = jrpg.find_child("EnemyWing", true, false) as VBoxContainer
+		var ally_wing: VBoxContainer = jrpg.find_child("AllyWing", true, false) as VBoxContainer
+		_expect(enemy_wing != null and ally_wing != null, "Compact HP wings appear on respective sides of the field")
+		var mini_enemy_hp: ProgressBar = jrpg.find_child("EnemyHpMini", true, false) as ProgressBar
+		_expect(mini_enemy_hp != null and mini_enemy_hp.custom_minimum_size.x <= 160, "Ordinary enemy bars are compact, not giant boss bars")
+		_expect(jrpg.find_child("BattlePartyStatus", true, false) != null, "Lower JRPG status strip shows the player party")
+		_expect(jrpg.find_child("CombatCommandDock", true, false) != null, "Command dock anchors battle action controls")
+		_expect(jrpg.find_child("CombatTab_attack", true, false) != null, "Battle includes Attack category")
+		_expect(jrpg.find_child("CombatTab_skills", true, false) != null, "Battle includes Skills category")
+		_expect(jrpg.find_child("CombatTab_items", true, false) != null, "Battle includes Items category")
+		_expect(jrpg.find_child("CombatTab_guard", true, false) != null, "Battle includes Guard category")
+		_expect(jrpg.find_child("CombatTab_switch", true, false) != null, "Battle includes Switch category")
+		var no_reserve: Button = jrpg.find_child("CombatTab_switch", true, false) as Button
+		_expect(no_reserve != null and no_reserve.disabled, "Switch category disables with no reserve")
+		var current_before_tabs: String = str(live_ui.current_actor().get("id", ""))
+		jrpg.call("_set_combat_tab", "attack")
+		_expect(jrpg.find_child("CombatAction_Attack_attack", true, false) != null, "Attack tab shows basic action")
+		jrpg.call("_set_combat_tab", "items")
+		var food_action: Button = jrpg.find_child("CombatAction_Item_0", true, false) as Button
+		_expect(food_action != null and food_action.disabled, "Food is visible but disabled while nobody is wounded")
+		_expect(str(live_ui.current_actor().get("id", "")) == current_before_tabs, "Changing tabs costs no turns")
+		jrpg.call("_set_combat_tab", "skills")
+		_expect(jrpg.find_child("CombatAction_Skill_divine_arrow", true, false) != null, "Skills lists Haniel's Divine Arrow")
+		jrpg.call("_party_battle_pick_target", "divine_arrow")
+		_expect(jrpg.find_child("CombatTargetChoices", true, false) != null, "Target mode has its own compact action area")
+		_expect(jrpg.find_child("TargetReticle_1", true, false) != null, "Enemy targeting shows a diamond reticle")
+		_expect(jrpg.find_child("PartyTarget_Enemy_1", true, false) != null, "Player may select the second enemy")
+		jrpg.call("_party_battle_use", "divine_arrow", 1)
+		_expect(str(live_ui.current_actor().get("id", "")) == "asmodeus", "Using a skill advances to the next fighter")
+		_expect(jrpg.find_child("CombatAction_Skill_black_ice_lance", true, false) != null, "Learned Black Ice Lance appears under Skills")
+		jrpg.call("_set_combat_tab", "guard")
+		_expect(jrpg.find_child("CombatAction_Guard_ice_guard", true, false) != null, "Asmodeus's Ice Guard appears under Guard")
+		jrpg.call("_set_combat_tab", "attack")
+		jrpg.call("_party_battle_pick_target", "attack")
+		jrpg.call("_party_battle_use", "attack", 0)
+		_expect(jrpg.get("save_data") == before_practice, "All JRPG practice tabs and moves preserve save isolation")
+		jrpg.call("_show_menu")
+		_expect(jrpg.find_child("CampaignChoice_blades", true, false) != null, "Exiting practice returns to campaign hub")
+		_expect(old_panel != null and not old_panel.visible, "No black title bar after practice battle")
+		jrpg.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
