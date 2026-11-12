@@ -1,6 +1,6 @@
 extends RefCounted
 ## Reusable three-character party state. No save-file or story-cursor writes.
-## Stat sheet bonuses and item/training panels are previews until later systems.
+## Stat sheets include trained moves; ATK/DEF/SPD bonuses and items remain previews.
 
 const ContentStore = preload("res://scripts/core/content_store.gd")
 const MAX_ACTIVE := 3
@@ -96,7 +96,21 @@ func sheet(character_id: String, save_data: Dictionary) -> Dictionary:
 	var max_hp := maxi(base_hp, int(progress.get("max_hp", base_hp)))
 	var current_hp := clampi(int(progress.get("hp", max_hp)), 0, max_hp)
 	var base: Dictionary = definition.get("base_stats", {})
-	var moves: Array = original.get("moves", [])
+	# Base moves stay equipped. Trained techniques occupy empty move slots;
+	# excess learned moves remain saved for a future move-loadout editor.
+	var moves: Array = original.get("moves", []).duplicate(true)
+	var training: Dictionary = lb.get("training", {}).get(character_id, {})
+	var known: Array = training.get("learned", [])
+	var train_config: Dictionary = ContentStore.read_dictionary("res://data/training/love_beyond.json")
+	for candidate in train_config.get("paths", {}).get(character_id, []):
+		var move: Dictionary = candidate
+		if known.has(str(move.get("id", ""))):
+			var already_equipped := false
+			for present in moves:
+				if str(present.get("id", "")) == str(move.get("id", "")):
+					already_equipped = true
+			if not already_equipped:
+				moves.append(move.duplicate(true))
 	var move_slots: Array = []
 	for i in range(MAX_MOVES):
 		move_slots.append(moves[i].duplicate(true) if i < moves.size() else {})
@@ -114,6 +128,7 @@ func sheet(character_id: String, save_data: Dictionary) -> Dictionary:
 		"speed":int(base.get("speed", 10)) + (level - 1),
 		"ability":definition.get("ability", {}),
 		"moves":move_slots,
+		"learned_move_count":known.size(),
 		"item_slots":ITEM_SLOTS,
 		"party_slot":active.find(character_id),
 		"unlocked":is_unlocked(character_id),
