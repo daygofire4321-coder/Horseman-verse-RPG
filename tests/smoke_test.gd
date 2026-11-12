@@ -505,6 +505,7 @@ func _run_tests() -> void:
 		var party_view: Node = (v10_resource as PackedScene).instantiate()
 		root.add_child(party_view)
 		party_view.set("party_disable_disk_writes", true)
+		_expect(party_view.find_child("TitleMenuScroll", true, false) != null, "Title menu scrolls to show the new party button at 720p")
 		party_view.set("save_data", SaveStore.new_save())
 		party_view.call("_show_party_menu", false)
 		_expect(party_view.find_child("PartySlot_2", true, false) != null, "Empty third slot is visible in party menu")
