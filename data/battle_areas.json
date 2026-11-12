@@ -86,7 +86,11 @@
     "michael_boss_damaged": "variants/michael_boss_damaged.png",
     "gabriel": "variants/gabriel.png",
     "uriel": "variants/uriel.png",
-    "joren_idle": "joren_idle.png"
+    "joren_idle": "joren_idle.png",
+    "bandit_dagger": "variants/explore_bandit_dagger.png",
+    "bandit_shield": "variants/explore_bandit_sword_shield.png",
+    "bandit_heavy": "variants/explore_bandit_heavy.png",
+    "bandit_veteran": "variants/explore_bandit_veteran.png"
   },
   "routes": {
     "prologue": "thundercloud",
@@ -97,6 +101,6 @@
     "market": "market_street",
     "smithy": "alric_smithy"
   },
-  "notes": "User-supplied 7-image environment pack optimized as WEBP for Godot 4.7.2. Older PNGs remain valid legacy fallbacks. Camp is used for daily interludes. Market and Alric smithy are location previews until shopping/inventory systems arrive. Original sprite mapping, story and saves are unchanged.",
+  "notes": "Love Beyond area and sprite map. Story scenes remain unchanged. Prototype 014 Cliffside daily bandit encounters use installed four outlaw variants, town market and alley backgrounds; separate market purchases and gold unlock after Part Six.",
   "background_pack_version": 3
 }
