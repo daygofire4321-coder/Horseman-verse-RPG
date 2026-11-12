@@ -19,7 +19,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "You aren't too bad, angel."
+      "text": "You aren't too bad, angel.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -51,7 +52,8 @@
       "kind": "line",
       "speaker": "ASMODEUS",
       "text": "I'm the demon of lust. I've had perverse encounters with hundreds, perhaps thousands... maybe more people. A few mutes have come my way.",
-      "curated_image": "part_01/04_asmodeus_closeup.webp"
+      "curated_image": "part_01/04_asmodeus_closeup.webp",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -98,7 +100,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Bet the Heaven Father told you to kill some lowly demon."
+      "text": "Bet the Heaven Father told you to kill some lowly demon.",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -108,7 +111,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "I was told the same. I was told to take out some weak little angel, so I guess we were both punked by our old men."
+      "text": "I was told the same. I was told to take out some weak little angel, so I guess we were both punked by our old men.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -151,7 +155,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [THOUGHT]",
-      "text": "I hope he finds happiness."
+      "text": "I hope he finds happiness.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -186,7 +191,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Why would you harm it?"
+      "text": "Why would you harm it?",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -206,7 +212,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "It also needed to live. To feel the sun, to eat, to breed."
+      "text": "It also needed to live. To feel the sun, to eat, to breed.",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -216,7 +223,8 @@
     {
       "kind": "line",
       "speaker": "HANIEL [SIGNING]",
-      "text": "Who is to say we are above them?"
+      "text": "Who is to say we are above them?",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -241,7 +249,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "We should know better?"
+      "text": "We should know better?",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -251,7 +260,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "To know better than the natural order is a lofty claim, angel. Is that empathy or arrogance?"
+      "text": "To know better than the natural order is a lofty claim, angel. Is that empathy or arrogance?",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -301,7 +311,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Shit."
+      "text": "Shit.",
+      "portrait_expression": "mad"
     },
     {
       "kind": "line",
@@ -311,7 +322,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Okay, ugly, let's dance. I would prefer someone cute, but when times are rough you gotta do what you gotta do."
+      "text": "Okay, ugly, let's dance. I would prefer someone cute, but when times are rough you gotta do what you gotta do.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
@@ -338,7 +350,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Alright, ugly, ya got me."
+      "text": "Alright, ugly, ya got me.",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -365,7 +378,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "Haniel..."
+      "text": "Haniel...",
+      "portrait_expression": "sad"
     },
     {
       "kind": "line",
@@ -375,7 +389,8 @@
     {
       "kind": "line",
       "speaker": "ASMODEUS",
-      "text": "You're shorter than I originally thought."
+      "text": "You're shorter than I originally thought.",
+      "portrait_expression": "smile"
     },
     {
       "kind": "line",
