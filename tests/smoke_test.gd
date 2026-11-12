@@ -1507,6 +1507,25 @@ func _run_tests() -> void:
 		_expect(bool(story_view.get("story_mode")), "Story mode is enabled when Part Seven begins")
 		_expect(int(story_view.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"]) == 6,
 			"Viewing Part Seven doesn't prematurely mark it complete")
+		var part_eight_start := -1
+		var part_nine_start := -1
+		for i in range(story_view.get("story_events").size()):
+			var entry: Dictionary = story_view.get("story_events")[i]
+			if str(entry.get("kind", "")) == "title":
+				if str(entry.get("part", "")) == "PART EIGHT":
+					part_eight_start = i
+				if str(entry.get("part", "")) == "PART NINE":
+					part_nine_start = i
+		story_view.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 7
+		story_view.call("_show_love_campaign")
+		story_view.call("_continue_next_chapter")
+		_expect(int(story_view.get("event_index")) == part_eight_start,
+			"Completed Part Seven resumes exactly at Part Eight")
+		story_view.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 8
+		story_view.call("_show_love_campaign")
+		story_view.call("_continue_next_chapter")
+		_expect(int(story_view.get("event_index")) == part_nine_start,
+			"Completed Part Eight resumes exactly at Part Nine")
 		var new_stats: Dictionary = story_view.call("_art_counts")
 		_expect(int(new_stats.get("chapters_total", 0)) == 36,
 			"Art check counts 22 existing plus 14 new chapter illustrations")
