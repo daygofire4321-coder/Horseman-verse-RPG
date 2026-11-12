@@ -1458,9 +1458,8 @@ func _run_tests() -> void:
 		"Haniel's concluding signed reflection remains intact")
 	_expect(new_events.any(func(e): return str(e.get("text", "")).contains("It sounds like you love them very much")),
 		"Alric's final response is present in full")
-	_expect(str(new_events[-1].get("id", "")) == "homestead_after_nine" or
-		str(new_events[-1].get("id", "")) == "homestead_haniel",
-		"Part Nine concludes in new homestead free time rather than an invented combat encounter")
+	_expect(str(new_events[-1].get("id", "")) == "homestead_haniel",
+		"Part Nine concludes at an existing Haniel homestead profile rather than a missing scene")
 	_expect(portrait_characters.get("michael", {}).get("expressions", {}).size() == 4,
 		"Michael gets his four supplied portraits")
 	_expect(portrait_characters.get("uriel", {}).get("expressions", {}).size() == 4,
