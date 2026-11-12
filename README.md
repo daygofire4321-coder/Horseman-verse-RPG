@@ -1,5 +1,20 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 013 — Inventory and Equipment
+
+The default scene is `scenes/prototype_story_v13.tscn`. **No new art pack is required.** GitHub Desktop → **Fetch origin → Pull origin**, then Godot → **F5**.
+
+**New:** Use the **INVENTORY & EQUIPMENT** button on the scrollable title screen, the ordinary-day menu, or each character sheet. You have a shared backpack and **three equipped/readied item slots per character**. On first visit, existing and new saves receive a **single starter kit** with Asmodeus's Black Ice Focus, Haniel's Bowstring Wrap, Leather Bracers, an Iron Charm, three Travel Rations and two Herbal Breads. This kit is never granted twice.
+
+**Playable:** Equip/unequip compatible gear from the backpack; see Attack, Defense and Speed bonuses reflected on your sheets and in non-canon party practice battles. Iron Charm reduces damage from enemy attacks. Equip food in a slot, then **EAT NOW** to restore HP, consuming it once; this also works during camp and stays synchronized with ordinary-day HP. In practice battles, **USE FOOD** spends a fighter's turn to heal a wounded ally but only consumes a temporary battle copy, leaving your permanent inventory unchanged.
+
+**Not implemented yet:** Coins, drops, shops, purchases, selling, and Alric's 20% Friends and Family shop discount. His Hammer Grip exists in the item catalog but isn't currently available as loot. Existing canonical story fights and results are unchanged, and the saved party, move training, XP and story checkpoints remain compatible.
+
+See [Prototype 013 inventory guide](docs/inventory_equipment_013.md) for the item table and step-by-step testing.
+
+---
+
+
 ## F5: Prototype 012 — Party Battle Practice
 
 The game now launches `scenes/prototype_story_v12.tscn`. From the title screen, scroll to **PARTY BATTLE PRACTICE** and select Woodland Skirmish (boar + wolf) or Cliffside Drill (two thugs). The mode loads your **saved three-character party and trained moves**.
