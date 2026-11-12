@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 015 — The Pale Horseman Campaign Select
+
+**NEW MAIN MENU:** Press F5 and choose a campaign. **Love Beyond Heaven or Hell** is playable, with its own **Story**, **Adventure** (Party / Inventory / Cliffside / Market), and **Practice & Extras** navigation. **Blades of Courage and Ferocity** is prominently listed as **COMING SOON**, disabled until implemented. Neither series shares the other's saves. The old growing list of prototype/debug buttons no longer clutters the title.
+
+**Visual polish:** Deep navy, translucent charcoal, elegant gold borders, icy-blue highlights, hover/focus/disabled states, cleaner dialogue buttons, and a right-hand title menu that keeps the character illustration visible. The artwork supplied for the title has been optimized to `assets/paleverse/campaign_title.webp` and is available as a small **separate title-art ZIP** to extract into your Godot project root. If you skip the art ZIP, the code automatically uses the existing storm background.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin** → Godot **F5**. No saves reset; Love Beyond chapters 1–6, daily routines, team combat, training, inventory, market and gold all remain in place. The default scene is `scenes/prototype_story_v15.tscn`.
+
+[Read the campaign hub and title art install guide](docs/campaign_hub_015.md).
+
+---
+
+
 ## F5: Prototype 014 — Cliffside Gold, Market and Outlaw Encounters
 
 **The default Godot scene is `scenes/prototype_story_v14.tscn`.** Update with GitHub Desktop → **Fetch origin → Pull origin**, then open Godot 4.7.2 and press **F5**. No extra PNG/ZIP packs needed.
