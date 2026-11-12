@@ -1,5 +1,20 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 016 — JRPG-Style Combat UI
+
+**NEW IN 016:** The multi-campaign main menu no longer shows the empty black rectangle left behind by the old dialogue panel. It returns properly when the story begins.
+
+**Battle interface inspired by the user's JRPG screenshot:** Nonboss party combat now has **small enemy HP bars on the left**, player sprites on the right, and a **three-member HP/status strip along the bottom**. A separate bottom **command dock** groups **Attack, Skills, Items, Guard, Switch and Exit/Retreat**, with a contextual move/item list and **diamond-reticle target choices** for enemies or allies. Existing HP, trained moves, food, reserve swapping, turn order and gold rewards remain functional; there is no fake SP/AP mechanic.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin** → Godot **F5**. The default scene is now `scenes/prototype_story_v16.tscn`. No new assets required—the earlier campaign title art and combat sprites are reused.
+
+Try **Love Beyond → Practice & Extras → Three-Character Battle Practice** or a repeatable **Cliffside Explore / Haniel Patrol** encounter after Part Six. Older scripted boss/story fights are unchanged.
+
+[Prototype 016 playtest and technical guide](docs/jrpg_battle_hud_016.md).
+
+---
+
+
 ## F5: Prototype 015 — The Pale Horseman Campaign Select
 
 **NEW MAIN MENU:** Press F5 and choose a campaign. **Love Beyond Heaven or Hell** is playable, with its own **Story**, **Adventure** (Party / Inventory / Cliffside / Market), and **Practice & Extras** navigation. **Blades of Courage and Ferocity** is prominently listed as **COMING SOON**, disabled until implemented. Neither series shares the other's saves. The old growing list of prototype/debug buttons no longer clutters the title.
