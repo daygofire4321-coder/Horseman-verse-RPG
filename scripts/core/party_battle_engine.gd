@@ -65,6 +65,8 @@ func _member_from_sheet(sheet: Dictionary) -> Dictionary:
 		"attack":int(sheet.get("attack", 20)), "defense":int(sheet.get("defense", 20)),
 		"speed":int(sheet.get("speed", 20)), "level":int(sheet.get("level", 1)),
 		"moves":sheet.get("moves", []).duplicate(true),
+		"items":sheet.get("item_slot_details", [{}, {}, {}]).duplicate(true),
+		"damage_reduction":maxi(0, int(sheet.get("damage_reduction", 0))),
 		"guard":false, "ability":sheet.get("ability", {}).duplicate(true)
 	}
 
@@ -175,6 +177,48 @@ func use_move(move_id: String, target_index: int = -1) -> Dictionary:
 	return {"ok":true, "message":last_log, "finished":finished, "victory":victory}
 
 
+
+func usable_food_slots() -> Array[int]:
+	var valid: Array[int] = []
+	var actor: Dictionary = current_actor()
+	var items: Array = actor.get("items", [])
+	for i in range(items.size()):
+		var item: Dictionary = items[i]
+		if str(item.get("category", "")) == "consumable" and int(item.get("heal", 0)) > 0:
+			valid.append(i)
+	return valid
+
+
+func food_targets(slot_index: int) -> Array[int]:
+	var valid: Array[int] = []
+	if not usable_food_slots().has(slot_index):
+		return valid
+	for i in range(allies.size()):
+		var member: Dictionary = allies[i]
+		if int(member.get("hp", 0)) > 0 and int(member.get("hp", 0)) < int(member.get("max_hp", 0)):
+			valid.append(i)
+	return valid
+
+
+func use_food(slot_index: int, target_index: int) -> Dictionary:
+	var actor: Dictionary = current_actor()
+	if actor.is_empty() or not usable_food_slots().has(slot_index):
+		return {"ok":false, "message":"No food is equipped in that slot."}
+	if not food_targets(slot_index).has(target_index):
+		return {"ok":false, "message":"Choose a living, wounded ally."}
+	var items: Array = actor.get("items", [])
+	var food: Dictionary = items[slot_index]
+	var friend: Dictionary = allies[target_index]
+	var amount := mini(maxi(0, int(food.get("heal", 0))), int(friend.get("max_hp", 0)) - int(friend.get("hp", 0)))
+	friend["hp"] = int(friend["hp"]) + amount
+	items[slot_index] = {}
+	actor["items"] = items
+	last_log = "%s shared %s with %s, restoring %d HP. The food is gone for this practice fight." % [
+		actor.get("name", ""), food.get("name", "food"), friend.get("name", ""), amount]
+	_advance_after_action()
+	return {"ok":true, "message":last_log, "finished":finished, "victory":victory}
+
+
 func switch_with_reserve(reserve_id: String) -> Dictionary:
 	var actor: Dictionary = current_actor()
 	if actor.is_empty():
@@ -239,7 +283,8 @@ func _enemy_phase() -> void:
 		var victim: Dictionary = allies[target_index]
 		var raw := int(roundf(float(foe.get("ai_damage", 10)) * enemy_damage_scale))
 		var defense_reduction := maxi(0, int((int(victim.get("defense", 20)) - 20) / 6))
-		var taken := maxi(1, raw - defense_reduction)
+		var ward_reduction := maxi(0, int(victim.get("damage_reduction", 0)))
+		var taken := maxi(1, raw - defense_reduction - ward_reduction)
 		if bool(victim.get("guard", false)):
 			taken = maxi(1, int(ceil(float(taken) / 2.0)))
 		victim["hp"] = maxi(0, int(victim["hp"]) - taken)
