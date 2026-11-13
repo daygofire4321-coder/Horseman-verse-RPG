@@ -1578,6 +1578,78 @@ func _run_tests() -> void:
 			"Ordinary days and woodwork cannot advance the authored story")
 		story_view.queue_free()
 
+
+	# Prototype 020: Existing daily gameplay controls are reorganized into
+	# round-card sections without changing their names or saved behavior.
+	var bubbly: Resource = load("res://scenes/prototype_story_v20.tscn")
+	_expect(bubbly is PackedScene, "Bubbly daily routine default scene imports")
+	if bubbly is PackedScene:
+		var life: Node = (bubbly as PackedScene).instantiate()
+		root.add_child(life)
+		life.set("party_disable_disk_writes", true)
+		life.call("_load_story_if_needed")
+		life.call("_enter_interlude", "after_part_four")
+		var scroll20: ScrollContainer = life.find_child("DailyActivitiesScroll", true, false) as ScrollContainer
+		_expect(scroll20 != null, "Old smaller-window scroll container is preserved")
+		_expect(life.find_child("DailyDashboardHeader", true, false) != null,
+			"Free time opens a rounded title and location bubble")
+		var statgrid: GridContainer = life.find_child("DailyDashboardStats", true, false) as GridContainer
+		_expect(statgrid != null and statgrid.get_child_count() == 6,
+			"Six distinct day, actions, HP, level, EXP and supplies chips replace dense text")
+		var actgrid: GridContainer = life.find_child("DailyActivityBubbleGrid", true, false) as GridContainer
+		_expect(actgrid != null and actgrid.columns == 2,
+			"At the desktop test viewport, actions are arranged in a two-column card grid")
+		_expect(life.find_child("DailyBubble_rest", true, false) != null and
+			life.find_child("DailyBubble_train", true, false) != null,
+			"Existing Camp Rest and Training appear as independent large rounded bubbles")
+		var routine_action: Button = life.find_child("Daily_action_rest", true, false) as Button
+		_expect(routine_action != null and routine_action.get_parent() is VBoxContainer,
+			"Existing activity button was reparented inside its bubble rather than recreated")
+		_expect(life.find_child("DailyNavigationBubbleGrid", true, false) != null and
+			life.find_child("DailyNavigation_Daily_Save", true, false) != null,
+			"Save/exit is visually grouped with the other management controls")
+		var p_before: int = int(life.get("interlude_engine").state.get("actions_left", 0))
+		if routine_action != null:
+			routine_action.pressed.emit()
+		_expect(int(life.get("interlude_engine").state.get("actions_left", 0)) == p_before - 1,
+			"Clicking a bubbly activity still spends exactly one real daily action")
+		_expect(life.find_child("DailyLastActivityBubble", true, false) != null,
+			"The most recent activity text is an easy-to-read separate result bubble")
+		# Continuing to existing scenes also keeps their original action logic.
+		life.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 6
+		life.call("_enter_cliffside_day", "haniel")
+		_expect(life.find_child("DailyEconomyBubble", true, false) != null,
+			"Cliffside wallets and outlaw wins are prominent in their own status bubble")
+		var town_hunt: Button = life.find_child("Daily_Hunt", true, false) as Button
+		var disabled_hunt_box: PanelContainer = life.find_child("DailyBubble_hunt", true, false) as PanelContainer
+		_expect(town_hunt != null and town_hunt.disabled and disabled_hunt_box != null and
+			not disabled_hunt_box.visible,
+			"Unavailable Cliffside wildlife hunting is removed from view without deleting its control")
+		_expect(life.find_child("Daily_VisitMarket", true, false) != null and
+			life.find_child("Daily_SwitchPOV", true, false) != null,
+			"Market and switch-character controls keep their original callbacks")
+		life.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 9
+		life.call("_enter_homestead", "haniel")
+		_expect(life.find_child("DailyHomesteadBubble", true, false) != null,
+			"Post-nine craft progress is displayed in a small homestead status bubble")
+		_expect(life.find_child("DailyVisitingHelpersBubble", true, false) != null,
+			"Toren and injured Joren remain visible in a separate helper bubble")
+		_expect(life.find_child("DailyBubble_woodwork", true, false) != null,
+			"Haniel woodworking is organized as a functioning bubble card")
+		_expect(life.find_child("HomesteadSwitchPOV", true, false) != null,
+			"Homestead retains the switch-POV control")
+		var before_craft: int = int(life.get("interlude_engine").state.get("actions_left", 0))
+		var craft_button: Button = life.find_child("Daily_action_woodwork", true, false) as Button
+		if craft_button != null:
+			craft_button.pressed.emit()
+		_expect(int(life.get("interlude_engine").state.get("woodwork_sessions", 0)) == 1 and
+			int(life.get("interlude_engine").state.get("actions_left", 0)) == before_craft - 1,
+			"Woodworking button still updates real progress once and spends one daily action")
+		life.call("_bedtime_question")
+		_expect(life.find_child("HomesteadOrdinaryTomorrow", true, false) != null,
+			"New dashboard preserves tomorrow navigation and avoids premature chapter advancement")
+		life.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
