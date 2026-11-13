@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 020 — Bubbly, Uncluttered Daily Routines
+
+**NEW:** Forest Recovery, Playing House, Cliffside, and the post-Part-Nine Cave Homestead now share a spacious, rounded **daily dashboard** rather than a growing stack of unrelated buttons. It includes a six-chip status area (day, actions, HP, level, EXP, supplies), optional gold/crafting results, a two-column grid of large rounded activity cards, a separate **Manage & Travel** section (inventory, party, market, day change, save, switch protagonist), and the existing homestead helper sprites.
+
+Every original action button is moved into the new layout **with its original callback, enabled state, cost and save behavior**; this is a visual/UI pass, not a progression rewrite. The old `DailyActivitiesScroll` and named action buttons remain in the scene, and the layout collapses to one column on narrow screens. Wildlife Hunt is tucked away when unavailable in Cliffside or Haniel's homestead.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin** → Godot **F5**. Main scene: `scenes/prototype_story_v20.tscn`. **No new art ZIP required**. All nine story parts, existing portraits and combat remain intact.
+
+[Prototype 020 guide and playtest instructions](docs/daily_dashboard_bubbles_020.md).
+
+---
+
+
 ## F5: Prototype 019 — Love Beyond Parts Seven, Eight & Nine
 
 **NEW STORY:** The playable adaptation now continues beyond Part Six through **Part Seven: Michael**, **Part Eight: Explanation**, and **Part Nine: Understanding**, using the author-supplied manuscript and the 26-image **care package**. Dialogue includes Michael and Uriel's conversation in Heaven, the visit to Alric's home, Joren's apology, Toren's introduction, and Haniel's reflections about her brothers.
