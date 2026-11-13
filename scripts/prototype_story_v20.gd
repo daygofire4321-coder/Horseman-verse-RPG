@@ -45,7 +45,7 @@ func _daily_left_label(parent: Node, value: String, size_value: int, color: Colo
 func _daily_status_chip(parent: Node, key: String, value: String, tint: Color) -> void:
 	var chip := _daily_panel(parent, "DailyStat_" + key, Color(0.085, 0.127, 0.191, 0.96),
 		Color(tint.r, tint.g, tint.b, 0.53), 9)
-	chip.get_parent().custom_minimum_size = Vector2(145, 64)
+	chip.get_parent().custom_minimum_size = Vector2(118, 64)
 	_daily_left_label(chip, key.to_upper(), 11, DAILY_MUTED)
 	_daily_left_label(chip, value, 18, tint)
 
@@ -194,6 +194,26 @@ func _daily_nav_metadata(button: Button) -> Dictionary:
 			return {"title":label.split("  •  ")[0], "subtitle":"Open this option.", "accent":DAILY_AQUA}
 
 
+func _daily_nav_sort_rank(button: Button) -> int:
+	match str(button.name):
+		"Daily_VisitMarket":
+			return 2
+		"Daily_SwitchPOV", "HomesteadSwitchPOV":
+			return 3
+		"Daily_NewOrdinaryDay":
+			return 4
+		"Daily_Bedtime":
+			return 5
+		"Daily_Save":
+			return 6
+		_:
+			if button.text.to_upper().begins_with("PARTY"):
+				return 0
+			if button.text.to_upper().begins_with("INVENTORY"):
+				return 1
+			return 7
+
+
 func _draw_interlude() -> void:
 	# The full inherited chain builds every actual gameplay button first.
 	# Only after that do we arrange them into the new card dashboard.
@@ -306,6 +326,10 @@ func _draw_interlude() -> void:
 	nav_grid.add_theme_constant_override("h_separation", 12)
 	nav_grid.add_theme_constant_override("v_separation", 12)
 	content.add_child(nav_grid)
+	# Management first, then travel, then tomorrow/save: more deliberate
+	# than inheriting fifteen prototypes' append order.
+	navigation_buttons.sort_custom(func(a: Button, b: Button) -> bool:
+		return _daily_nav_sort_rank(a) < _daily_nav_sort_rank(b))
 	for entry in navigation_buttons:
 		var button: Button = entry as Button
 		var meta := _daily_nav_metadata(button)
