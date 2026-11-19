@@ -50,8 +50,8 @@ func _new_speaking_portrait(node_name: String, start_x: float, end_x: float, fli
 	visual.anchor_right = end_x
 	# Dialogue takes the lower screen; never let tall portrait art compete
 	# with the speech text or its advance controls.
-	visual.anchor_top = 0.025
-	visual.anchor_bottom = 0.67
+	visual.anchor_top = 0.065
+	visual.anchor_bottom = 0.71
 	visual.offset_left = 0
 	visual.offset_right = 0
 	visual.offset_top = 0
@@ -151,7 +151,7 @@ func _set_speaking_visual(rect: TextureRect, id: String, expression: String, spe
 	rect.texture = tex
 	rect.show()
 	# Active speaker lights up; their companion remains present but muted.
-	rect.modulate = Color(1.0, 1.0, 1.0, 0.95) if speaking else Color(0.60, 0.68, 0.81, 0.60)
+	rect.modulate = Color(1.0, 1.0, 1.0, 1.0) if speaking else Color(0.83, 0.88, 0.96, 0.92)
 
 
 func _present_speakers(left_id: String, right_id: String, expressions: Dictionary, active_id: String) -> void:
