@@ -221,10 +221,37 @@ func _combat_animate_changes(before: Dictionary) -> void:
 			_combat_result_overlay(frame, delta, group == "enemies")
 
 
+func _combat_actor_lunge(id: String) -> void:
+	if id == "" or party_battle == null:
+		return
+	var frame: PanelContainer = null
+	for i in range(party_battle.allies.size()):
+		if str(party_battle.allies[i].get("id", "")) == id:
+			frame = frontend_body.find_child("AllyBattler_" + str(i), true, false) as PanelContainer
+			break
+	if frame == null:
+		return
+	var start: float = frame.position.x
+	var motion := create_tween()
+	motion.tween_property(frame, "position:x", start - 35.0, 0.13).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	motion.tween_property(frame, "position:x", start, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
 func _party_battle_use(move_id: String, target_index: int) -> void:
+	var actor_id := ""
+	var is_attack := false
+	if party_battle != null and not party_battle.finished:
+		actor_id = str(party_battle.current_actor().get("id", ""))
+		for raw in party_battle.current_moves():
+			var move: Dictionary = raw
+			if str(move.get("id", "")) == move_id:
+				is_attack = str(move.get("kind", "")) == "damage"
+				break
 	var before := _combat_hp_snapshot()
 	super._party_battle_use(move_id, target_index)
 	_combat_animate_changes(before)
+	if is_attack:
+		_combat_actor_lunge(actor_id)
 
 
 func _party_battle_use_food(slot_index: int, target_index: int) -> void:
