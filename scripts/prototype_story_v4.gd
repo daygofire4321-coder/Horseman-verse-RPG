@@ -364,13 +364,33 @@ func _draw_alley() -> void:
 		"Haniel" if wave_number == 1 else "Asmodeus",
 		int(wave_engine.player_hp), int(wave_engine.alric_hp), wave_engine.enemy_summary()]
 	for move in wave_engine.player_moves():
-		_button(str(move.get("name", "Attack")), Callable(self, "_alley_turn").bind(str(move.get("id", ""))))
+		var move_id := str(move.get("id", ""))
+		if str(move.get("kind", "damage")) == "damage":
+			_button(str(move.get("name", "Attack")) + "  •  Choose target",
+				Callable(self, "_alley_choose_target").bind(move_id))
+		else:
+			_button(str(move.get("name", "Action")), Callable(self, "_alley_turn").bind(move_id))
 
 
-func _alley_turn(move_id: String) -> void:
+func _alley_choose_target(move_id: String) -> void:
+	if not alley_mode or alley_ready or wave_engine == null:
+		return
+	_clear_buttons()
+	speaker.text = "CHOOSE AN ENEMY"
+	message.text = "Select which opponent to attack. Alric will automatically strike the first remaining enemy."
+	for index in range(wave_engine.enemies.size()):
+		var enemy: Dictionary = wave_engine.enemies[index]
+		if int(enemy.get("hp", 0)) <= 0:
+			continue
+		_button("%s  •  %d HP" % [str(enemy.get("name", "Enemy")), int(enemy.get("hp", 0))],
+			Callable(self, "_alley_turn").bind(move_id, index))
+	_button("Back to moves", _draw_alley)
+
+
+func _alley_turn(move_id: String, target_index: int = -1) -> void:
 	if not alley_mode or alley_ready:
 		return
-	var outcome: Dictionary = wave_engine.take_turn(move_id)
+	var outcome: Dictionary = wave_engine.take_turn(move_id, target_index)
 	if bool(outcome.get("finished", false)):
 		alley_ready = true
 		_clear_buttons()
