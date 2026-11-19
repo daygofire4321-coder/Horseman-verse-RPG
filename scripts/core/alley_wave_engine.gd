@@ -64,7 +64,7 @@ func _strike(index: int, amount: int) -> String:
 	return "%s takes %d damage." % [str(foe.get("name", "Enemy")), previous - int(foe["hp"])]
 
 
-func take_turn(move_id: String) -> Dictionary:
+func take_turn(move_id: String, target_index: int = -1) -> Dictionary:
 	var move: Dictionary = {}
 	for candidate in player_moves():
 		if str(candidate.get("id", "")) == move_id:
@@ -80,9 +80,12 @@ func take_turn(move_id: String) -> Dictionary:
 	var power: int = maxi(0, int(move.get("power", 0)))
 	match kind:
 		"damage":
-			var target := _next_alive()
-			if target >= 0:
-				logs.append(str(player.get("name", "Hero")) + " attacks. " + _strike(target, power))
+			var target := target_index if target_index >= 0 else _next_alive()
+			# Reject invalid/dead explicit targets without consuming a turn.
+			if target < 0 or target >= enemies.size() or int(enemies[target].get("hp", 0)) <= 0:
+				round_number -= 1
+				return {"finished":false, "message":"Choose a living enemy."}
+			logs.append(str(player.get("name", "Hero")) + " attacks. " + _strike(target, power))
 		"heal":
 			var healed: int = mini(player_max_hp - player_hp, power)
 			player_hp += healed
