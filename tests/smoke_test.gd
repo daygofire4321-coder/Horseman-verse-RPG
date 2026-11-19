@@ -1737,6 +1737,111 @@ func _run_tests() -> void:
 			"Practice still cannot change the player's saved party, items, or health")
 		battle_ui.queue_free()
 
+
+	# Prototype 022: chapter-relative enemy levels and party-wide EXP.
+	const EnemyBalance = preload("res://scripts/core/encounter_balance.gd")
+	const CharacterLeveling = preload("res://scripts/core/character_leveling.gd")
+	var mode_data: Dictionary = ContentStore.read_dictionary("res://data/difficulties.json")
+	var modes: Dictionary = {}
+	for raw in mode_data.get("profiles", []):
+		var setting: Dictionary = raw
+		modes[str(setting.get("id", ""))] = setting
+	_expect(EnemyBalance.expected_level(0) == 1 and EnemyBalance.expected_level(3) == 2
+		and EnemyBalance.expected_level(6) == 3 and EnemyBalance.expected_level(9) == 4,
+		"Expected party level rises with story progress")
+	_expect(EnemyBalance.target_level(6, modes["story"]) == 1
+		and EnemyBalance.target_level(6, modes["normal"]) == 2
+		and EnemyBalance.target_level(6, modes["hard"]) == 3
+		and EnemyBalance.target_level(6, modes["nightmare"]) == 4,
+		"Part Six enemy targets: Story 1, Normal 2, Hard 3, Nightmare 4")
+	_expect(EnemyBalance.target_level(9, modes["story"]) == 2
+		and EnemyBalance.target_level(9, modes["normal"]) == 3
+		and EnemyBalance.target_level(9, modes["hard"]) == 4
+		and EnemyBalance.target_level(9, modes["nightmare"]) == 5,
+		"Part Nine targets follow the assumed Lv4 player progression")
+	var thug_data: Dictionary = ContentStore.load_character("bandit_thug")
+	var easier: Dictionary = EnemyBalance.enemy_stats(thug_data, 9, modes["story"])
+	var harder: Dictionary = EnemyBalance.enemy_stats(thug_data, 9, modes["hard"])
+	_expect(int(harder["hp"]) > int(easier["hp"]) and
+		int(harder["ai_damage"]) > int(easier["ai_damage"]),
+		"Higher difficulties raise both enemy HP and raw attack damage")
+	var ally_level: Dictionary = CharacterLeveling.grant_xp(
+		{"hp":55,"max_hp":100,"xp":25,"level":1}, 12)
+	_expect(int(ally_level["progress"]["level"]) == 2
+		and int(ally_level["progress"]["xp"]) == 7
+		and int(ally_level["progress"]["hp"]) == 63
+		and int(ally_level["progress"]["max_hp"]) == 108,
+		"Active companion EXP uses the same threshold/HP growth as protagonist XP")
+	var scene22: Resource = load("res://scenes/prototype_story_v22.tscn")
+	_expect(scene22 is PackedScene, "Level-aware party combat main scene imports")
+	if scene22 is PackedScene:
+		var lv: Node = (scene22 as PackedScene).instantiate()
+		root.add_child(lv)
+		lv.set("party_disable_disk_writes", true)
+		lv.call("_load_story_if_needed")
+		var level_save: Dictionary = SaveStore.new_save()
+		level_save["campaigns"] = {"love_beyond":{
+			"opening_parts_completed":6,
+			"party":{"active":["haniel","asmodeus","alric"]},
+			"progression":{
+				"haniel":{"level":1,"xp":0,"hp":100,"max_hp":100},
+				"asmodeus":{"level":1,"xp":0,"hp":100,"max_hp":100},
+				"alric":{"level":1,"xp":0,"hp":100,"max_hp":100}
+			}
+		}}
+		lv.set("save_data", level_save)
+		lv.call("_show_love_adventure")
+		_expect(lv.find_child("LoveDifficulty", true, false) != null,
+			"Adventure hub offers a challenge settings screen")
+		lv.call("_show_challenge_settings")
+		_expect(lv.find_child("ChallengeMode_nightmare", true, false) != null,
+			"Players can choose Nightmare without replaying the prologue")
+		lv.call("_choose_challenge_difficulty", "hard")
+		_expect(str(lv.get("selected_profile").get("id", "")) == "hard" and
+			str(lv.get("save_data")["settings"]["difficulty"]) == "hard",
+			"Hard difficulty changes live setup and the saved preference")
+		lv.call("_party_battle_start", "forest_clearing")
+		var level_battle = lv.get("party_battle")
+		_expect(int(level_battle.enemies[0].get("level", 0)) == 3 and
+			int(level_battle.enemies[0].get("defense", 0)) == 2,
+			"Hard practice at Part Six generates Lv3 enemies with modest armor")
+		_expect(int(level_battle.current_actor().get("level", 0)) == 1,
+			"Enemy level uses authored story progress rather than exact player level")
+		var level_enemy_card: PanelContainer = lv.find_child("EnemyMini_0", true, false) as PanelContainer
+		var label_text := ""
+		if level_enemy_card != null:
+			var body: VBoxContainer = level_enemy_card.get_child(0) as VBoxContainer
+			label_text = str((body.get_child(0) as Label).text)
+		_expect(label_text.begins_with("LV 3"), "Enemy level is shown on its battlefield status card")
+		var hp_before: int = int(level_battle.enemies[0].get("hp", 0))
+		lv.call("_party_battle_use", "divine_arrow", 0)
+		_expect(int(level_battle.enemies[0].get("hp", 0)) < hp_before,
+			"Even an underleveled player still deals positive damage")
+		lv.call("_show_menu")
+		lv.call("_enter_cliffside_day", "haniel")
+		lv.call("_start_outlaw_encounter", "quiet_intervention")
+		var outlaw = lv.get("party_battle")
+		_expect(outlaw != null and int(outlaw.enemies[0].get("level", 0)) == 3,
+			"Real Cliffside encounters also use chosen Hard story-level scaling")
+		outlaw.enemies[0]["hp"] = 1
+		lv.call("_party_battle_use", "divine_arrow", 0)
+		var progress: Dictionary = lv.get("save_data")["campaigns"]["love_beyond"]["progression"]
+		_expect(int(progress.get("haniel", {}).get("xp", 0)) == 12
+			and int(progress.get("asmodeus", {}).get("xp", 0)) == 12
+			and int(progress.get("alric", {}).get("xp", 0)) == 12,
+			"All three active party members earn their own EXP after patrol victory")
+		_expect(not lv.get("save_data")["campaigns"]["love_beyond"].has("interlude_checkpoint"),
+			"Victory still cannot move a story checkpoint")
+		lv.call("_finish_outlaw_encounter", false)
+		_expect(int(lv.get("save_data")["campaigns"]["love_beyond"]["progression"]["alric"]["xp"]) == 12,
+			"Finishing the same encounter twice gives no extra EXP")
+		lv.call("_enter_cliffside_day", "haniel")
+		lv.call("_start_outlaw_encounter", "quiet_intervention")
+		lv.call("_retreat_outlaw")
+		_expect(int(lv.get("save_data")["campaigns"]["love_beyond"]["progression"]["alric"]["xp"]) == 12,
+			"Retreat grants no companion XP")
+		lv.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
