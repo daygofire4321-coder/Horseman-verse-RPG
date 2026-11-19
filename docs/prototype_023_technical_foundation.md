@@ -20,7 +20,7 @@ Establish safe maintenance practices before adding hunger or a richer exploratio
 
 ## Art status
 
-Most required art paths are referenced in `data/chapters`, `data/portraits`, and `data/battle_areas.json`. The built-in Love Beyond art diagnostic reports installed backgrounds and portraits. If using a local art pack, merge the pack's `assets/` directory beside `project.godot`; a one-level nested extraction fallback also exists. Future packaging should eliminate separate ZIP installs, but do not remove the fallback until distribution has been tested.
+The main branch currently tracks **36 curated chapter WebP images**, **26 dialogue portrait WebP images**, **37 pixel battle image assets**, and **2 story sprites**. The built-in Love Beyond art diagnostic reports installed backgrounds and portraits. After a normal clone/pull, these images should already be present. Older README sections referring to separate ZIP packs are historical instructions for older prototypes, not a current requirement. The loader's nested-extraction fallback remains for optional future packs. Verify actual display in Godot before removing it.
 
 ## Inheritance refactoring
 
@@ -37,4 +37,4 @@ Most required art paths are referenced in `data/chapters`, `data/portraits`, and
 
 ## Not completed by this patch
 
-No mass script consolidation and no repackaging of missing external art assets. Both require separate validated work; the repo's own optional-art diagnostics and existing test coverage remain available.
+No mass script consolidation is attempted in this safe initial pass. The main chapter and portrait art is already committed to the repository; its runtime display still needs a local manual check. Both require separate validated work; the repo's own optional-art diagnostics and existing test coverage remain available.
