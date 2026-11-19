@@ -7,7 +7,7 @@ extends RefCounted
 static func expected_level(completed_part: int) -> int:
 	# Assumes some ordinary-day exploration and repeatable encounters.
 	# Part 0-2 -> Lv1, 3-5 -> Lv2, 6-8 -> Lv3, 9-11 -> Lv4.
-	return clampi(1 + maxi(0, completed_part) / 3, 1, 40)
+	return clampi(1 + floori(float(maxi(0, completed_part)) / 3.0), 1, 40)
 
 
 static func target_level(completed_part: int, profile: Dictionary) -> int:
