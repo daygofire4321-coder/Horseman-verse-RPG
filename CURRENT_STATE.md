@@ -19,7 +19,7 @@ Story checkpoints, dialogue portraits, skip dialogue; daily routines and repeata
 - Hunger and food-as-survival are not yet implemented.
 - Combat AI uses predictable targeting; no full enemy skill/status system.
 - The current UI is constructed through a long version-to-version GDScript inheritance chain. Refactor only with regression coverage.
-- Some illustration packs were distributed separately; verify local installation via Love Beyond > Practice & Extras > CHECK INSTALLED STORY & PORTRAIT ART (36 story images, 26 portraits when all packs are installed).
+- The repository now tracks all 36 curated chapter images and 26 dialogue portraits, plus pixel-battle and story sprites. Old README install notes about separate ZIP downloads refer to historical prototypes. Verify local display via Love Beyond > Practice & Extras > CHECK INSTALLED STORY & PORTRAIT ART.
 
 ## Regression priorities
 
