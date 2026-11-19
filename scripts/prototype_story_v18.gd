@@ -24,8 +24,9 @@ func _build_ui() -> void:
 	dialogue_portrait_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(dialogue_portrait_layer)
 	move_child(dialogue_portrait_layer, scene_image.get_index() + 2)
-	portrait_left = _new_speaking_portrait("LeftSpeakingPortrait", 0.0, 0.39, false)
-	portrait_right = _new_speaking_portrait("RightSpeakingPortrait", 0.61, 1.0, true)
+	# Keep speaking faces away from the dialogue panel's central/lower area.
+	portrait_left = _new_speaking_portrait("LeftSpeakingPortrait", 0.01, 0.35, false)
+	portrait_right = _new_speaking_portrait("RightSpeakingPortrait", 0.65, 0.99, true)
 	dialogue_portrait_layer.hide()
 
 
@@ -34,8 +35,10 @@ func _new_speaking_portrait(node_name: String, start_x: float, end_x: float, fli
 	visual.name = node_name
 	visual.anchor_left = start_x
 	visual.anchor_right = end_x
-	visual.anchor_top = 0.15
-	visual.anchor_bottom = 0.96
+	# Dialogue takes the lower screen; never let tall portrait art compete
+	# with the speech text or its advance controls.
+	visual.anchor_top = 0.025
+	visual.anchor_bottom = 0.67
 	visual.offset_left = 0
 	visual.offset_right = 0
 	visual.offset_top = 0
