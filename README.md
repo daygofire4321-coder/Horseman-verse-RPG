@@ -1,5 +1,20 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 022 — RPG Levels, Difficulty & Combat Balance
+
+**New:** Optional enemies have actual **visible levels** that scale from completed story progress, not the party's exact current level. Story is forgiving, Normal trails the expected level, Hard meets it, and Nightmare runs one above. Enemy HP, damage and armor rise appropriately, in addition to the existing difficulty HP/damage multipliers. Grinding and leveling remain genuinely useful.
+
+**Party EXP fix:** Real outlaw victories reward **every active fighter** with their own EXP; the protagonist uses existing free-time leveling and teammates gain the same level thresholds and HP increases. Reserves, retreats and practice fights earn no EXP.
+
+**Difficulty selection:** **Love Beyond → Adventure → Challenge Settings** now offers Story / Normal / Hard / Nightmare without replaying the opening duel. Your choice is saved. The selector shows expected player level, proposed enemy level and HP/damage multipliers. Character levels remain visible on character sheets; enemy levels appear beside their HP bars in real and practice battles.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin** → Godot **F5**. Default scene: `scenes/prototype_story_v22.tscn`. No new art download, save migration or story changes necessary. Scripted story battles preserve their authored outcomes.
+
+[Prototype 022 leveling and difficulty playtest guide](docs/level_scaling_and_balance_022.md).
+
+---
+
+
 ## F5: Prototype 021 — Dropdown Daily Routines & Interactive Combat
 
 **BIGGER CLEANUP:** The old tall daily dashboard is now a set of expandable, rounded categories. Today's Activities is open initially; **Character Details**, **Characters & Inventory**, **Places & Companions**, and **Tomorrow & Save** stay collapsed. Opening one section closes the previous one. Day, remaining actions, and HP remain visible at a glance. Existing action controls are moved into these sections, not replaced: activity costs, market access, party changes, crafting progress, and saved checkpoints work exactly as before.
