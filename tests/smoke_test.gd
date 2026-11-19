@@ -206,6 +206,22 @@ func _run_tests() -> void:
 
 	# Losing the alley fight should still enter the authored cutscene.
 	const AllyWaves = preload("res://scripts/core/alley_wave_engine.gd")
+	var targeted_alley = AllyWaves.new()
+	targeted_alley.setup(1, {"enemy_damage_multiplier":0.0})
+	var before_first: int = int(targeted_alley.enemies[0]["hp"])
+	var before_second: int = int(targeted_alley.enemies[1]["hp"])
+	targeted_alley.take_turn("divine_arrow", 1)
+	_expect(int(targeted_alley.enemies[1]["hp"]) < before_second,
+		"Wave One lets the player explicitly choose the second thug")
+	_expect(int(targeted_alley.enemies[0]["hp"]) <= before_first,
+		"Alric may still attack automatically after the chosen target")
+	var invalid_alley = AllyWaves.new()
+	invalid_alley.setup(2)
+	var turn_before: int = invalid_alley.round_number
+	invalid_alley.take_turn("black_ice", 99)
+	_expect(invalid_alley.round_number == turn_before,
+		"Invalid scripted enemy targets do not consume a turn")
+
 	var scripted_loss = AllyWaves.new()
 	scripted_loss.setup(2, {"enemy_hp_multiplier":1.0,"enemy_damage_multiplier":1.0})
 	scripted_loss.player_hp = 1
