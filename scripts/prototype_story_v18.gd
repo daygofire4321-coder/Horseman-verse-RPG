@@ -8,6 +8,7 @@ const DIALOGUE_PORTRAITS_DATA := "res://data/portraits/love_beyond.json"
 
 var portrait_catalog: Dictionary = {}
 var dialogue_portrait_layer: Control = null
+var dialogue_lower_spacer: Control = null
 var portrait_left: TextureRect = null
 var portrait_right: TextureRect = null
 var last_portrait_speaker := ""
@@ -15,6 +16,18 @@ var last_portrait_speaker := ""
 
 func _build_ui() -> void:
 	super._build_ui()
+	# The legacy face-card row used to reserve vertical space. Hiding it for
+	# transparent portraits made the dialogue panel jump into the actors.
+	# Reserve that space independently, pushing the text/buttons to the bottom.
+	var dialogue_panel: Node = message.get_parent().get_parent()
+	var stack: VBoxContainer = dialogue_panel.get_parent() as VBoxContainer
+	dialogue_lower_spacer = Control.new()
+	dialogue_lower_spacer.name = "DialogueLowerSpacer"
+	dialogue_lower_spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dialogue_lower_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	stack.add_child(dialogue_lower_spacer)
+	stack.move_child(dialogue_lower_spacer, dialogue_panel.get_index())
+	dialogue_lower_spacer.hide()
 	# The root scene order is background, darkening shade, then legacy UI.
 	# Put the transparent full-height portraits ABOVE the backgrounds but
 	# BELOW the existing dialogue box and advance/skip controls.
@@ -148,11 +161,15 @@ func _present_speakers(left_id: String, right_id: String, expressions: Dictionar
 	_set_speaking_visual(portrait_right, right_id, str(expressions.get(right_id, _portrait_default(right_id))), active_id == right_id)
 	last_portrait_speaker = active_id
 	dialogue_portrait_layer.visible = portrait_left.visible or portrait_right.visible
+	if is_instance_valid(dialogue_lower_spacer):
+		dialogue_lower_spacer.show()
 
 
 func _hide_speaking_portraits() -> void:
 	if is_instance_valid(dialogue_portrait_layer):
 		dialogue_portrait_layer.hide()
+	if is_instance_valid(dialogue_lower_spacer):
+		dialogue_lower_spacer.hide()
 
 
 func _show_dialogue() -> void:
@@ -167,7 +184,8 @@ func _show_dialogue() -> void:
 	var expressions := {"asmodeus":"neutral", "haniel":"neutral"}
 	if actor == "asmodeus" and line_index > 0:
 		expressions["asmodeus"] = "smile"
-	_present_speakers("asmodeus", "haniel", expressions, actor)
+	# In the prologue duel Haniel stands on the left, Asmodeus on the right.
+	_present_speakers("haniel", "asmodeus", expressions, actor)
 
 
 func _choose_fighter() -> void:
