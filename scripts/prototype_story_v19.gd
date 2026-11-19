@@ -252,6 +252,24 @@ func _bedtime_question() -> void:
 	_front_button(content, "NOT YET  •  Back to activities", _draw_interlude, 45.0)
 
 
+func _bedtime_question() -> void:
+	# The old Cliffside bedtime override still says Part Six is the finale,
+	# so never let it hide the actual authored Parts Seven through Nine.
+	if _is_cliffside_day() and _completed_story_part() >= 6 and _completed_story_part() < 9:
+		var content := _party_panel("EVENING IN CLIFFSIDE",
+			"Parts Seven through Nine are ready; ordinary days remain optional.")
+		var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][_completed_story_part() - 6])
+		var advance := _front_button(content, "AN EXCITING DAY  •  " + next_part,
+			_continue_next_chapter, 54.0)
+		advance.name = "CliffsideExcitingTomorrow"
+		var ordinary := _front_button(content, "AN ORDINARY DAY  •  Stay in Cliffside",
+			_ordinary_tomorrow, 51.0)
+		ordinary.name = "CliffsideOrdinaryTomorrow"
+		_front_button(content, "NOT YET  •  Return to activities", _draw_interlude, 45.0)
+		return
+	super._bedtime_question()
+
+
 func _exciting_tomorrow() -> void:
 	if _is_homestead_day():
 		_bedtime_question()
