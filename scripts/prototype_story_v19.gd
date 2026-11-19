@@ -178,7 +178,7 @@ func _draw_interlude() -> void:
 		if cliffside_scroll != null and cliffside_scroll.get_child_count() > 0:
 			var cliffside_content: VBoxContainer = cliffside_scroll.get_child(0).get_child(0) as VBoxContainer
 			if cliffside_content != null:
-				var next_part := ["PART SEVEN", "PART EIGHT", "PART NINE"][_completed_story_part() - 6]
+				var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][_completed_story_part() - 6])
 				var next_button := _front_button(cliffside_content,
 					"CONTINUE STORY  •  " + next_part,
 					_continue_next_chapter, 54.0)
