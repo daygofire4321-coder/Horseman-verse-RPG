@@ -1906,6 +1906,36 @@ func _run_tests() -> void:
 	SaveStore.unlock_character(save_data, "haniel")
 	_expect(save_data["roster"]["unlocked"].size() == 1)
 
+	# Optimization pass: shared stats preserve old arithmetic exactly, while
+	# optional modifiers prepare for hunger without activating it yet.
+	const CharacterStats = preload("res://scripts/core/character_stats.gd")
+	var stats_base := {"attack":20, "defense":15, "speed":9}
+	var stats_gear := {"attack":4, "defense":2, "speed":3, "damage_reduction":2}
+	var neutral: Dictionary = CharacterStats.effective_stats(stats_base, 3, stats_gear)
+	_expect(neutral["attack"] == 28 and neutral["defense"] == 21
+		and neutral["speed"] == 14 and neutral["damage_reduction"] == 2,
+		"Shared stat calculator preserves existing sheet math")
+	var nourished: Dictionary = CharacterStats.effective_stats(stats_base, 3, stats_gear,
+		{"attack":1.05, "defense":1.05})
+	_expect(nourished["attack"] == 29 and nourished["defense"] == 22
+		and nourished["speed"] == 14, "Optional future status modifiers apply once")
+	# Description extraction must preserve existing labels and action costs.
+	const DailyActionCatalog = preload("res://scripts/core/daily_action_catalog.gd")
+	var routine := {"actions":[{"id":"explore","label":"Explore the Woods",
+		"description":"Look for supplies","limited":true}]}
+	var explore_detail: Dictionary = DailyActionCatalog.detail(routine, "explore")
+	_expect(explore_detail["title"] == "EXPLORE THE WOODS" and
+		explore_detail["cost"] == "1 DAILY ACTION", "Daily action descriptions preserved")
+	_expect(DailyActionCatalog.detail(routine, "hunt")["cost"] == "FREE • REPEATABLE",
+		"Hunting remains free and repeatable")
+	# Cached data must not leak mutations between callers.
+	var cache_first: Dictionary = ContentStore.load_character("asmodeus")
+	cache_first["name"] = "ACCIDENTAL MUTATION"
+	var cache_second: Dictionary = ContentStore.load_character("asmodeus")
+	_expect(str(cache_second.get("name", "")) != "ACCIDENTAL MUTATION",
+		"Content cache returns independent dictionaries")
+	ContentStore.clear_cache()
+
 	if failures.is_empty():
 		print("Paleverse smoke tests passed: content, duel, difficulty scaling, save model, both fighters.")
 		quit(0)
