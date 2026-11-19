@@ -1,5 +1,18 @@
 # Horseman-verse-RPG
 
+## F5: Prototype 021 — Dropdown Daily Routines & Interactive Combat
+
+**BIGGER CLEANUP:** The old tall daily dashboard is now a set of expandable, rounded categories. Today's Activities is open initially; **Character Details**, **Characters & Inventory**, **Places & Companions**, and **Tomorrow & Save** stay collapsed. Opening one section closes the previous one. Day, remaining actions, and HP remain visible at a glance. Existing action controls are moved into these sections, not replaced: activity costs, market access, party changes, crafting progress, and saved checkpoints work exactly as before.
+
+**COMBAT FEEL PASS:** Choose Attack/Skills/Items, then click a **valid character sprite on the battlefield itself** instead of only selecting a separate target card. The old target cards stay available. Actual damage/healing produces floating HP numbers and brief red/green flashes, and the attacking ally lunges forward before returning. Party selection, damage math, enemy AI, moves, and saves are unchanged.
+
+**Update:** GitHub Desktop → **Fetch origin → Pull origin** → Godot **F5**. Main scene: `scenes/prototype_story_v21.tscn`. No new image files necessary; all Parts 1–9 and current sprites/portraits remain compatible.
+
+[Prototype 021 playtest guide: dropdowns and combat feedback](docs/daily_dropdowns_and_combat_021.md).
+
+---
+
+
 ## F5: Prototype 020 — Bubbly, Uncluttered Daily Routines
 
 **NEW:** Forest Recovery, Playing House, Cliffside, and the post-Part-Nine Cave Homestead now share a spacious, rounded **daily dashboard** rather than a growing stack of unrelated buttons. It includes a six-chip status area (day, actions, HP, level, EXP, supplies), optional gold/crafting results, a two-column grid of large rounded activity cards, a separate **Manage & Travel** section (inventory, party, market, day change, save, switch protagonist), and the existing homestead helper sprites.
