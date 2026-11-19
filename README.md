@@ -1,5 +1,7 @@
 # Horseman-verse-RPG
 
+> **Current asset note (Prototype 023):** The repository now includes the Love Beyond chapter art, dialogue portraits, pixel battle images and story sprites. Historical sections below mention separate ZIP installations that were required in earlier prototypes; a fresh up-to-date checkout should already contain those tracked assets. If artwork is missing on screen, use **Love Beyond → Practice & Extras → CHECK INSTALLED STORY & PORTRAIT ART** before downloading any old pack. See [current project state](CURRENT_STATE.md), [roadmap](ROADMAP.md) and [technical foundation notes](docs/prototype_023_technical_foundation.md).
+
 ## F5: Prototype 022 — RPG Levels, Difficulty & Combat Balance
 
 **New:** Optional enemies have actual **visible levels** that scale from completed story progress, not the party's exact current level. Story is forgiving, Normal trails the expected level, Hard meets it, and Nightmare runs one above. Enemy HP, damage and armor rise appropriately, in addition to the existing difficulty HP/damage multipliers. Grinding and leveling remain genuinely useful.

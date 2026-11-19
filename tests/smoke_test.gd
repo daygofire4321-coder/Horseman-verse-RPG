@@ -1906,6 +1906,43 @@ func _run_tests() -> void:
 	SaveStore.unlock_character(save_data, "haniel")
 	_expect(save_data["roster"]["unlocked"].size() == 1)
 
+	# Prototype 023: isolated disk I/O; NEVER touch the player's normal save path.
+	var scratch := "user://paleverse_smoke_023.json"
+	for suffix in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(scratch + suffix):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(scratch + suffix))
+	var initial: Dictionary = SaveStore.new_save()
+	initial["campaigns"] = {"love_beyond":{"progression":{"haniel":{"xp":19}}}}
+	_expect(SaveStore.write_save_to_path(initial, scratch),
+		"Safe-save initial write should succeed")
+	var next_save: Dictionary = initial.duplicate(true)
+	next_save["campaigns"]["love_beyond"]["progression"]["haniel"]["xp"] = 34
+	_expect(SaveStore.write_save_to_path(next_save, scratch),
+		"Safe-save second write should create a recovery backup")
+	_expect(int(SaveStore.load_save_from_path(scratch)["campaigns"]["love_beyond"]["progression"]["haniel"]["xp"]) == 34,
+		"Safe-save primary must contain latest XP")
+	_expect(FileAccess.file_exists(scratch + ".bak"),
+		"Safe-save backup should exist after second write")
+	var corrupt := FileAccess.open(scratch, FileAccess.WRITE)
+	corrupt.store_string("not json")
+	corrupt.close()
+	_expect(int(SaveStore.load_save_from_path(scratch)["campaigns"]["love_beyond"]["progression"]["haniel"]["xp"]) == 19,
+		"Safe-save should recover earlier valid backup after primary corruption")
+	_expect(SaveStore.write_save_to_path(next_save, scratch),
+		"Safe-save should repair corrupt primary using existing valid backup")
+	var future: Dictionary = next_save.duplicate(true)
+	future["version"] = 999
+	var future_file := FileAccess.open(scratch, FileAccess.WRITE)
+	future_file.store_string(JSON.stringify(future))
+	future_file.close()
+	_expect(not SaveStore.write_save_to_path(next_save, scratch),
+		"Newer save versions must never be overwritten")
+	_expect(int(SaveStore.load_save_from_path(scratch).get("version", -1)) == 1,
+		"Unsupported primary should load the compatible backup instead")
+	for suffix in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(scratch + suffix):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(scratch + suffix))
+
 	if failures.is_empty():
 		print("Paleverse smoke tests passed: content, duel, difficulty scaling, save model, both fighters.")
 		quit(0)
