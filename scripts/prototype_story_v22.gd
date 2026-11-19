@@ -41,7 +41,7 @@ func _start_hunt() -> void:
 
 
 func _finish_outlaw_encounter(retreated: bool) -> void:
-	var was_victory := live_outlaw_active and not live_outlaw_resolved and \
+	var was_victory: bool = live_outlaw_active and not live_outlaw_resolved and \
 		party_battle != null and party_battle.finished and party_battle.victory and not retreated
 	var earned := maxi(0, int(live_outlaw_scenario.get("exp", 15))) if was_victory else 0
 	var participating: Array = []
