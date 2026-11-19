@@ -169,6 +169,21 @@ func _homestead_companion(parent: VBoxContainer, character_id: String, label_tex
 
 func _draw_interlude() -> void:
 	super._draw_interlude()
+	# Cliffside's optional sandbox is available from Part Six onward.
+	# Surface story continuation directly here, not only in the campaign menu:
+	# players should not have to hunt for the next manuscript chapter.
+	if interlude_mode and current_interlude_id.begins_with("cliffside_") and \
+			_completed_story_part() >= 6 and _completed_story_part() < 9:
+		var cliffside_scroll: ScrollContainer = frontend_body.find_child("DailyActivitiesScroll", true, false) as ScrollContainer
+		if cliffside_scroll != null and cliffside_scroll.get_child_count() > 0:
+			var cliffside_content: VBoxContainer = cliffside_scroll.get_child(0).get_child(0) as VBoxContainer
+			if cliffside_content != null:
+				var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][_completed_story_part() - 6])
+				var next_button := _front_button(cliffside_content,
+					"CONTINUE STORY  •  " + next_part,
+					_continue_next_chapter, 54.0)
+				next_button.name = "CliffsideContinueStory"
+				cliffside_content.move_child(next_button, mini(1, cliffside_content.get_child_count() - 1))
 	if not _is_homestead_day():
 		return
 	_display_curated_image(HOME_SCENE_IMAGE)

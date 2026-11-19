@@ -206,6 +206,22 @@ func _run_tests() -> void:
 
 	# Losing the alley fight should still enter the authored cutscene.
 	const AllyWaves = preload("res://scripts/core/alley_wave_engine.gd")
+	var targeted_alley = AllyWaves.new()
+	targeted_alley.setup(1, {"enemy_damage_multiplier":0.0})
+	var before_first: int = int(targeted_alley.enemies[0]["hp"])
+	var before_second: int = int(targeted_alley.enemies[1]["hp"])
+	targeted_alley.take_turn("divine_arrow", 1)
+	_expect(int(targeted_alley.enemies[1]["hp"]) < before_second,
+		"Wave One lets the player explicitly choose the second thug")
+	_expect(int(targeted_alley.enemies[0]["hp"]) <= before_first,
+		"Alric may still attack automatically after the chosen target")
+	var invalid_alley = AllyWaves.new()
+	invalid_alley.setup(2)
+	var turn_before: int = invalid_alley.round_number
+	invalid_alley.take_turn("black_ice", 99)
+	_expect(invalid_alley.round_number == turn_before,
+		"Invalid scripted enemy targets do not consume a turn")
+
 	var scripted_loss = AllyWaves.new()
 	scripted_loss.setup(2, {"enemy_hp_multiplier":1.0,"enemy_damage_multiplier":1.0})
 	scripted_loss.player_hp = 1
@@ -1279,6 +1295,11 @@ func _run_tests() -> void:
 		_expect(portrait_view.find_child("DialoguePortraitLayer", true, false) != null, "Portraits have a separate dialogue overlay")
 		_expect(portrait_view.find_child("LeftSpeakingPortrait", true, false) != null, "Left speaker has an independent transparent picture")
 		_expect(portrait_view.find_child("RightSpeakingPortrait", true, false) != null, "Right speaker has an independent transparent picture")
+		var left_speaker: TextureRect = portrait_view.find_child("LeftSpeakingPortrait", true, false) as TextureRect
+		var right_speaker: TextureRect = portrait_view.find_child("RightSpeakingPortrait", true, false) as TextureRect
+		_expect(left_speaker != null and left_speaker.anchor_bottom <= 0.70
+			and right_speaker != null and right_speaker.anchor_bottom <= 0.70,
+			"Speaker portraits leave the lower dialogue box uncovered")
 		_expect(portrait_view.call("_portrait_speaker_id", "HANIEL [SIGNING]") == "haniel", "Signing lines brighten Haniel, not narrator")
 		_expect(portrait_view.call("_portrait_speaker_id", "BLOND YOUTH") == "joren", "Youth alias displays Joren without changing authored name")
 		_expect(portrait_view.call("_portrait_speaker_id", "GANG LEADER") == "", "Unprovided thug portrait is not invented")
@@ -1307,6 +1328,15 @@ func _run_tests() -> void:
 			"Old face boxes are hidden when the opening dialogue starts")
 		_expect(str(portrait_view.get("last_portrait_speaker")) == "asmodeus",
 			"The opening Asmodeus line still selects his new transparent portrait")
+		var dialogue_spacer: Control = portrait_view.find_child("DialogueLowerSpacer", true, false) as Control
+		_expect(dialogue_spacer != null and dialogue_spacer.visible
+			and dialogue_spacer.size_flags_vertical == Control.SIZE_EXPAND_FILL,
+			"Opening dialogue reserves flexible space above its bottom-anchored text panel")
+		var intro_haniel: TextureRect = portrait_view.find_child("LeftSpeakingPortrait", true, false) as TextureRect
+		var intro_asmodeus: TextureRect = portrait_view.find_child("RightSpeakingPortrait", true, false) as TextureRect
+		_expect(intro_haniel != null and intro_asmodeus != null
+			and intro_haniel.texture != null and intro_asmodeus.texture != null,
+			"Prologue displays Haniel on left and Asmodeus on right using actual art")
 		portrait_view.call("_advance_dialogue")
 		_expect(old_face_row != null and not old_face_row.visible,
 			"Legacy portrait boxes remain hidden when the speaker changes")
@@ -1618,6 +1648,9 @@ func _run_tests() -> void:
 		# Continuing to existing scenes also keeps their original action logic.
 		life.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 6
 		life.call("_enter_cliffside_day", "haniel")
+		var next_story: Button = life.find_child("CliffsideContinueStory", true, false) as Button
+		_expect(next_story != null and next_story.visible,
+			"Part Six Cliffside dashboard exposes a prominent Continue Story button")
 		_expect(life.find_child("DailyEconomyBubble", true, false) != null,
 			"Cliffside wallets and outlaw wins are prominent in their own status bubble")
 		var town_hunt: Button = life.find_child("Daily_Hunt", true, false) as Button
@@ -1724,6 +1757,19 @@ func _run_tests() -> void:
 		var foe_click: Button = battle_ui.find_child("CombatSpriteTarget_Enemy_1", true, false) as Button
 		_expect(foe_click != null and foe_click.mouse_filter == Control.MOUSE_FILTER_STOP,
 			"Clickable target overlay exists on the second enemy sprite")
+		if foe_click != null:
+			# A signal can be emitted on a zero-size button; assert that a real
+			# mouse click has an actual sprite-sized rectangle to hit.
+			await process_frame
+			var frame_rect: Rect2 = (foe_click.get_parent() as Control).get_global_rect()
+			var target_rect: Rect2 = foe_click.get_global_rect()
+			_expect(target_rect.size.x >= 100.0 and target_rect.size.y >= 95.0,
+				"Enemy sprite target must be genuinely clickable, not a zero-size overlay")
+			# PanelContainer adds style insets around children; the target need
+			# not share the outer border's exact top-left pixel.
+			_expect(frame_rect.intersects(target_rect)
+				and target_rect.get_center().distance_to(frame_rect.get_center()) < 24.0,
+				"Enemy target overlay must overlap the visible sprite frame")
 		var earlier_hp: int = int(combat_engine.enemies[1].get("hp", 0))
 		if foe_click != null:
 			foe_click.pressed.emit()

@@ -272,6 +272,15 @@ func _party_battle_food_targets(slot_index: int) -> void:
 	super._party_battle_food_targets(slot_index)
 
 
+func _combat_ignore_decorative_mouse_input(node: Node) -> void:
+	# Status HUD labels, panels and progress bars are decorative. Even if
+	# their rectangles overlap the battler artwork, they must not eat clicks.
+	if node is Control:
+		(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for child in node.get_children():
+		_combat_ignore_decorative_mouse_input(child)
+
+
 func _field_target_markers(enemy_side: bool, indices: Array) -> void:
 	super._field_target_markers(enemy_side, indices)
 	var stage: Control = frontend_body.find_child("BattlefieldStage", true, false) as Control
@@ -280,6 +289,11 @@ func _field_target_markers(enemy_side: bool, indices: Array) -> void:
 		stage.mouse_filter = Control.MOUSE_FILTER_PASS
 	if sprites != null:
 		sprites.mouse_filter = Control.MOUSE_FILTER_PASS
+	if stage != null:
+		for wing_name in ["EnemyWing", "AllyWing"]:
+			var wing: Node = stage.get_node_or_null(wing_name)
+			if wing != null:
+				_combat_ignore_decorative_mouse_input(wing)
 	for i in indices:
 		var name := ("EnemyBattler_" if enemy_side else "AllyBattler_") + str(i)
 		var frame: PanelContainer = frontend_body.find_child(name, true, false) as PanelContainer
@@ -287,15 +301,23 @@ func _field_target_markers(enemy_side: bool, indices: Array) -> void:
 			continue
 		var click := Button.new()
 		click.name = "CombatSpriteTarget_" + ("Enemy_" if enemy_side else "Ally_") + str(i)
+		# Attach BEFORE applying full-rect anchors; doing it the other way
+		# can leave a zero-size click region that cannot target the sprite.
+		frame.add_child(click)
 		click.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		click.offset_left = 0.0
+		click.offset_top = 0.0
+		click.offset_right = 0.0
+		click.offset_bottom = 0.0
 		click.flat = true
 		click.mouse_filter = Control.MOUSE_FILTER_STOP
 		click.focus_mode = Control.FOCUS_ALL
+		click.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		click.tooltip_text = "Select this character as your target"
 		click.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
 		click.add_theme_stylebox_override("hover", _new_hud_box(0.22, HUD_GOLD, 10))
+		click.add_theme_stylebox_override("focus", _new_hud_box(0.25, HUD_GOLD, 10))
 		click.add_theme_stylebox_override("pressed", _new_hud_box(0.34, DAILY_AQUA, 10))
-		frame.add_child(click)
 		var callback: Callable
 		if pending_food_slot >= 0:
 			callback = Callable(self, "_party_battle_use_food").bind(pending_food_slot, int(i))
