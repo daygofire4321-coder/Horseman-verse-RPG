@@ -1312,6 +1312,15 @@ func _run_tests() -> void:
 			"Old face boxes are hidden when the opening dialogue starts")
 		_expect(str(portrait_view.get("last_portrait_speaker")) == "asmodeus",
 			"The opening Asmodeus line still selects his new transparent portrait")
+		var dialogue_spacer: Control = portrait_view.find_child("DialogueLowerSpacer", true, false) as Control
+		_expect(dialogue_spacer != null and dialogue_spacer.visible
+			and dialogue_spacer.size_flags_vertical == Control.SIZE_EXPAND_FILL,
+			"Opening dialogue reserves flexible space above its bottom-anchored text panel")
+		var intro_haniel: TextureRect = portrait_view.find_child("LeftSpeakingPortrait", true, false) as TextureRect
+		var intro_asmodeus: TextureRect = portrait_view.find_child("RightSpeakingPortrait", true, false) as TextureRect
+		_expect(intro_haniel != null and intro_asmodeus != null
+			and intro_haniel.texture != null and intro_asmodeus.texture != null,
+			"Prologue displays Haniel on left and Asmodeus on right using actual art")
 		portrait_view.call("_advance_dialogue")
 		_expect(old_face_row != null and not old_face_row.visible,
 			"Legacy portrait boxes remain hidden when the speaker changes")
