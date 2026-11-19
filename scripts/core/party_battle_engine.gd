@@ -2,6 +2,7 @@ extends RefCounted
 ## Independent, non-canon three-member team-battle rules.
 ## The original scripted duel, bear rescue and Cliffside waves remain untouched.
 const ContentStore = preload("res://scripts/core/content_store.gd")
+const EncounterBalance = preload("res://scripts/core/encounter_balance.gd")
 
 var allies: Array = []
 var enemies: Array = []
@@ -46,10 +47,17 @@ func setup(active_ids: Array, reserve_ids: Array, sheets: Dictionary, enemy_ids:
 		if creature.is_empty():
 			continue
 		var hp := maxi(1, int(roundf(float(creature.get("max_hp", 50)) * hp_scale)))
-		enemies.append({
+		var foe := {
 			"id":str(creature.get("id", "")), "name":str(creature.get("name", "Enemy")),
-			"hp":hp, "max_hp":hp, "ai_damage":maxi(0, int(creature.get("ai", {}).get("damage", 10)))
-		})
+			"hp":hp, "max_hp":hp, "ai_damage":maxi(0, int(creature.get("ai", {}).get("damage", 10))),
+			"level":1, "defense":0
+		}
+		# Earlier test battles and scripted story encounters preserve their
+		# original stats unless a progression-aware story part is passed in.
+		if difficulty.has("story_part"):
+			foe.merge(EncounterBalance.enemy_stats(creature,
+				maxi(0, int(difficulty.get("story_part", 0))), difficulty), true)
+		enemies.append(foe)
 	if allies.is_empty() or enemies.is_empty():
 		finished = true
 		victory = enemies.is_empty() and not allies.is_empty()
@@ -159,7 +167,11 @@ func use_move(move_id: String, target_index: int = -1) -> Dictionary:
 		var attack_bonus := maxi(0, int((int(actor.get("attack", 20)) - 20) / 5))
 		if str(actor.get("id", "")) == "asmodeus" and str(move_id).begins_with("black_ice"):
 			attack_bonus += 2  # Black Ice Affinity: prototype team-mode passive
-		var damage := power + attack_bonus
+		# Higher-level opponents withstand a little more damage, while
+		# grinding player levels and stronger learned moves remain useful.
+		var level_bonus := maxi(0, int(actor.get("level", 1)) - 1)
+		var enemy_armor := maxi(0, int(foe.get("defense", 0)))
+		var damage := maxi(1, power + attack_bonus + level_bonus - enemy_armor)
 		foe["hp"] = maxi(0, int(foe["hp"]) - damage)
 		log_line = "%s used %s on %s: %d damage." % [actor["name"], move.get("name", move_id), foe["name"], damage]
 	elif kind == "heal":
