@@ -202,8 +202,8 @@ func _hunt_turn(move_id: String) -> void:
 	_hit_feedback(enemy_sprite)
 
 
-func _alley_turn(move_id: String) -> void:
-	super._alley_turn(move_id)
+func _alley_turn(move_id: String, target_index: int = -1) -> void:
+	super._alley_turn(move_id, target_index)
 	_hit_feedback(enemy_sprite)
 
 
