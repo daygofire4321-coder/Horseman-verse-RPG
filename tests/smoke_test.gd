@@ -1650,6 +1650,93 @@ func _run_tests() -> void:
 			"New dashboard preserves tomorrow navigation and avoids premature chapter advancement")
 		life.queue_free()
 
+
+	# Prototype 021 — accordion daily navigation and active battlefield
+	# targeting. All old IDs and combat math stay intact.
+	var next_scene: Resource = load("res://scenes/prototype_story_v21.tscn")
+	_expect(next_scene is PackedScene, "Prototype 021 expandable-routines and interactive-combat scene imports")
+	if next_scene is PackedScene:
+		var dropdown: Node = (next_scene as PackedScene).instantiate()
+		root.add_child(dropdown)
+		dropdown.set("party_disable_disk_writes", true)
+		dropdown.call("_load_story_if_needed")
+		dropdown.call("_enter_interlude", "after_part_four")
+		_expect(dropdown.find_child("DailyQuickStatus", true, false) != null,
+			"Day, actions and HP remain visible without opening any dropdown")
+		var activities: VBoxContainer = dropdown.find_child("DailyDropdownContent_activities", true, false) as VBoxContainer
+		var details: VBoxContainer = dropdown.find_child("DailyDropdownContent_details", true, false) as VBoxContainer
+		var manage: VBoxContainer = dropdown.find_child("DailyDropdownContent_manage", true, false) as VBoxContainer
+		var travel: VBoxContainer = dropdown.find_child("DailyDropdownContent_travel", true, false) as VBoxContainer
+		var tomorrow: VBoxContainer = dropdown.find_child("DailyDropdownContent_tomorrow", true, false) as VBoxContainer
+		_expect(activities != null and activities.visible,
+			"Daily activities open by default, so familiar actions are immediately usable")
+		_expect(details != null and not details.visible and manage != null and not manage.visible
+			and travel != null and not travel.visible and tomorrow != null and not tomorrow.visible,
+			"Character, travel and day-management sections initially stay collapsed")
+		dropdown.call("_daily_select_group", "manage")
+		_expect(manage.visible and not activities.visible,
+			"Opening Character & Inventory closes activities instead of stacking menus")
+		_expect(dropdown.find_child("DailyNavigation_Daily_Save", true, false) != null,
+			"Save button remains in the tree under Tomorrow rather than being recreated")
+		var gear: Button = dropdown.find_child("Daily_action_rest", true, false) as Button
+		dropdown.call("_daily_select_group", "activities")
+		var old_count: int = int(dropdown.get("interlude_engine").state.get("actions_left", 0))
+		if gear != null:
+			gear.pressed.emit()
+		_expect(int(dropdown.get("interlude_engine").state.get("actions_left", 0)) == old_count - 1,
+			"Rest inside accordion consumes exactly one daily action")
+		_expect(dropdown.find_child("DailyDropdownContent_activities", true, false).visible,
+			"Active accordion category persists after an activity redraw")
+		dropdown.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 9
+		dropdown.call("_enter_homestead", "haniel")
+		dropdown.call("_daily_select_group", "travel")
+		var switch_menu: VBoxContainer = dropdown.find_child("DailyDropdownContent_travel", true, false) as VBoxContainer
+		var switch_button: Button = dropdown.find_child("HomesteadSwitchPOV", true, false) as Button
+		_expect(switch_menu != null and switch_menu.visible and switch_button != null,
+			"Homestead switch-POV button is discoverable under its collapsed Travel menu")
+		_expect(switch_button.get_parent().get_parent().get_parent() == switch_menu,
+			"Original switch-POV navigation card was reparented rather than duplicated")
+		dropdown.call("_daily_select_group", "activities")
+		var woodwork: Button = dropdown.find_child("Daily_action_woodwork", true, false) as Button
+		var before_wood: int = int(dropdown.get("interlude_engine").state.get("actions_left", 0))
+		if woodwork != null:
+			woodwork.pressed.emit()
+		_expect(int(dropdown.get("interlude_engine").state.get("woodwork_sessions", 0)) == 1
+			and int(dropdown.get("interlude_engine").state.get("actions_left", 0)) == before_wood - 1,
+			"Woodworking keeps correct skill progress and cost inside activity dropdown")
+		dropdown.queue_free()
+
+		var battle_ui: Node = (next_scene as PackedScene).instantiate()
+		root.add_child(battle_ui)
+		battle_ui.set("party_disable_disk_writes", true)
+		var combat_save: Dictionary = SaveStore.new_save()
+		combat_save["campaigns"] = {"love_beyond": {
+			"opening_parts_completed":6,
+			"party":{"active":["asmodeus","haniel","alric"]},
+			"training":{"asmodeus":{"learned":["black_ice_lance"],"points":0}}
+		}}
+		battle_ui.set("save_data", combat_save.duplicate(true))
+		battle_ui.call("_party_battle_start", "forest_clearing")
+		var combat_engine = battle_ui.get("party_battle")
+		_expect(combat_engine != null and combat_engine.allies.size() == 3,
+			"Combat UI still uses the actual active three-person party")
+		battle_ui.call("_party_battle_pick_target", "divine_arrow")
+		var foe_click: Button = battle_ui.find_child("CombatSpriteTarget_Enemy_1", true, false) as Button
+		_expect(foe_click != null and foe_click.mouse_filter == Control.MOUSE_FILTER_STOP,
+			"Clickable target overlay exists on the second enemy sprite")
+		var earlier_hp: int = int(combat_engine.enemies[1].get("hp", 0))
+		if foe_click != null:
+			foe_click.pressed.emit()
+		_expect(int(combat_engine.enemies[1].get("hp", 0)) < earlier_hp,
+			"Pressing the enemy's on-field sprite deals real damage to the chosen enemy")
+		_expect(battle_ui.find_child("CombatFloatingValue", true, false) != null,
+			"An actual HP change produces a floating hit indicator on the sprite")
+		_expect(battle_ui.find_child("CombatCommandDock", true, false) != null,
+			"After an attack, the command dock returns for the next character")
+		_expect(battle_ui.get("save_data") == combat_save,
+			"Practice still cannot change the player's saved party, items, or health")
+		battle_ui.queue_free()
+
 	var chapter: Dictionary = ContentStore.load_chapter("love_beyond_prototype_001")
 	var haniel: Dictionary = ContentStore.load_character("haniel")
 	var asmodeus: Dictionary = ContentStore.load_character("asmodeus")
