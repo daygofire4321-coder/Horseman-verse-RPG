@@ -79,6 +79,9 @@ static func write_save_to_path(data: Dictionary, path: String) -> bool:
 	var primary_exists := FileAccess.file_exists(path)
 	var existing := _read_save(path)
 	var valid_primary := _valid_current_save(existing)
+	if primary_exists and int(existing.get("version", -1)) > SCHEMA_VERSION:
+		push_error("Refusing to downgrade a newer save version.")
+		return false
 	if primary_exists and not valid_primary:
 		# A newer-version save must NEVER be replaced by the empty fallback.
 		# An unreadable primary may be replaced only when a valid backup exists.
