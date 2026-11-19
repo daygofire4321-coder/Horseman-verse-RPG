@@ -1,4 +1,5 @@
 extends "res://scripts/prototype_story_v19.gd"
+const DailyActionCatalog = preload("res://scripts/core/daily_action_catalog.gd")
 ## Prototype 020 — the daily-life UI is a real dashboard rather than
 ## an accumulating stack of miscellaneous full-width buttons.
 ## Reparent EXISTING activity controls, retaining their original callbacks,
@@ -67,21 +68,7 @@ func _daily_accent_for(id: String) -> Color:
 
 
 func _daily_action_detail(id: String) -> Dictionary:
-	if id == "hunt":
-		return {
-			"title":"HUNT", "description":"Repeatable wildlife encounter. No daily action cost.",
-			"cost":"FREE • REPEATABLE"
-		}
-	for raw in current_profile.get("actions", []):
-		var action: Dictionary = raw
-		if str(action.get("id", "")) == id:
-			return {
-				"title":str(action.get("label", id)).to_upper(),
-				"description":str(action.get("description", "")),
-				"cost":"1 DAILY ACTION"
-			}
-	return {"title":id.replace("_", " ").to_upper(), "description":"Available today.", "cost":"1 DAILY ACTION"}
-
+	return DailyActionCatalog.detail(current_profile, id)
 
 func _daily_style_button(button: Button, accent: Color, is_primary: bool = false) -> void:
 	button.custom_minimum_size.y = 41 if not is_primary else 47

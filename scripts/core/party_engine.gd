@@ -4,6 +4,7 @@ extends RefCounted
 
 const ContentStore = preload("res://scripts/core/content_store.gd")
 const InventoryEngine = preload("res://scripts/core/inventory_engine.gd")
+const CharacterStats = preload("res://scripts/core/character_stats.gd")
 const INVENTORY_CATALOG := "res://data/items/love_beyond.json"
 const MAX_ACTIVE := 3
 const MAX_MOVES := 4
@@ -101,6 +102,7 @@ func sheet(character_id: String, save_data: Dictionary) -> Dictionary:
 	var inventory = InventoryEngine.new()
 	inventory.begin(save_data, ContentStore.read_dictionary(INVENTORY_CATALOG))
 	var bonuses: Dictionary = inventory.bonuses_for(character_id)
+	var stats: Dictionary = CharacterStats.effective_stats(base, level, bonuses)
 	# Base moves stay equipped. Trained techniques occupy empty move slots;
 	# excess learned moves remain saved for a future move-loadout editor.
 	var moves: Array = original.get("moves", []).duplicate(true)
@@ -128,16 +130,16 @@ func sheet(character_id: String, save_data: Dictionary) -> Dictionary:
 		"xp_target":30 * level,
 		"hp":current_hp,
 		"max_hp":max_hp,
-		"attack":int(base.get("attack", 10)) + (level - 1) * 2 + int(bonuses.get("attack", 0)),
-		"defense":int(base.get("defense", 10)) + (level - 1) * 2 + int(bonuses.get("defense", 0)),
-		"speed":int(base.get("speed", 10)) + (level - 1) + int(bonuses.get("speed", 0)),
+		"attack":stats["attack"],
+		"defense":stats["defense"],
+		"speed":stats["speed"],
 		"ability":definition.get("ability", {}),
 		"moves":move_slots,
 		"learned_move_count":known.size(),
 		"item_slots":ITEM_SLOTS,
 		"item_slot_details":inventory.equipped_details(character_id),
 		"equipment_bonuses":bonuses,
-		"damage_reduction":int(bonuses.get("damage_reduction", 0)),
+		"damage_reduction":stats["damage_reduction"],
 		"party_slot":active.find(character_id),
 		"unlocked":is_unlocked(character_id),
 		"unlock_after_part":int(definition.get("unlock_after_part", 0))
