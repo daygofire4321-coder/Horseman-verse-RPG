@@ -14,6 +14,7 @@ var finished := false
 var victory := false
 var last_log := "The party faces a pair of wild creatures."
 var enemy_damage_scale := 1.0
+var level_scaling_enabled := false
 
 
 func setup(active_ids: Array, reserve_ids: Array, sheets: Dictionary, enemy_ids: Array, difficulty: Dictionary = {}) -> void:
@@ -26,6 +27,7 @@ func setup(active_ids: Array, reserve_ids: Array, sheets: Dictionary, enemy_ids:
 	finished = false
 	victory = false
 	enemy_damage_scale = maxf(0.0, float(difficulty.get("enemy_damage_multiplier", 1.0)))
+	level_scaling_enabled = difficulty.has("story_part")
 	last_log = "The party faces a pair of wild creatures."
 	for raw_id in active_ids:
 		var id := str(raw_id)
@@ -169,7 +171,7 @@ func use_move(move_id: String, target_index: int = -1) -> Dictionary:
 			attack_bonus += 2  # Black Ice Affinity: prototype team-mode passive
 		# Higher-level opponents withstand a little more damage, while
 		# grinding player levels and stronger learned moves remain useful.
-		var level_bonus := maxi(0, int(actor.get("level", 1)) - 1)
+		var level_bonus := maxi(0, int(actor.get("level", 1)) - 1) if level_scaling_enabled else 0
 		var enemy_armor := maxi(0, int(foe.get("defense", 0)))
 		var damage := maxi(1, power + attack_bonus + level_bonus - enemy_armor)
 		foe["hp"] = maxi(0, int(foe["hp"]) - damage)
