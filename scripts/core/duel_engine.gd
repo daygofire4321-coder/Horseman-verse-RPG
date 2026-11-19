@@ -1,6 +1,7 @@
 extends RefCounted
 ## Standalone rules/state for a one-versus-one duel.
 ## Content, presentation, saves and difficulty menus live elsewhere.
+const EncounterBalance = preload("res://scripts/core/encounter_balance.gd")
 
 var player: Dictionary = {}
 var enemy: Dictionary = {}
@@ -10,6 +11,8 @@ var player_max_hp: int = 100
 var enemy_max_hp: int = 100
 var enemy_damage_multiplier: float = 1.0
 var enemy_used_heal: bool = false
+var player_level_bonus := 0
+var enemy_level := 1
 
 
 func setup(player_data: Dictionary, enemy_data: Dictionary, difficulty: Dictionary = {}) -> void:
@@ -19,6 +22,17 @@ func setup(player_data: Dictionary, enemy_data: Dictionary, difficulty: Dictiona
 	var hp_scale := maxf(0.1, float(difficulty.get("enemy_hp_multiplier", 1.0)))
 	enemy_max_hp = max(1, int(round(float(enemy.get("max_hp", 100)) * hp_scale)))
 	enemy_damage_multiplier = maxf(0.0, float(difficulty.get("enemy_damage_multiplier", 1.0)))
+	player_level_bonus = 0
+	enemy_level = 1
+	if difficulty.has("story_part"):
+		var balanced: Dictionary = EncounterBalance.enemy_stats(enemy,
+			int(difficulty.get("story_part", 0)), difficulty)
+		enemy_max_hp = int(balanced["max_hp"])
+		enemy_level = int(balanced["level"])
+		var enemy_ai: Dictionary = enemy.get("ai", {}).duplicate(true)
+		enemy_ai["damage"] = int(balanced["ai_damage"])
+		enemy["ai"] = enemy_ai
+		player_level_bonus = maxi(0, int(difficulty.get("player_level", 1)) - 1)
 	player_hp = player_max_hp
 	enemy_hp = enemy_max_hp
 	enemy_used_heal = false
@@ -67,8 +81,9 @@ func take_turn(move_id: String) -> Dictionary:
 
 	match kind:
 		"damage":
-			enemy_hp = max(0, enemy_hp - power)
-			log_text = "%s uses %s for %d damage." % [actor, str(move.get("name", "Attack")), power]
+			var balanced_power := power + player_level_bonus
+			enemy_hp = max(0, enemy_hp - balanced_power)
+			log_text = "%s uses %s for %d damage." % [actor, str(move.get("name", "Attack")), balanced_power]
 		"heal":
 			var old_hp := player_hp
 			player_hp = min(player_max_hp, player_hp + power)
