@@ -272,6 +272,15 @@ func _party_battle_food_targets(slot_index: int) -> void:
 	super._party_battle_food_targets(slot_index)
 
 
+func _combat_ignore_decorative_mouse_input(node: Node) -> void:
+	# Status HUD labels, panels and progress bars are decorative. Even if
+	# their rectangles overlap the battler artwork, they must not eat clicks.
+	if node is Control:
+		(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for child in node.get_children():
+		_combat_ignore_decorative_mouse_input(child)
+
+
 func _field_target_markers(enemy_side: bool, indices: Array) -> void:
 	super._field_target_markers(enemy_side, indices)
 	var stage: Control = frontend_body.find_child("BattlefieldStage", true, false) as Control
@@ -280,6 +289,11 @@ func _field_target_markers(enemy_side: bool, indices: Array) -> void:
 		stage.mouse_filter = Control.MOUSE_FILTER_PASS
 	if sprites != null:
 		sprites.mouse_filter = Control.MOUSE_FILTER_PASS
+	if stage != null:
+		for wing_name in ["EnemyWing", "AllyWing"]:
+			var wing: Node = stage.get_node_or_null(wing_name)
+			if wing != null:
+				_combat_ignore_decorative_mouse_input(wing)
 	for i in indices:
 		var name := ("EnemyBattler_" if enemy_side else "AllyBattler_") + str(i)
 		var frame: PanelContainer = frontend_body.find_child(name, true, false) as PanelContainer
