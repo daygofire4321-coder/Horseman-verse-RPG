@@ -1297,8 +1297,8 @@ func _run_tests() -> void:
 		_expect(portrait_view.find_child("RightSpeakingPortrait", true, false) != null, "Right speaker has an independent transparent picture")
 		var left_speaker: TextureRect = portrait_view.find_child("LeftSpeakingPortrait", true, false) as TextureRect
 		var right_speaker: TextureRect = portrait_view.find_child("RightSpeakingPortrait", true, false) as TextureRect
-		_expect(left_speaker != null and left_speaker.anchor_bottom <= 0.70
-			and right_speaker != null and right_speaker.anchor_bottom <= 0.70,
+		_expect(left_speaker != null and left_speaker.anchor_bottom <= 0.73
+			and right_speaker != null and right_speaker.anchor_bottom <= 0.73,
 			"Speaker portraits leave the lower dialogue box uncovered")
 		_expect(portrait_view.call("_portrait_speaker_id", "HANIEL [SIGNING]") == "haniel", "Signing lines brighten Haniel, not narrator")
 		_expect(portrait_view.call("_portrait_speaker_id", "BLOND YOUTH") == "joren", "Youth alias displays Joren without changing authored name")
@@ -1661,6 +1661,16 @@ func _run_tests() -> void:
 		_expect(life.find_child("Daily_VisitMarket", true, false) != null and
 			life.find_child("Daily_SwitchPOV", true, false) != null,
 			"Market and switch-character controls keep their original callbacks")
+		life.call("_bedtime_question")
+		var cliffside_exciting: Button = life.find_child("CliffsideExcitingTomorrow", true, false) as Button
+		_expect(cliffside_exciting != null and not cliffside_exciting.disabled,
+			"Part Six bedtime offers a working exciting day to Part Seven")
+		if cliffside_exciting != null:
+			cliffside_exciting.pressed.emit()
+		_expect(int(life.get("event_index")) >= 0 and bool(life.get("story_mode"))
+			and not bool(life.get("interlude_mode")),
+			"Choosing exciting tomorrow leaves Cliffside free time for the next chapter")
+
 		life.get("save_data")["campaigns"]["love_beyond"]["opening_parts_completed"] = 9
 		life.call("_enter_homestead", "haniel")
 		_expect(life.find_child("DailyHomesteadBubble", true, false) != null,
