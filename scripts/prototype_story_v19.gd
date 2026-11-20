@@ -270,6 +270,27 @@ func _bedtime_question() -> void:
 	super._bedtime_question()
 
 
+func _bedtime_question() -> void:
+	# Prototype 014 treated Part Six as the final authored chapter and
+	# disabled exciting tomorrows. Parts Seven to Nine now exist, so
+	# Cliffside's evening menu must expose the continuation again.
+	if _is_cliffside_day() and _completed_story_part() >= 6 and _completed_story_part() < 9:
+		var content := _party_panel("EVENING IN CLIFFSIDE",
+			"The next chapter is ready; ordinary days remain optional.")
+		var completed: int = _completed_story_part()
+		var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][completed - 6])
+		var next := _front_button(content,
+			"AN EXCITING DAY  •  Continue " + next_part,
+			_continue_next_chapter, 54.0)
+		next.name = "CliffsideExcitingTomorrow"
+		_front_button(content, "AN ORDINARY DAY  •  Stay in Cliffside",
+			_ordinary_tomorrow, 52.0)
+		_front_button(content, "NOT YET  •  Return to activities",
+			_draw_interlude, 46.0)
+		return
+	super._bedtime_question()
+
+
 func _exciting_tomorrow() -> void:
 	if _is_homestead_day():
 		_bedtime_question()
