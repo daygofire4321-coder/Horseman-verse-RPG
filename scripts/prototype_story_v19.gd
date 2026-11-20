@@ -239,26 +239,13 @@ func _take_interlude_action(id: String) -> void:
 
 
 func _bedtime_question() -> void:
-	if not _is_homestead_day():
-		super._bedtime_question()
-		return
-	var content := _party_panel("EVENING AT THE CAVE HOMESTEAD",
-		"The next authored chapter will arrive later. Ordinary life continues.")
-	_front_label(content,
-		"An ordinary tomorrow refreshes your three activities. Gardening and woodworking progress is kept, and the story remains at Part Nine.",
-		16, UI_TEXT).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	var next := _front_button(content, "AN ORDINARY DAY  •  Stay at the homestead", _ordinary_tomorrow, 51.0)
-	next.name = "HomesteadOrdinaryTomorrow"
-	_front_button(content, "NOT YET  •  Back to activities", _draw_interlude, 45.0)
-
-
-func _bedtime_question() -> void:
-	# The old Cliffside bedtime override still says Part Six is the finale,
-	# so never let it hide the actual authored Parts Seven through Nine.
+	# Cliffside's original Part Six bedtime override predates Parts Seven-Nine.
+	# Restore exciting-day story continuation without changing ordinary days.
 	if _is_cliffside_day() and _completed_story_part() >= 6 and _completed_story_part() < 9:
 		var content := _party_panel("EVENING IN CLIFFSIDE",
-			"Parts Seven through Nine are ready; ordinary days remain optional.")
-		var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][_completed_story_part() - 6])
+			"The next chapter is ready; ordinary days remain optional.")
+		var completed: int = _completed_story_part()
+		var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][completed - 6])
 		var advance := _front_button(content, "AN EXCITING DAY  •  " + next_part,
 			_continue_next_chapter, 54.0)
 		advance.name = "CliffsideExcitingTomorrow"
@@ -267,26 +254,16 @@ func _bedtime_question() -> void:
 		ordinary.name = "CliffsideOrdinaryTomorrow"
 		_front_button(content, "NOT YET  •  Return to activities", _draw_interlude, 45.0)
 		return
-	super._bedtime_question()
-
-
-func _bedtime_question() -> void:
-	# Prototype 014 treated Part Six as the final authored chapter and
-	# disabled exciting tomorrows. Parts Seven to Nine now exist, so
-	# Cliffside's evening menu must expose the continuation again.
-	if _is_cliffside_day() and _completed_story_part() >= 6 and _completed_story_part() < 9:
-		var content := _party_panel("EVENING IN CLIFFSIDE",
-			"The next chapter is ready; ordinary days remain optional.")
-		var completed: int = _completed_story_part()
-		var next_part: String = str(["PART SEVEN", "PART EIGHT", "PART NINE"][completed - 6])
-		var next := _front_button(content,
-			"AN EXCITING DAY  •  Continue " + next_part,
-			_continue_next_chapter, 54.0)
-		next.name = "CliffsideExcitingTomorrow"
-		_front_button(content, "AN ORDINARY DAY  •  Stay in Cliffside",
-			_ordinary_tomorrow, 52.0)
-		_front_button(content, "NOT YET  •  Return to activities",
-			_draw_interlude, 46.0)
+	if _is_homestead_day():
+		var content := _party_panel("EVENING AT THE CAVE HOMESTEAD",
+			"The next authored chapter will arrive later. Ordinary life continues.")
+		_front_label(content,
+			"An ordinary tomorrow refreshes your three activities. Gardening and woodworking progress is kept, and the story remains at Part Nine.",
+			16, UI_TEXT).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		var next := _front_button(content, "AN ORDINARY DAY  •  Stay at the homestead",
+			_ordinary_tomorrow, 51.0)
+		next.name = "HomesteadOrdinaryTomorrow"
+		_front_button(content, "NOT YET  •  Back to activities", _draw_interlude, 45.0)
 		return
 	super._bedtime_question()
 
